@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { signup } from 'lib/api';
+import { authenticate } from 'lib/auth';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 400
+    width: 400,
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  button: {
+    margin: '24px 0 40px'
   }
 }));
 
-export default function (props) {
-  const {
-    email,
-    password,
-    passwordConfirmation,
-    errors,
-    handleChangeEmail,
-    handleChangePassword,
-    handleChangePassWordConfirmation,
-    handleClearErrors,
-    handleSignup
-  } = props;
-
+export default function ({ setAuth }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [errors, setErrors] = useState({});
   const classes = useStyles();
+
+  const handleAuth = ({ auth, email, errors }) => {
+    if (auth) {
+      authenticate(auth, email);
+      setAuth(auth);
+    } else {
+      setErrors(errors);
+    }
+  }
+
+  const handleClearErrors = () => {
+    setErrors({});
+  }
 
   return (
     <form autoComplete='off'>
@@ -29,23 +43,24 @@ export default function (props) {
         <TextField
           id='standard-basic email'
           label='メールアドレス'
-          margin='dense'
+          margin='normal'
           value={email}
           error={errors.email !== undefined}
           helperText={errors.email}
           onFocus={handleClearErrors}
-          onChange={e => handleChangeEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
         <TextField
           id='standard-basic password'
-          label='パスワード (6文字以上)'
+          label='パスワード'
           type='password'
           margin='normal'
+          placeholder='6文字以上の半角文字(数字, アルファベット)'
           value={password}
           error={errors.password !== undefined}
           helperText={errors.password}
           onFocus={handleClearErrors}
-          onChange={e => handleChangePassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
         <TextField
           id='standard-basic password-conf'
@@ -56,17 +71,23 @@ export default function (props) {
           error={errors.password_confirmation !== undefined}
           helperText={errors.password_confirmation}
           onFocus={handleClearErrors}
-          onChange={e => handleChangePassWordConfirmation(e.target.value)}
+          onChange={e => setPasswordConfirmation(e.target.value)}
         />
         <Button
           variant='contained'
           color='primary'
           disabled={!(email && password && passwordConfirmation)}
           className={classes.button}
-          onClick={handleSignup}
+          onClick={() => signup({
+            email,
+            password,
+            passwordConfirmation,
+            handleAuth
+          })}
         >
           新規登録
         </Button>
+        <Link to='/login'>ログインはこちら</Link>
       </div>
     </form>
   );
