@@ -7,13 +7,10 @@ export const IsAuthenticated = () => (
   localStorage.getItem('currentUser')
 );
 
-export const currentUser = () => (
+export const isAuthenticated = () => (
   localStorage.getItem('currentUser')
 );
 
 export const logout = () => {
-  if (currentUser) {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('email');
-  }
+  localStorage.clear();
 }
