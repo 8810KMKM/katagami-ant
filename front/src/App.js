@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Route,
   Redirect,
   Switch,
+  useLocation,
+  useHistory
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { Box } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import TopPage from 'pages/TopPage';
 import SignupPage from 'pages/SignupPage';
 import LoginPage from 'pages/LoginPage';
@@ -22,15 +24,31 @@ export default function () {
   const [isLoggedIn, setIsLoggedIn] = useState(currentUser());
   const classes = useStyles();
 
-  const handleLogout = () => {
+  const handleLogout = ({path, component }) => {
     logout();
     setIsLoggedIn(null);
+  }
+
+  const AuthRoute = ({ path, component }) => {
+    let location = useLocation();
+    let history = useHistory();
+    let { from } = location.state || { from: { pathname: '/' } };
+
+    useEffect(() => {
+      if (isLoggedIn) {
+        setTimeout(history.replace(from), 100);
+      }
+    });
+
+    return (
+      <Route path={path} render={() => component({ setIsLoggedIn })} />
+    );
   }
 
   const PrivateRoute = ({ path, component }) => {
     return (
       isLoggedIn ? (
-        <Route path={path} component={component} />
+        <Route path={path} component={component}  />
       ) : (
         <Route
           render={({ location }) => (
@@ -48,20 +66,13 @@ export default function () {
 
   return (
     <BrowserRouter>
+      {isLoggedIn &&
+        <Button onClick={handleLogout}>ログアウト</Button>
+      }
       <Box className={classes.root}>
         <Switch>
-          <Route path='/signup' render={() =>
-            <SignupPage
-              auth={isLoggedIn}
-              setAuth={setIsLoggedIn}
-            />}
-          />
-          <Route path='/login' render={() =>
-            <LoginPage
-              auth={isLoggedIn}
-              setAuth={setIsLoggedIn}
-            />}
-          />
+          <AuthRoute path='/signup' component={SignupPage} />
+          <AuthRoute path='/login' component={LoginPage} />
           <PrivateRoute path='/' component={TopPage} />
         </Switch>
       </Box>

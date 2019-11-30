@@ -73,7 +73,7 @@ export default function ({ setAuth }) {
         >
           ログイン
         </Button>
-        <Link to='/login'>新規登録はこちら</Link>
+        <Link to='/signup'>新規登録はこちら</Link>
       </div>
     </form>
   );
