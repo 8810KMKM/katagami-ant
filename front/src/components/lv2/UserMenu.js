@@ -7,19 +7,28 @@ import {
   MenuItem,
   Modal,
   Grid,
-  Button
+  Button,
+  Box
 } from '@material-ui/core';
+import { AccountBox, ExitToApp } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
 import UserIcon from 'components/lv1/UserIcon';
+import { currentUser } from 'lib/auth';
 
 const useStyle = makeStyles(theme => ({
   link: {
+    display: 'flex',
+    flexDirection: 'row',
     textDecoration: 'none',
     alignItems: 'center',
     color: grey[900]
   },
   menuItem: {
     padding: '6px 32px'
+  },
+  icon: {
+    marginTop: 5,
+    marginRight: 3
   },
   modal: {
     display: 'flex',
@@ -40,15 +49,12 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-export default function (props) {
-  const {
-    id,
-    handleLogout
-  } = props;
-  const classes = useStyle();
+export default function ({ handleLogout }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const open = Boolean(anchorEl);
+  const user = currentUser();
+  const classes = useStyle();
 
   const handleSafetyLogout = () => {
     setModalIsOpen(false);
@@ -69,7 +75,7 @@ export default function (props) {
         aria-controls='menu-appbar'
         onClick={e => setAnchorEl(e.currentTarget)}
       >
-        <UserIcon size={40} email={localStorage.getItem('email')} />
+        <UserIcon size={40} email={user.email} />
       </IconButton>
       <Menu
         id='menu-appbar'
@@ -88,14 +94,20 @@ export default function (props) {
       >
         <MenuItem className={classes.menuItem} onClick={() => setAnchorEl(false)}>
           <Link
-            to={`/users/${id}`}
+            to={`/users/${user.id}`}
             className={classes.link}
           >
+            <Box className={classes.icon}>
+              <AccountBox />
+            </Box>
             マイページ
           </Link>
         </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleModalOpen}>
-          ログアウト
+          <Box className={classes.icon}>
+            <ExitToApp />
+          </Box>
+         ログアウト
         </MenuItem>
       </Menu>
       <Modal

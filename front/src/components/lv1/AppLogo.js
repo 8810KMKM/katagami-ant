@@ -19,7 +19,7 @@ export default function () {
 
   return (
     <Link to='/' className={classes.link}>
-      <h1 className={classes.logo}> Takagami Anotation (demo)</h1>
+      <h1 className={classes.logo}>KATAGAMI Annotation Tool</h1>
     </Link>
   );
 }

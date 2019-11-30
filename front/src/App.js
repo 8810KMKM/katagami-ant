@@ -8,10 +8,11 @@ import {
   useHistory
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import TopPage from 'pages/TopPage';
 import SignupPage from 'pages/SignupPage';
 import LoginPage from 'pages/LoginPage';
+import Header from 'components/lv3/Header';
 import { isAuthenticated, logout, currentUser } from 'lib/auth';
 
 const useStyles = makeStyles(theme => ({
@@ -70,9 +71,7 @@ export default function () {
 
   return (
     <BrowserRouter>
-      {isLoggedIn &&
-        <Button onClick={handleLogout}>ログアウト</Button>
-      }
+      <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
       <Box className={classes.root}>
         <Switch>
           <AuthRoute path='/signup' component={SignupPage} />
