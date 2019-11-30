@@ -25,7 +25,7 @@ export default function ({ setAuth }) {
   const classes = useStyles();
 
   const handleAuth = ({ user, errors }) => {
-    if (user) {
+    if (user.id) {
       authenticate(user);
       setAuth(user.id);
     } else {

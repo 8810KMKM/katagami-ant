@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     end
 
     render json: {
-      user: auth ? user : nil,
+      user: auth ? user : { id: nil },
       errors: errors
     }
   end
