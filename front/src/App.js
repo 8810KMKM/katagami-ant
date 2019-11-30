@@ -12,7 +12,7 @@ import { Box, Button } from '@material-ui/core';
 import TopPage from 'pages/TopPage';
 import SignupPage from 'pages/SignupPage';
 import LoginPage from 'pages/LoginPage';
-import { isAuthenticated, logout } from 'lib/auth';
+import { isAuthenticated, logout, currentUser } from 'lib/auth';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,9 +22,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function () {
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+  const user = currentUser();
   const classes = useStyles();
 
-  const handleLogout = ({path, component }) => {
+  const handleLogout = () => {
     logout();
     setIsLoggedIn(null);
   }
@@ -41,7 +42,10 @@ export default function () {
     });
 
     return (
-      <Route path={path} render={() => component({ setIsLoggedIn })} />
+      <Route
+        path={path}
+        render={() => component({ setIsLoggedIn })}
+      />
     );
   }
 

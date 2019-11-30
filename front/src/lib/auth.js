@@ -3,13 +3,16 @@ export const authenticate = user => {
   localStorage.setItem('email', user.email);
 }
 
-export const IsAuthenticated = () => (
-  localStorage.getItem('currentUser')
-);
-
 export const isAuthenticated = () => (
   localStorage.getItem('currentUser')
 );
+
+export const currentUser = () => {
+  return ({
+    id: localStorage.getItem('currentUser'),
+    email: localStorage.getItem('email')
+  });
+}
 
 export const logout = () => {
   localStorage.clear();
