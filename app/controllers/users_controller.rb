@@ -11,9 +11,8 @@ class UsersController < ApplicationController
       password_confirmation: params[:password_confirmation]
     )
 
-    render json: { 
-      auth: user.id,
-      email: user.email,
+    render json: {
+      user: user,
       errors: format_error_messages(user)
     }
   end
@@ -21,11 +20,11 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
     errors = {}
-    auth = nil
+    auth = false
 
     if user.present?
       if !!user.authenticate(params[:password])
-        auth = user.id
+        auth = true
       else
         errors[:password] = "パスワードが間違っています"
       end
@@ -33,9 +32,8 @@ class UsersController < ApplicationController
       errors[:email] = "登録されていないメールアドレスです"
     end
 
-    render json: { 
-      auth: auth,
-      email: user.email,
+    render json: {
+      user: auth ? user : nil,
       errors: errors
     }
   end
