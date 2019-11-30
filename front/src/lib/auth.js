@@ -1,9 +1,11 @@
-export const authenticate = (auth, email) => {
-  if (auth) {
-    localStorage.setItem('currentUser', auth);
-    localStorage.setItem('email', email);
-  }
+export const authenticate = user => {
+  localStorage.setItem('currentUser', user.id);
+  localStorage.setItem('email', user.email);
 }
+
+export const IsAuthenticated = () => (
+  localStorage.getItem('currentUser')
+);
 
 export const currentUser = () => (
   localStorage.getItem('currentUser')

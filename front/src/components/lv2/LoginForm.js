@@ -23,10 +23,10 @@ export default function ({ setAuth }) {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleAuth = ({ auth, email, errors }) => {
-    if (auth) {
-      authenticate(auth, email);
-      setAuth(auth);
+  const handleAuth = ({ user, errors }) => {
+    if (user) {
+      authenticate(user);
+      setAuth(user.id);
     } else {
       setErrors(errors);
     }
