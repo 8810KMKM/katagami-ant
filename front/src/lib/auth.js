@@ -1,4 +1,4 @@
-export const authenticate = ({ auth, email }) => {
+export const authenticate = (auth, email) => {
   if (auth) {
     localStorage.setItem('currentUser', auth);
     localStorage.setItem('email', email);

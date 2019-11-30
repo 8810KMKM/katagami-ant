@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 import TopPage from 'pages/TopPage';
 import SignupPage from 'pages/SignupPage';
+import LoginPage from 'pages/LoginPage';
 import { currentUser, logout } from 'lib/auth';
 
 const useStyles = makeStyles(theme => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function () {
-  const [isloggedIn, setIsLoggedIn] = useState(currentUser);
+  const [isLoggedIn, setIsLoggedIn] = useState(currentUser());
   const classes = useStyles();
 
   const handleLogout = () => {
@@ -28,7 +29,7 @@ export default function () {
 
   const PrivateRoute = ({ path, component }) => {
     return (
-      isloggedIn ? (
+      isLoggedIn ? (
         <Route path={path} component={component} />
       ) : (
         <Route
@@ -51,17 +52,17 @@ export default function () {
         <Switch>
           <Route path='/signup' render={() =>
             <SignupPage
-              auth={isloggedIn}
+              auth={isLoggedIn}
               setAuth={setIsLoggedIn}
             />}
           />
-          {/* <Route path='/login' render={() =>
+          <Route path='/login' render={() =>
             <LoginPage
-              auth={loggedIn}
-              setAuth={setLoggedIn}
+              auth={isLoggedIn}
+              setAuth={setIsLoggedIn}
             />}
-          /> */}
-          <Route path='/' component={TopPage} />
+          />
+          <PrivateRoute path='/' component={TopPage} />
         </Switch>
       </Box>
     </BrowserRouter>
