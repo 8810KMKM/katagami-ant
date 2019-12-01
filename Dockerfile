@@ -1,7 +1,7 @@
 FROM ruby:2.6.5-slim
 
 # db, js関係の環境をインストール
-RUN apt-get update -qq && apt-get install -y mariadb-client libmariadb-dev-compat build-essential apt-transport-https curl && \
+RUN apt-get update -qq && apt-get install -y mariadb-client libmariadb-dev-compat build-essential apt-transport-https curl imagemagick && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs && \
     curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
