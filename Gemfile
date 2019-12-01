@@ -51,3 +51,5 @@ gem 'dotenv-rails', '2.7.5'
 gem 'rails-i18n'
 # aws経由で取得する型紙画像保存のため
 gem 'carrierwave'
+# awsにアプリケーションからアクセスするため
+gem 'aws-sdk'
