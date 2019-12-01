@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'users#show'
 
   #Katagami
-  get '/katagamis', to: 'katagamis#show' 
+  get '/katagamis', to: 'katagamis#index' 
 end
