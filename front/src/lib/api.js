@@ -45,6 +45,13 @@ export const fetchUser = async (id, handleGetUser) => {
   });
 }
 
+export const fetchKatagamis = async (handleGetKatagamis) => {
+  await fetchGet({
+    url: `${baseUrl}/katagamis`,
+    successAction: handleGetKatagamis
+  });
+}
+
 const fetchGet = async (props) => {
   const {
     url,
