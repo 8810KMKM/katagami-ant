@@ -1,6 +1,11 @@
 class KatagamisController < ApplicationController
   def index
-    katagamis = Katagami.all.select(:id, :src, :width, :height)
-    render json: katagamis.each_slice(2).to_a
+    render json: Katagami.all.select(:id, :src)
+  end
+
+  def aws
+    katagami = Katagami.find(params[:id])
+    
+    render json: { image: katagami.presigned_url }
   end
 end

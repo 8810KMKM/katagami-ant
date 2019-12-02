@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   #Katagami
   get '/katagamis', to: 'katagamis#index' 
+  get 'katagamis/aws', to: 'katagamis#aws'
 end

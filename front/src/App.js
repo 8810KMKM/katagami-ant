@@ -17,7 +17,7 @@ import { isAuthenticated, logout, currentUser } from 'lib/auth';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: '120px auto'
+    margin: '80px auto'
   }
 }));
 
