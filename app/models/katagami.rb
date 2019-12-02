@@ -1,7 +1,7 @@
 class Katagami < ApplicationRecord
   require 'aws-sdk'
 
-  validates :src, presence: true, allow_nil: false
+  validates :name, presence: true, allow_nil: false
   validates :cw_obj, presence: true, allow_nil: false
   validates :width, presence: true, allow_nil: false
   validates :height, presence: true, allow_nil: false
