@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   GridListTile,
   Card,
@@ -16,7 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function (props) {
   const {
-    katagami
+    katagami,
+    userId
   } = props;
   const classes = useStyles();
 
@@ -26,7 +28,9 @@ export default function (props) {
         <p>Image {`${katagami.id}`}</p>
       </CardContent>
       <CardActions>
-        <Button>実行</Button>
+        <Link to={`/ant/${katagami.id}/${userId}`}>
+          <Button>実行</Button>
+        </Link>
         <Button>結果一覧</Button>
       </CardActions>
     </Card>

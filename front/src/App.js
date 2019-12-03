@@ -12,6 +12,7 @@ import { Box } from '@material-ui/core';
 import TopPage from 'pages/TopPage';
 import SignupPage from 'pages/SignupPage';
 import LoginPage from 'pages/LoginPage';
+import AnnotationPage from 'pages/AnnotationPage';
 import Header from 'components/lv3/Header';
 import { isAuthenticated, logout, currentUser } from 'lib/auth';
 
@@ -51,9 +52,10 @@ export default function () {
   }
 
   const PrivateRoute = ({ path, component }) => {
+    console.log(path);
     return (
       isLoggedIn ? (
-        <Route path={path} component={component}  />
+        <Route path={path} component={component}/>
       ) : (
         <Route
           render={({ location }) => (
@@ -74,9 +76,10 @@ export default function () {
       <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
       <Box className={classes.root}>
         <Switch>
-          <AuthRoute path='/signup' component={SignupPage} />
-          <AuthRoute path='/login' component={LoginPage} />
-          <PrivateRoute path='/' component={TopPage} />
+          <Route path='/ant/:katagamiId/:userId' component={AnnotationPage}/>
+          <AuthRoute path='/signup' component={SignupPage}/>
+          <AuthRoute path='/login' component={LoginPage}/>    
+          <PrivateRoute path='/' component={TopPage}/>
         </Switch>
       </Box>
     </BrowserRouter>

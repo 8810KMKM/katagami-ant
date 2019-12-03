@@ -1,5 +1,5 @@
 class Annotation < ApplicationRecord
-  validates :status, inclusion: { in: %w(0 1 2) }
+  validates :status, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 2 }
 
   belongs_to :user
   belongs_to :katagami

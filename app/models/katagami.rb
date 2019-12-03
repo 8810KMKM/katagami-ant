@@ -19,7 +19,7 @@ class Katagami < ApplicationRecord
   end
 
   def presigned_url
-    target = Katagami.s3_bucket.objects.select { |object| object.key === src }
+    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
     target[0].presigned_url(:get)
   end
 end
