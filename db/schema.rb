@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_022214) do
+ActiveRecord::Schema.define(version: 2019_12_03_085108) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_022214) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["katagami_id"], name: "index_annotations_on_katagami_id"
+    t.index ["user_id", "katagami_id"], name: "index_annotations_on_user_id_and_katagami_id", unique: true
     t.index ["user_id"], name: "index_annotations_on_user_id"
   end
 
