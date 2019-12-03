@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_134529) do
+ActiveRecord::Schema.define(version: 2019_12_03_022214) do
+
+  create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "katagami_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["katagami_id"], name: "index_annotations_on_katagami_id"
+    t.index ["user_id"], name: "index_annotations_on_user_id"
+  end
 
   create_table "katagamis", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "width", null: false
@@ -28,4 +38,6 @@ ActiveRecord::Schema.define(version: 2019_12_02_134529) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "annotations", "katagamis"
+  add_foreign_key "annotations", "users"
 end

@@ -6,6 +6,8 @@ class Katagami < ApplicationRecord
   validates :width, presence: true, allow_nil: false
   validates :height, presence: true, allow_nil: false
 
+  has_many :annotations
+
   mount_uploader :cw_obj, KatagamiUploader
 
   def self.s3_bucket

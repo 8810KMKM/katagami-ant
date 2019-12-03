@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: {minimum: 6 }, allow_nil: false
   validates :password_confirmation, presence: true, allow_nil: false
+
+  has_many :annotations
 end
