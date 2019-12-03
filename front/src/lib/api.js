@@ -52,6 +52,19 @@ export const fetchKatagamis = async (handleGetKatagamis) => {
   });
 }
 
+export const createAnnotation = async (props) => {
+  const {
+    katagamiId,
+    userId,
+    handleCreateAnnotation
+  } = props;
+  
+  await fetchPost({
+    url: `${baseUrl}/annotations/${katagamiId}/${userId}`,
+    successAction: handleCreateAnnotation
+  });
+}
+
 const fetchGet = async (props) => {
   const {
     url,
