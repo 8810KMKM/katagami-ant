@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#signup'
   post '/login' , to: 'users#login'
   get 'users/:id', to: 'users#show'
-
-  #Katagami
+  # Katagami
   get '/katagamis', to: 'katagamis#index'
-
-  #Annotation
+  # Annotation
   post '/annotations/:katagami_id/:user_id', to: 'annotations#create'
+  # Label
+  get '/labels', to: 'labels#index'
 end

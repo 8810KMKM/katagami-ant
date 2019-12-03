@@ -65,6 +65,13 @@ export const createAnnotation = async (props) => {
   });
 }
 
+export const fetchLabels = async (handleGetLabels) => {
+  await fetchGet({
+    url: `${baseUrl}/labels`,
+    successAction: handleGetLabels
+  });
+}
+
 const fetchGet = async (props) => {
   const {
     url,
