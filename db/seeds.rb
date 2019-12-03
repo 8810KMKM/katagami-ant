@@ -10,3 +10,15 @@ Katagami.transaction do
     katagami.save!
   end
 end
+
+label_names = [
+  'kasuri',   'kiku', 'ume',   'hishi',     'sakura',
+  'karakusa', 'chou', 'matsu', 'kamenokou', 'asanoha'
+]
+
+Label.transaction do
+  label_names.each do |name|
+    label = Label.new(name: name)
+    label.save!
+  end
+end
