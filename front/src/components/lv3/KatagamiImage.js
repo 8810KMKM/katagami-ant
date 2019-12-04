@@ -22,7 +22,8 @@ export default function (props) {
     katagamiUrl,
     katagamiWidth,
     katagamiHeight,
-    dividing
+    dividing,
+    handleToggleTile
   } = props;
   const fixedWidth = 640;
   const fixedHeight = katagamiHeight / katagamiWidth * fixedWidth;
@@ -37,8 +38,8 @@ export default function (props) {
 
   const Labels = () => {
     const labels = [];
-    for (let i = 0; i < dividing; i++) {
-      labels.push(<Grid xs={12/tileSquare}>{i}</Grid>);
+    for (let i = 1; i <= dividing; i++) {
+      labels.push(<Grid item xs={12/tileSquare}>{i}</Grid>);
     }
     return labels;
   }

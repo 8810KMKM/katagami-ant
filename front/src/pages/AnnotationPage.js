@@ -25,9 +25,19 @@ export default function (props) {
   const [katagamiWidth, setKatagamiWidth] = useState(0);
   const [katagamiHeight, setKatagamiHeight] = useState(0);
   const [labels, setLabels] = useState([]);
+  const [selectedTiles, setSelectedTiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [islatest, setIsLatest] = useState(true);
   const classes = useStyles();
+
+  const handleToggleTile = number => {
+    if (selectedTiles.includes(number)) {
+      const _selectedTiles = selectedTiles.splice(selectedTiles.indexOf(number), 1);
+      setSelectedTiles(_selectedTiles);
+    } else {
+      setSelectedTiles([...selectedTiles, number]);
+    }
+  }
 
   useEffect(() => {
     const handleCreateAnnotation = response => {
@@ -71,6 +81,7 @@ export default function (props) {
             katagamiHeight={katagamiHeight}
             katagamiWidth={katagamiWidth}
             dividing={9}
+            handleToggleTile={handleToggleTile}
           />
         </Grid>
         <Grid item xs={5}>
