@@ -1,27 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Container from 'components/lv1/Container';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: 640
+  },
   katagami: {
-    width: '640px',
-    height: 'auto'
+    backgroundImage: props => `url(${props.katagamiUrl})`,
+    backgroundSize: 'cover',
+    width: props => `${props.fixedWidth}px`,
+    height: props => `${props.fixedHeight}px`
+  },
+  tile: {
+    height: props => `${props.tileHeight}`
   }
 }));
 
 export default function (props) {
   const {
-    katagamiUrl
+    katagamiUrl,
+    katagamiWidth,
+    katagamiHeight,
+    dividing
   } = props;
-  const classes = useStyles();
+  const fixedWidth = 640;
+  const fixedHeight = katagamiHeight / katagamiWidth * fixedWidth;
+  const tileSquare = Math.sqrt(dividing);
+  const tileHeight = fixedHeight / tileSquare;
+  const classes = useStyles({
+    katagamiUrl,
+    fixedWidth,
+    fixedHeight,
+    tileHeight
+  });
+
+  const Labels = () => {
+    const labels = [];
+    for (let i = 0; i < dividing; i++) {
+      labels.push(<Grid xs={12/tileSquare}>{i}</Grid>);
+    }
+    return labels;
+  }
 
   return (
     <div className={classes.root}>
-      <img
-        src={katagamiUrl}
-        alt={`Image ${katagamiId}`}
-        className={classes.katagami}
-      />
+      <Grid container spacing={0} className={classes.katagami}>
+        <Labels />
+      </Grid>
     </div>
   );
 }

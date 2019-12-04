@@ -8,7 +8,9 @@ class AnnotationsController < ApplicationController
 
     render json: {
       id: annotation.id,
-      katagami_url: ant_params[:katagami].presigned_url
+      katagami_url: ant_params[:katagami].presigned_url,
+      katagami_width: ant_params[:katagami].width,
+      katagami_height: ant_params[:katagami].height
     }
   end
 end

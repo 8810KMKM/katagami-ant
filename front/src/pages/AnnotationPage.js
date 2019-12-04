@@ -5,11 +5,9 @@ import { createAnnotation, fetchLabels } from 'lib/api';
 import HeadLine from 'components/lv1/HeadLine';
 import { Grid } from '@material-ui/core';
 import LabelList from 'components/lv3/LabelList';
+import KatagamiImage from 'components/lv3/KatagamiImage';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    border: '1px solid'
-  },
   katagami: {
     width: '640px',
     height: 'auto'
@@ -24,15 +22,19 @@ export default function (props) {
 
   const [annotation, setAnnotation] = useState(null);
   const [katagamiUrl, setKatagamiUrl] = useState('');
+  const [katagamiWidth, setKatagamiWidth] = useState(0);
+  const [katagamiHeight, setKatagamiHeight] = useState(0);
   const [labels, setLabels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [islatest, setIsLatest] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
-    const handleCreateAnnotation = ({id, katagami_url}) => {
-      setAnnotation(id);
-      setKatagamiUrl(katagami_url);
+    const handleCreateAnnotation = response => {
+      setAnnotation(response.id);
+      setKatagamiUrl(response.katagami_url);
+      setKatagamiWidth(response.katagami_width);
+      setKatagamiHeight(response.katagami_height);
       setIsLoading(false);
     }
     setIsLoading(true);
@@ -64,10 +66,11 @@ export default function (props) {
       <HeadLine>アノテーション (Image {katagamiId})</HeadLine>
       <Grid container>
         <Grid item xs={7}>
-          <img
-            src={katagamiUrl}
-            alt={`Image ${katagamiId}`}
-            className={classes.katagami}
+          <KatagamiImage
+            katagamiUrl={katagamiUrl}
+            katagamiHeight={katagamiHeight}
+            katagamiWidth={katagamiWidth}
+            dividing={9}
           />
         </Grid>
         <Grid item xs={5}>
