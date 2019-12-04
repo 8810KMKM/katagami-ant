@@ -52,21 +52,25 @@ export default function (props) {
   }, [islatest]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <Container>
+        <p>Loading...</p>
+      </Container>
+    );
   }
 
   return (
     <Container>
       <HeadLine>アノテーション (Image {katagamiId})</HeadLine>
       <Grid container>
-        <Grid item xs={6}>
-        <img
-        src={katagamiUrl}
-        alt={`Image ${katagamiId}`}
-        className={classes.katagami}
-      />
+        <Grid item xs={7}>
+          <img
+            src={katagamiUrl}
+            alt={`Image ${katagamiId}`}
+            className={classes.katagami}
+          />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <LabelList labels={labels} />
         </Grid>
       </Grid>
