@@ -6,7 +6,7 @@ import Tile from 'components/lv1/Tile';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 640
+    width: props => `${props.fixedWidth}px`
   },
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
