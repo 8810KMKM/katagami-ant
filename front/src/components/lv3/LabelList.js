@@ -17,7 +17,7 @@ export default function (props) {
   return (
     <ul>
       {labels.map(label =>
-        <li>{labelNameJp(label.name)}</li>
+        <li key={label.id}>{labelNameJp(label.name)}</li>
       )}
     </ul>
   );

@@ -20,23 +20,22 @@ export default function (props) {
     katagamiId
   } = props.match.params;
 
+  const tileNumber = 9;
+
   const [annotation, setAnnotation] = useState(null);
   const [katagamiUrl, setKatagamiUrl] = useState('');
   const [katagamiWidth, setKatagamiWidth] = useState(0);
   const [katagamiHeight, setKatagamiHeight] = useState(0);
   const [labels, setLabels] = useState([]);
-  const [selectedTiles, setSelectedTiles] = useState([]);
+  const [selectedTiles, setSelectedTiles] = useState(new Array(tileNumber).fill(false));
   const [isLoading, setIsLoading] = useState(false);
   const [islatest, setIsLatest] = useState(true);
   const classes = useStyles();
 
   const handleToggleTile = number => {
-    if (selectedTiles.includes(number)) {
-      const _selectedTiles = selectedTiles.splice(selectedTiles.indexOf(number), 1);
-      setSelectedTiles(_selectedTiles);
-    } else {
-      setSelectedTiles([...selectedTiles, number]);
-    }
+    let newTiles = selectedTiles;
+    newTiles[number] = !newTiles[number];
+    setSelectedTiles(newTiles);
   }
 
   useEffect(() => {
@@ -71,6 +70,7 @@ export default function (props) {
     );
   }
 
+  console.log(selectedTiles);
   return (
     <Container>
       <HeadLine>アノテーション (Image {katagamiId})</HeadLine>
@@ -80,7 +80,7 @@ export default function (props) {
             katagamiUrl={katagamiUrl}
             katagamiHeight={katagamiHeight}
             katagamiWidth={katagamiWidth}
-            dividing={9}
+            dividing={tileNumber}
             handleToggleTile={handleToggleTile}
           />
         </Grid>
