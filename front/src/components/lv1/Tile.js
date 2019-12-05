@@ -15,11 +15,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   selected: {
-    color: grey[50],
-    border: '2px solid',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(205, 220, 57, 0.8)'
   }
 }));
@@ -37,7 +32,11 @@ export default function (props) {
     <Grid
       item
       xs={12 / square}
-      className={isSelected ? classes.selected : classes.tile}
+      className={
+        isSelected
+          ? classes.tile + ' ' + classes.selected
+          : classes.tile
+      }
       onClick={() => handleToggleTile(number)}
     />
   );
