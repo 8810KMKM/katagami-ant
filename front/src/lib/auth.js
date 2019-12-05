@@ -32,7 +32,7 @@ export const logout = () => {
 const isExpired = () => {
   const expirationHours = 6;
   const saved = localStorage.getItem('saved');
-  console.log(new Date().getTime() - saved);
+  // console.log(new Date().getTime() - saved);
   return (
     saved &&
     new Date().getTime() - saved > expirationHours * 60 * 60 * 1000

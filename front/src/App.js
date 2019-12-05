@@ -52,7 +52,7 @@ export default function () {
   }
 
   const PrivateRoute = ({ path, component }) => {
-    console.log(path);
+    // console.log(path);
     return (
       isLoggedIn ? (
         <Route path={path} component={component}/>
