@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 import { pink } from '@material-ui/core/colors';
-import Tile from 'components/lv2/Tile';
+import Tile from 'components/lv1/Tile';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +30,7 @@ export default function (props) {
     katagamiWidth,
     katagamiHeight,
     dividing,
+    isSelecteds,
     handleToggleTile
   } = props;
   const fixedWidth = 640;
@@ -43,14 +44,15 @@ export default function (props) {
     tileHeight
   });
 
-  const Tiles = () => {
+  const TilesOnKatagami = () => {
     const labels = [];
-    for (let i = 1; i <= dividing; i++) {
+    for (let i = 0; i < dividing; i++) {
       labels.push(
         <Tile
           key={i}
           number={i}
           square={tileSquare}
+          isSelected={isSelecteds[i]}
           handleToggleTile={handleToggleTile}
         />
       );
@@ -60,8 +62,12 @@ export default function (props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={0} className={classes.katagami}>
-        <Tiles />
+      <Grid
+        container
+        spacing={0}
+        className={classes.katagami}
+      >
+        <TilesOnKatagami />
       </Grid>
     </div>
   );

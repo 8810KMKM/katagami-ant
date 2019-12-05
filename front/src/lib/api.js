@@ -82,7 +82,7 @@ const fetchGet = async (props) => {
   return await fetch(url)
     .then(response => response.json())
     .then(responseJson => {
-      console.log(responseJson);
+      // console.log(responseJson);
       if (successAction) {
         successAction(responseJson);
       }
@@ -111,11 +111,11 @@ const fetchPost = async(props) => {
   })
     .then(response => response.json())
     .then(responseJson => {
-      console.log(responseJson);
+      // console.log(responseJson);
       if (successAction) {
         successAction(responseJson);
       }
-      // console.log('fetch is finished');
+      // // console.log('fetch is finished');
     })
     .catch(error => {
       console.error(error);

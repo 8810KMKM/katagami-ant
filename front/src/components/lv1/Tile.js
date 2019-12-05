@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Container from 'components/lv1/Container';
 import { Grid } from '@material-ui/core';
-import { pink, grey, lime } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(97, 97, 97, 0.7)'
+    backgroundColor: 'rgba(205, 220, 57, 0.8)'
   }
 }));
 
@@ -29,23 +28,17 @@ export default function (props) {
   const {
     number,
     square,
+    isSelected,
     handleToggleTile
   } = props;
-  const [isSelected, setIsSelected] = useState(false);
-  let color = '';
   const classes = useStyles();
-
-  const handleToggle = () => {
-    setIsSelected(!isSelected);
-    // handleToggleTile(number);
-  }
 
   return (
     <Grid
       item
       xs={12 / square}
       className={isSelected ? classes.selected : classes.tile}
-      onClick={handleToggle}
+      onClick={() => handleToggleTile(number)}
     />
   );
 }

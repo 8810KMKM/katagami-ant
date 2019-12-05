@@ -33,10 +33,14 @@ export default function (props) {
   const classes = useStyles();
 
   const handleToggleTile = number => {
-    let newTiles = selectedTiles;
-    newTiles[number] = !newTiles[number];
-    setSelectedTiles(newTiles);
+    setSelectedTiles(
+      selectedTiles.map((tile, i) => i === number ? !tile : tile)
+    );
   }
+
+  useEffect(() => {
+    console.log(selectedTiles);
+  }, [selectedTiles]);
 
   useEffect(() => {
     const handleCreateAnnotation = response => {
@@ -70,7 +74,6 @@ export default function (props) {
     );
   }
 
-  console.log(selectedTiles);
   return (
     <Container>
       <HeadLine>アノテーション (Image {katagamiId})</HeadLine>
@@ -81,6 +84,7 @@ export default function (props) {
             katagamiHeight={katagamiHeight}
             katagamiWidth={katagamiWidth}
             dividing={tileNumber}
+            isSelecteds={selectedTiles}
             handleToggleTile={handleToggleTile}
           />
         </Grid>
