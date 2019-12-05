@@ -13,14 +13,6 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`
-  },
-  tile: {
-    color: pink[500],
-    backgroundColor:  `rgba(255, 96, 144, 0.5)`,
-    border: '1px dots',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 }));
 
