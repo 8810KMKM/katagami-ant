@@ -1,43 +1,43 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Grid } from '@material-ui/core';
-import { pink } from '@material-ui/core/colors';
-import Tile from 'components/lv1/Tile';
+import React from 'react'
+import { makeStyles } from '@material-ui/styles'
+import { Grid } from '@material-ui/core'
+import { pink } from '@material-ui/core/colors'
+import Tile from 'components/lv1/Tile'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 640
+    width: props => `${props.fixedWidth}px`,
   },
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
     backgroundSize: 'cover',
     width: props => `${props.fixedWidth}px`,
-    height: props => `${props.fixedHeight}px`
-  }
-}));
+    height: props => `${props.fixedHeight}px`,
+  },
+}))
 
-export default function (props) {
+export default function(props) {
   const {
     katagamiUrl,
     katagamiWidth,
     katagamiHeight,
     dividing,
     isSelecteds,
-    handleToggleTile
-  } = props;
-  const fixedWidth = 640;
-  const fixedHeight = katagamiHeight / katagamiWidth * fixedWidth;
-  const tileSquare = Math.sqrt(dividing);
-  const tileHeight = fixedHeight / tileSquare;
+    handleToggleTile,
+  } = props
+  const fixedWidth = 640
+  const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
+  const tileSquare = Math.sqrt(dividing)
+  const tileHeight = fixedHeight / tileSquare
   const classes = useStyles({
     katagamiUrl,
     fixedWidth,
     fixedHeight,
-    tileHeight
-  });
+    tileHeight,
+  })
 
   const TilesOnKatagami = () => {
-    const labels = [];
+    const labels = []
     for (let i = 0; i < dividing; i++) {
       labels.push(
         <Tile
@@ -47,20 +47,16 @@ export default function (props) {
           isSelected={isSelecteds[i]}
           handleToggleTile={handleToggleTile}
         />
-      );
+      )
     }
-    return labels;
+    return labels
   }
 
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        spacing={0}
-        className={classes.katagami}
-      >
+      <Grid container spacing={0} className={classes.katagami}>
         <TilesOnKatagami />
       </Grid>
     </div>
-  );
+  )
 }
