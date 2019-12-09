@@ -19,6 +19,7 @@ export default function(props) {
   const [selectedTiles, setSelectedTiles] = useState(
     new Array(tileNumber).fill(false)
   )
+  const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [islatest, setIsLatest] = useState(true)
 
@@ -75,6 +76,7 @@ export default function(props) {
             katagamiWidth={katagamiWidth}
             dividing={tileNumber}
             isSelecteds={selectedTiles}
+            tileIsSelectable={tileIsSelectable}
             handleToggleTile={handleToggleTile}
           />
         </Grid>

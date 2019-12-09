@@ -7,9 +7,11 @@ import Tile from 'components/lv1/Tile'
 const useStyles = makeStyles(theme => ({
   root: {
     width: props => `${props.fixedWidth}px`,
+    pointerEvents: props => (props.tileIsSelectable ? '' : 'none'),
   },
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
+    filter: props => (props.tileIsSelectable ? '' : 'grayscale(100%)'),
     backgroundSize: 'cover',
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`,
@@ -24,6 +26,7 @@ export default function(props) {
     dividing,
     isSelecteds,
     handleToggleTile,
+    tileIsSelectable,
   } = props
   const fixedWidth = 640
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth

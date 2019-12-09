@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { labelNameJp } from 'lib/format'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import {
-  Inbox,
-  RadioButtonUnchecked,
-  RadioButtonChecked,
-} from '@material-ui/icons'
+import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   root: {},
