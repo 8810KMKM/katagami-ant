@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/styles'
+import { Link } from 'react-router-dom'
 import {
   IconButton,
   Menu,
@@ -8,12 +8,12 @@ import {
   Modal,
   Grid,
   Button,
-  Box
-} from '@material-ui/core';
-import { AccountBox, ExitToApp } from '@material-ui/icons';
-import { grey } from '@material-ui/core/colors';
-import UserIcon from 'components/lv1/UserIcon';
-import { currentUser } from 'lib/auth';
+  Box,
+} from '@material-ui/core'
+import { AccountBox, ExitToApp } from '@material-ui/icons'
+import { grey } from '@material-ui/core/colors'
+import UserIcon from 'components/lv1/UserIcon'
+import { currentUser } from 'lib/auth'
 
 const useStyle = makeStyles(theme => ({
   link: {
@@ -21,14 +21,14 @@ const useStyle = makeStyles(theme => ({
     flexDirection: 'row',
     textDecoration: 'none',
     alignItems: 'center',
-    color: grey[900]
+    color: grey[900],
   },
   menuItem: {
-    padding: '6px 32px'
+    padding: '6px 32px',
   },
   icon: {
     marginTop: 5,
-    marginRight: 3
+    marginRight: 3,
   },
   modal: {
     display: 'flex',
@@ -39,46 +39,46 @@ const useStyle = makeStyles(theme => ({
     width: 240,
     height: 120,
     padding: '16px 24px',
-    backgroundColor: grey[50]
+    backgroundColor: grey[50],
   },
   text: {
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   button: {
-    margin: '0 auto'
-  }
-}));
+    margin: '0 auto',
+  },
+}))
 
-export default function ({ handleLogout }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const open = Boolean(anchorEl);
-  const user = currentUser();
-  const classes = useStyle();
+export default function({ handleLogout }) {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const open = Boolean(anchorEl)
+  const user = currentUser()
+  const classes = useStyle()
 
   const handleSafetyLogout = () => {
-    setModalIsOpen(false);
-    setAnchorEl(false);
-    handleLogout();
+    setModalIsOpen(false)
+    setAnchorEl(false)
+    handleLogout()
   }
 
   const handleModalOpen = () => {
-    setAnchorEl(false);
-    setModalIsOpen(true);
+    setAnchorEl(false)
+    setModalIsOpen(true)
   }
 
   return (
     <div>
       <IconButton
-        aria-label='current user'
-        aria-haspopup='true'
-        aria-controls='menu-appbar'
+        aria-label="current user"
+        aria-haspopup="true"
+        aria-controls="menu-appbar"
         onClick={e => setAnchorEl(e.currentTarget)}
       >
         <UserIcon size={40} email={user.email} />
       </IconButton>
       <Menu
-        id='menu-appbar'
+        id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
@@ -92,11 +92,11 @@ export default function ({ handleLogout }) {
         open={open}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem className={classes.menuItem} onClick={() => setAnchorEl(false)}>
-          <Link
-            to={`/users/${user.id}`}
-            className={classes.link}
-          >
+        <MenuItem
+          className={classes.menuItem}
+          onClick={() => setAnchorEl(false)}
+        >
+          <Link to={`/users/${user.id}`} className={classes.link}>
             <Box className={classes.icon}>
               <AccountBox />
             </Box>
@@ -107,7 +107,7 @@ export default function ({ handleLogout }) {
           <Box className={classes.icon}>
             <ExitToApp />
           </Box>
-         ログアウト
+          ログアウト
         </MenuItem>
       </Menu>
       <Modal
@@ -122,8 +122,8 @@ export default function ({ handleLogout }) {
           <Grid container>
             <Grid item xs={8}>
               <Button
-                variant='contained'
-                color='primary'
+                variant="contained"
+                color="primary"
                 className={classes.button}
                 onClick={handleSafetyLogout}
               >
@@ -132,7 +132,7 @@ export default function ({ handleLogout }) {
             </Grid>
             <Grid item xs={4}>
               <Button
-                variant='contained'
+                variant="contained"
                 className={classes.button}
                 onClick={() => setModalIsOpen(false)}
               >
@@ -143,5 +143,5 @@ export default function ({ handleLogout }) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }

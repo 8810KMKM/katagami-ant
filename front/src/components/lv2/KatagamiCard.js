@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Button
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Card, CardContent, CardActions, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 360
-  }
-}));
+    width: 360,
+  },
+}))
 
-export default function (props) {
-  const {
-    katagami,
-    userId
-  } = props;
-  const classes = useStyles();
+export default function(props) {
+  const { katagami, userId } = props
+  const classes = useStyles()
 
   return (
     <Card className={classes.root}>
@@ -33,5 +25,5 @@ export default function (props) {
         <Button>結果一覧</Button>
       </CardActions>
     </Card>
-  );
+  )
 }
