@@ -1,7 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@material-ui/core'
-import { pink } from '@material-ui/core/colors'
 import Tile from 'components/lv1/Tile'
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +36,7 @@ export default function(props) {
     fixedWidth,
     fixedHeight,
     tileHeight,
+    tileIsSelectable,
   })
 
   const TilesOnKatagami = () => {

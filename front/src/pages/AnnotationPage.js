@@ -81,7 +81,11 @@ export default function(props) {
           />
         </Grid>
         <Grid item xs={5}>
-          <LabelList labels={labels} />
+          <LabelList
+            labels={labels}
+            tileIsSelectable={tileIsSelectable}
+            setTileIsSelectable={setTileIsSelectable}
+          />
         </Grid>
       </Grid>
     </Container>

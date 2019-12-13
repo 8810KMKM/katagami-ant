@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { labelNameJp } from 'lib/format'
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
+import { List } from '@material-ui/core'
+import Label from 'components/lv3/Label'
 
 const useStyles = makeStyles(theme => ({
   root: {},
 }))
 
-export default function(props) {
-  const { labels } = props
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+export default props => {
+  const { labels, tileIsSelectable, setTileIsSelectable } = props
+  const [selectedIndex, setSelectedIndex] = useState(0)
   const classes = useStyles()
+
+  console.log(selectedIndex)
 
   return (
     <div className={classes.root}>
       <List component="nav">
         {labels.map((label, i) => (
-          <ListItem
-            button
-            selected={selectedIndex == i}
-            onClick={() => setSelectedIndex(i)}
-          >
-            <ListItemIcon>
-              {selectedIndex === i ? (
-                <RadioButtonChecked />
-              ) : (
-                <RadioButtonUnchecked />
-              )}
-            </ListItemIcon>
-            <ListItemText>{labelNameJp(label.name)}</ListItemText>
-          </ListItem>
+          <Label
+            name={labelNameJp(label.name)}
+            i={i}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+            tileIsSelectable={tileIsSelectable}
+            setTileIsSelectable={setTileIsSelectable}
+          />
         ))}
       </List>
     </div>
