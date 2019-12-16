@@ -69,9 +69,12 @@ export default function() {
       <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Box className={classes.root}>
         <Switch>
-          <Route path="/ant/:katagamiId/:userId" component={AnnotationPage} />
           <AuthRoute path="/signup" component={SignupPage} />
           <AuthRoute path="/login" component={LoginPage} />
+          <PrivateRoute
+            path="/ant/:katagamiId/:userId"
+            component={AnnotationPage}
+          />
           <PrivateRoute path="/" component={TopPage} />
         </Switch>
       </Box>

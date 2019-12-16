@@ -5,7 +5,10 @@ import { List } from '@material-ui/core'
 import Label from 'components/lv3/Label'
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    height: 400,
+    overflow: 'scroll',
+  },
 }))
 
 export default props => {
@@ -18,16 +21,14 @@ export default props => {
   return (
     <div className={classes.root}>
       <List component="nav">
-        {labels.map((label, i) => (
-          <Label
-            name={labelNameJp(label.name)}
-            i={i}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            tileIsSelectable={tileIsSelectable}
-            setTileIsSelectable={setTileIsSelectable}
-          />
-        ))}
+        {labels.map((label, i) => {
+          const name = labelNameJp(label.name)
+          return (
+            <Label
+              {...{ i, name, selectedIndex, setSelectedIndex, ...props }}
+            />
+          )
+        })}
       </List>
     </div>
   )
