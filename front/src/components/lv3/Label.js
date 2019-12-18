@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
 import { selectedTileNumbers } from 'libs/format'
-import { saveSelectedTiles, savedTiles } from 'libs/tile'
+import { saveSelectedTiles, savedTiles, isSaved } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({}))
 
@@ -26,7 +26,17 @@ export default props => {
   } = props
   const classes = useStyles()
   const isFocused = selectedIndex === i
+  const wasSaved = isSaved(i)
   const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
+
+  const displayedTiles = () => {
+    if (wasSaved) {
+      return savedTiles(i)
+    } else if (isFocused) {
+      return convertedSelectedTiles
+    }
+    return '-'
+  }
 
   const handleTileSelectabe = () => {
     setTileIsSelectable(true)
@@ -67,7 +77,7 @@ export default props => {
             {name}
           </Grid>
           <Grid item xs={6}>
-            {isFocused ? convertedSelectedTiles : savedTiles(i)}
+            {displayedTiles()}
           </Grid>
         </Grid>
       </ListItemText>
