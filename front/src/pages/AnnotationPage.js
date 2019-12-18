@@ -85,6 +85,7 @@ export default function(props) {
             labels={labels}
             tileIsSelectable={tileIsSelectable}
             selectedTiles={selectedTiles}
+            setSelectedTiles={setSelectedTiles}
             setTileIsSelectable={setTileIsSelectable}
           />
         </Grid>
