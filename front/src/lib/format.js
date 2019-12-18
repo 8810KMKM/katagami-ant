@@ -24,3 +24,9 @@ export const labelNameJp = nameEn => {
       return '不明'
   }
 }
+
+export const selectedTileNumbers = tileStates =>
+  tileStates
+    .map((tile, i) => (tile ? i : ' '))
+    .filter(number => number !== ' ')
+    .join(' ')

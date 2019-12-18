@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { ListItem, ListItemIcon, ListItemText, Button } from '@material-ui/core'
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Button,
+  Grid,
+} from '@material-ui/core'
 import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
+import { selectedTileNumbers } from 'lib/format'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,6 +23,7 @@ export default props => {
     selectedIndex,
     setSelectedIndex,
     tileIsSelectable,
+    selectedTiles,
     setTileIsSelectable,
   } = props
   const classes = useStyles()
@@ -30,15 +38,17 @@ export default props => {
   }
 
   const handleSelectThis = () => {
+    setTileIsSelectable(false)
     setSelectedIndex(i)
   }
 
   const handleMoveToNext = () => {
-    setTimeout(setSelectedIndex(i + 1), 1000)
+    setTileIsSelectable(false)
+    setSelectedIndex(i + 1)
   }
 
   return (
-    <ListItem selected={selectedIndex == i}>
+    <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
         {isFocused ? (
           <RadioButtonChecked color="primary" />
@@ -46,7 +56,16 @@ export default props => {
           <RadioButtonUnchecked />
         )}
       </ListItemIcon>
-      <ListItemText>{name}</ListItemText>
+      <ListItemText>
+        <Grid container>
+          <Grid item xs={6}>
+            {name}
+          </Grid>
+          <Grid item xs={6}>
+            {isFocused ? selectedTileNumbers(selectedTiles) : '-'}
+          </Grid>
+        </Grid>
+      </ListItemText>
       {isFocused && tileIsSelectable ? (
         <div>
           <Button color="primary" onClick={handleTileSelectabe}>

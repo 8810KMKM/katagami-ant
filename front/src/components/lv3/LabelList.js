@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { labels, tileIsSelectable, setTileIsSelectable } = props
+  const { labels, tileIsSelectable, selectedTiles, setTileIsSelectable } = props
   const [selectedIndex, setSelectedIndex] = useState(0)
   const classes = useStyles()
 
