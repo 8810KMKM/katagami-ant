@@ -29,19 +29,22 @@ export default props => {
     setTileIsSelectable(false)
   }
 
+  const handleSelectThis = () => {
+    setSelectedIndex(i)
+  }
+
   const handleMoveToNext = () => {
     setTimeout(setSelectedIndex(i + 1), 1000)
   }
 
   return (
-    <ListItem
-      button
-      selected={selectedIndex == i}
-      // onClick={() => setSelectedIndex(i)}
-      disabled={selectedIndex !== i}
-    >
-      <ListItemIcon>
-        {isFocused ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
+    <ListItem selected={selectedIndex == i}>
+      <ListItemIcon onClick={handleSelectThis}>
+        {isFocused ? (
+          <RadioButtonChecked color="primary" />
+        ) : (
+          <RadioButtonUnchecked />
+        )}
       </ListItemIcon>
       <ListItemText>{name}</ListItemText>
       {isFocused && tileIsSelectable ? (
