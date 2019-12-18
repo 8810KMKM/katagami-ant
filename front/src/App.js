@@ -14,7 +14,7 @@ import SignupPage from 'pages/SignupPage'
 import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import Header from 'components/lv3/Header'
-import { isAuthenticated, logout, currentUser } from 'lib/auth'
+import { isAuthenticated, logout, currentUser } from 'libs/auth'
 
 const useStyles = makeStyles(theme => ({
   root: {

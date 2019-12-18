@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { labelNameJp } from 'lib/format'
+import { labelNameJp } from 'libs/format'
 import { List } from '@material-ui/core'
 import Label from 'components/lv3/Label'
 

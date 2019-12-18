@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField } from '@material-ui/core'
-import { login } from 'lib/api'
-import { authenticate } from 'lib/auth'
+import { login } from 'libs/api'
+import { authenticate } from 'libs/auth'
 
 const useStyles = makeStyles(theme => ({
   root: {

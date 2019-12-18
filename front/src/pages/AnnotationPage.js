@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
-import { createAnnotation, fetchLabels } from 'lib/api'
+import { createAnnotation, fetchLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
 import { Grid } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'

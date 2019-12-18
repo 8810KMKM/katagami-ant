@@ -2,7 +2,7 @@ import React from 'react'
 import { GridList, GridListTile } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import KatagamiCard from 'components/lv2/KatagamiCard'
-import { currentUser } from 'lib/auth'
+import { currentUser } from 'libs/auth'
 
 const useStyles = makeStyles(theme => ({
   root: {

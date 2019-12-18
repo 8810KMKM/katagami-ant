@@ -8,7 +8,7 @@ import {
   Grid,
 } from '@material-ui/core'
 import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
-import { selectedTileNumbers } from 'lib/format'
+import { selectedTileNumbers } from 'libs/format'
 
 const useStyles = makeStyles(theme => ({
   root: {
