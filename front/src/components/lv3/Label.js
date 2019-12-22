@@ -80,7 +80,7 @@ export default props => {
   }
 
   const handleSelectThis = () => {
-    setTileIsSelectable(false)
+    setTileIsSelectable(isSaved)
     setSelectedIndex(i)
   }
 
