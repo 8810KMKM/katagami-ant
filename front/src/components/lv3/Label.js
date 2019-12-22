@@ -8,7 +8,7 @@ import {
   Grid,
 } from '@material-ui/core'
 import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
-import { selectedTileNumbers } from 'libs/format'
+import { selectedTileNumbers, selectedTilesArray } from 'libs/format'
 import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
 
 // const useStyles = makeStyles(theme => ({}))
@@ -26,7 +26,7 @@ export default props => {
   } = props
   // const classes = useStyles()
   const isFocused = selectedIndex === i
-  const [isSaved, SetIsSaved] = useState(tilesAreSaved(i))
+  const [isSaved, setIsSaved] = useState(tilesAreSaved(i))
   const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
 
   const displayedTiles = () => {
@@ -41,7 +41,11 @@ export default props => {
 
   const ActivatedButtons = () => {
     if (isSaved) {
-      return <Button color="default">編集</Button>
+      return (
+        <Button color="default" onClick={handleEditSelectedTiles}>
+          編集
+        </Button>
+      )
     }
     if (isFocused && tileIsSelectable) {
       return (
@@ -88,8 +92,15 @@ export default props => {
   const handleSaveSelectedTiles = () => {
     saveSelectedTiles(convertedSelectedTiles, i)
     setSelectedTiles(new Array(9).fill(false))
-    SetIsSaved(true)
+    setIsSaved(true)
     handleMoveToNext()
+  }
+
+  const handleEditSelectedTiles = () => {
+    setSelectedTiles(selectedTilesArray(savedTiles(i)))
+    setTileIsSelectable(true)
+    setSelectedIndex(i)
+    setIsSaved(false)
   }
 
   return (

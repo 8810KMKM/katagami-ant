@@ -30,3 +30,13 @@ export const selectedTileNumbers = tileStates =>
     .map((tile, i) => (tile ? i : ' '))
     .filter(number => number !== ' ')
     .join(' ')
+
+export const selectedTilesArray = saveTiles => {
+  let convertArray = new Array(9).fill(false)
+  if (saveTiles) {
+    saveTiles
+      .split(' ')
+      .forEach(tileNumber => (convertArray[tileNumber] = true))
+  }
+  return convertArray
+}
