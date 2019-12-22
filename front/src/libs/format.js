@@ -25,11 +25,14 @@ export const labelNameJp = nameEn => {
   }
 }
 
-export const selectedTileNumbers = tileStates =>
-  tileStates
+export const selectedTileNumbers = tileStates => {
+  const numbersStr = tileStates
     .map((tile, i) => (tile ? i : ' '))
     .filter(number => number !== ' ')
     .join(' ')
+
+  return numbersStr ? numbersStr : '-'
+}
 
 export const selectedTilesArray = saveTiles => {
   let convertArray = new Array(9).fill(false)
