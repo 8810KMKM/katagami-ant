@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { labelNameJp } from 'libs/format'
 import { List } from '@material-ui/core'
@@ -16,8 +16,6 @@ export default props => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const classes = useStyles()
 
-  console.log(selectedIndex)
-
   return (
     <div className={classes.root}>
       <List component="nav">
@@ -25,6 +23,7 @@ export default props => {
           const name = labelNameJp(label.name)
           return (
             <Label
+              key={i}
               {...{ i, name, selectedIndex, setSelectedIndex, ...props }}
             />
           )

@@ -14,7 +14,7 @@ import SignupPage from 'pages/SignupPage'
 import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import Header from 'components/lv3/Header'
-import { isAuthenticated, logout, currentUser } from 'libs/auth'
+import { isAuthenticated, logout } from 'libs/auth'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function() {
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated())
-  const user = currentUser()
+  // const user = currentUser()
   const classes = useStyles()
 
   const handleLogout = () => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
 import { fetchKatagamis } from 'libs/api'
-import { makeStyles } from '@material-ui/styles'
 import KatagamiList from 'components/lv3/KatagamiList'
 import HeadLine from 'components/lv1/HeadLine'
 

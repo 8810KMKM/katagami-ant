@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/styles'
+import React, { useState } from 'react'
+// import { makeStyles } from '@material-ui/styles'
 import {
   ListItem,
   ListItemIcon,
@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core'
 import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
 import { selectedTileNumbers } from 'libs/format'
-import { saveSelectedTiles, savedTiles, isSaved } from 'libs/tile'
+import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
 
-const useStyles = makeStyles(theme => ({}))
+// const useStyles = makeStyles(theme => ({}))
 
 export default props => {
   const {
@@ -24,18 +24,47 @@ export default props => {
     setSelectedTiles,
     setTileIsSelectable,
   } = props
-  const classes = useStyles()
+  // const classes = useStyles()
   const isFocused = selectedIndex === i
-  const wasSaved = isSaved(i)
+  const [isSaved, SetIsSaved] = useState(tilesAreSaved(i))
   const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
 
   const displayedTiles = () => {
-    if (wasSaved) {
+    if (isSaved) {
       return savedTiles(i)
-    } else if (isFocused) {
+    }
+    if (isFocused) {
       return convertedSelectedTiles
     }
     return '-'
+  }
+
+  const ActivatedButtons = () => {
+    if (isSaved) {
+      return <Button color="default">編集</Button>
+    }
+    if (isFocused && tileIsSelectable) {
+      return (
+        <div>
+          <Button color="primary" onClick={handleSaveSelectedTiles}>
+            保存
+          </Button>
+          <Button color="secondary" onClick={handleTileUnselectabe}>
+            戻る
+          </Button>
+        </div>
+      )
+    }
+    return (
+      <div>
+        <Button color="primary" onClick={handleTileSelectabe}>
+          あり
+        </Button>
+        <Button color="secondary" onClick={handleMoveToNext}>
+          なし
+        </Button>
+      </div>
+    )
   }
 
   const handleTileSelectabe = () => {
@@ -59,6 +88,7 @@ export default props => {
   const handleSaveSelectedTiles = () => {
     saveSelectedTiles(convertedSelectedTiles, i)
     setSelectedTiles(new Array(9).fill(false))
+    SetIsSaved(true)
     handleMoveToNext()
   }
 
@@ -81,25 +111,7 @@ export default props => {
           </Grid>
         </Grid>
       </ListItemText>
-      {isFocused && tileIsSelectable ? (
-        <div>
-          <Button color="primary" onClick={handleSaveSelectedTiles}>
-            保存
-          </Button>
-          <Button color="secondary" onClick={handleTileUnselectabe}>
-            戻る
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <Button color="primary" onClick={handleTileSelectabe}>
-            あり
-          </Button>
-          <Button color="secondary" onClick={handleMoveToNext}>
-            なし
-          </Button>
-        </div>
-      )}
+      <ActivatedButtons />
     </ListItem>
   )
 }
