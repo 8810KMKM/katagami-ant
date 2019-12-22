@@ -3,10 +3,13 @@ export const saveSelectedTiles = (tiles, labelNumber) => {
 }
 
 export const tilesAreSaved = labelNumber =>
-  localStorage.getItem(`label${labelNumber}`) !== null
+  localStorage.getItem(`label${labelNumber}`) &&
+  localStorage.getItem(`label${labelNumber}`) !== '該当なし'
 
 export const savedTiles = labelNumber =>
-  tilesAreSaved(labelNumber) ? localStorage.getItem(`label${labelNumber}`) : '-'
+  tilesAreSaved(labelNumber)
+    ? localStorage.getItem(`label${labelNumber}`)
+    : '該当なし'
 
 export const clearTiles = labelNumber => {
   localStorage.removeItem(`label${labelNumber}`)

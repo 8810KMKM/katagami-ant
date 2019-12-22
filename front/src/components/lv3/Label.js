@@ -86,6 +86,7 @@ export default props => {
 
   const handleMoveToNext = () => {
     setTileIsSelectable(false)
+    setIsSaved(true)
     setSelectedIndex(i + 1)
   }
 
