@@ -7,7 +7,7 @@ import {
   Button,
   Grid,
 } from '@material-ui/core'
-import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
+import { Check, Remove } from '@material-ui/icons'
 import { selectedTileNumbers, selectedTilesArray } from 'libs/format'
 import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
 
@@ -138,11 +138,7 @@ export default props => {
   return (
     <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
-        {isFocused ? (
-          <RadioButtonChecked color="primary" />
-        ) : (
-          <RadioButtonUnchecked />
-        )}
+        {isSaved ? <Check color="primary" /> : <Remove />}
       </ListItemIcon>
       <ListItemText>
         <Grid container>
