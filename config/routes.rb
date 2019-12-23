@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # Annotation
   post '/annotations/:katagami_id/:user_id', to: 'annotations#create'
   # Label
-  get '/labels', to: 'labels#index'
+  get '/labels', to: 'labels#get_random'
 end
