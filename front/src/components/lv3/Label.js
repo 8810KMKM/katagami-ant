@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import {
   ListItem,
   ListItemIcon,
@@ -7,11 +7,22 @@ import {
   Button,
   Grid,
 } from '@material-ui/core'
-import { Check, Remove } from '@material-ui/icons'
+import {
+  RadioButtonUnchecked,
+  RadioButtonChecked,
+  Edit,
+  Cancel,
+  Check,
+} from '@material-ui/icons'
 import { selectedTileNumbers, selectedTilesArray } from 'libs/format'
 import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
+import { indigo } from '@material-ui/core/colors'
 
-// const useStyles = makeStyles(theme => ({}))
+const useStyles = makeStyles(theme => ({
+  tile: {
+    color: indigo[600],
+  },
+}))
 
 export default props => {
   const {
@@ -24,7 +35,7 @@ export default props => {
     setSelectedTiles,
     setTileIsSelectable,
   } = props
-  // const classes = useStyles()
+  const classes = useStyles()
   const isFocused = selectedIndex === i
   const [isSaved, setIsSaved] = useState(tilesAreSaved(i))
   const [isEditing, setIsEditing] = useState(false)
@@ -95,7 +106,7 @@ export default props => {
     if (isSaved) {
       return (
         <Button color="default" onClick={handleEditSelectedTiles}>
-          編集
+          <Edit />
         </Button>
       )
     }
@@ -103,10 +114,10 @@ export default props => {
       return (
         <div>
           <Button color="primary" onClick={handleSaveSelectedTiles}>
-            更新
+            <Check />
           </Button>
           <Button color="secondary" onClick={handleCancelEdit}>
-            戻る
+            <Cancel />
           </Button>
         </div>
       )
@@ -138,14 +149,18 @@ export default props => {
   return (
     <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
-        {isSaved ? <Check color="primary" /> : <Remove />}
+        {isFocused ? (
+          <RadioButtonChecked color="primary" />
+        ) : (
+          <RadioButtonUnchecked />
+        )}
       </ListItemIcon>
       <ListItemText>
         <Grid container>
           <Grid item xs={6}>
             {name}
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.tile}>
             {displayedTiles()}
           </Grid>
         </Grid>

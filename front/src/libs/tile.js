@@ -1,3 +1,7 @@
+export const tilesInit = number => {
+  for (let i = 0; i < number; i++) saveSelectedTiles('該当無し', i)
+}
+
 export const saveSelectedTiles = (tiles, labelNumber) => {
   localStorage.setItem(`label${labelNumber}`, tiles)
 }

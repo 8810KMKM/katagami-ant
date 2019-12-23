@@ -5,7 +5,7 @@ import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { tiles, clearAllTiles } from 'libs/tile'
+import { tiles, clearAllTiles, tilesInit } from 'libs/tile'
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
@@ -30,6 +30,7 @@ export default function(props) {
     )
   }
 
+  // to fecth Katagami image
   useEffect(() => {
     const handleCreateAnnotation = response => {
       setAnnotation(response.id)
@@ -46,6 +47,7 @@ export default function(props) {
     })
   }, [islatest])
 
+  // to fetch labels
   useEffect(() => {
     const handleGetLabels = response => {
       setLabels(response)
@@ -53,6 +55,9 @@ export default function(props) {
     setIsLoading(true)
     fetchLabels(handleGetLabels)
   }, [islatest])
+
+  // init savedTiles (localStorage)
+  useEffect(() => tilesInit(3), [islatest])
 
   if (isLoading) {
     return (
