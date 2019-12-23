@@ -27,7 +27,5 @@ export const clearAllTiles = () => {
 }
 
 export const tiles = () => {
-  for (let i = 0; i < 10; i++) {
-    console.log(savedTiles(i))
-  }
+  for (let i = 0; i < 10; i++) console.log(savedTiles(i))
 }

@@ -68,13 +68,15 @@ export default function(props) {
       <Grid container>
         <Grid item xs={7}>
           <KatagamiImage
-            katagamiUrl={katagamiUrl}
-            katagamiHeight={katagamiHeight}
-            katagamiWidth={katagamiWidth}
-            dividing={tileNumber}
-            isSelecteds={selectedTiles}
-            tileIsSelectable={tileIsSelectable}
-            handleToggleTile={handleToggleTile}
+            {...{
+              katagamiUrl,
+              katagamiHeight,
+              katagamiWidth,
+              tileIsSelectable,
+              handleToggleTile,
+              tileNumber,
+              selectedTiles,
+            }}
           />
         </Grid>
         <Grid item xs={5}>

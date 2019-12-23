@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { makeStyles } from '@material-ui/styles'
 import {
   ListItem,
@@ -27,6 +27,7 @@ export default props => {
   // const classes = useStyles()
   const isFocused = selectedIndex === i
   const [isSaved, setIsSaved] = useState(tilesAreSaved(i))
+  const [isEditing, setIsEditing] = useState(false)
   const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
 
   const displayedTiles = () => {
@@ -39,12 +40,75 @@ export default props => {
     return '-'
   }
 
+  const handleTileSelectabe = () => {
+    setTileIsSelectable(true)
+  }
+
+  const handleTileUnselectabe = () => {
+    setTileIsSelectable(false)
+  }
+
+  const handleSelectThis = () => {
+    setSelectedTiles(
+      isSaved ? selectedTilesArray(savedTiles(i)) : new Array(9).fill(false)
+    )
+    setTileIsSelectable(false)
+    setSelectedIndex(i)
+  }
+
+  const handleMoveToNext = () => {
+    setTileIsSelectable(false)
+    setIsSaved(true)
+    setSelectedIndex(i + 1)
+  }
+
+  const handleSaveSelectedTiles = () => {
+    saveSelectedTiles(convertedSelectedTiles, i)
+    setSelectedTiles(new Array(9).fill(false))
+    setIsSaved(true)
+    setTileIsSelectable(false)
+    // handleMoveToNext()
+  }
+
+  const handleEditSelectedTiles = () => {
+    setSelectedTiles(selectedTilesArray(savedTiles(i)))
+    setTileIsSelectable(true)
+    setSelectedIndex(i)
+    setIsSaved(false)
+    setIsEditing(true)
+  }
+
+  const handleCancelEdit = () => {
+    setSelectedTiles(new Array(9).fill(false))
+    setIsSaved(true)
+    setTileIsSelectable(false)
+    setIsEditing(false)
+  }
+
+  useEffect(() => {
+    if (isSaved) {
+      setSelectedTiles(selectedTilesArray(savedTiles(i)))
+    }
+  }, [isSaved])
+
   const ActivatedButtons = () => {
     if (isSaved) {
       return (
         <Button color="default" onClick={handleEditSelectedTiles}>
           編集
         </Button>
+      )
+    }
+    if (isEditing) {
+      return (
+        <div>
+          <Button color="primary" onClick={handleSaveSelectedTiles}>
+            更新
+          </Button>
+          <Button color="secondary" onClick={handleCancelEdit}>
+            戻る
+          </Button>
+        </div>
       )
     }
     if (isFocused && tileIsSelectable) {
@@ -69,39 +133,6 @@ export default props => {
         </Button>
       </div>
     )
-  }
-
-  const handleTileSelectabe = () => {
-    setTileIsSelectable(true)
-  }
-
-  const handleTileUnselectabe = () => {
-    setTileIsSelectable(false)
-  }
-
-  const handleSelectThis = () => {
-    setTileIsSelectable(isSaved)
-    setSelectedIndex(i)
-  }
-
-  const handleMoveToNext = () => {
-    setTileIsSelectable(false)
-    setIsSaved(true)
-    setSelectedIndex(i + 1)
-  }
-
-  const handleSaveSelectedTiles = () => {
-    saveSelectedTiles(convertedSelectedTiles, i)
-    setSelectedTiles(new Array(9).fill(false))
-    setIsSaved(true)
-    handleMoveToNext()
-  }
-
-  const handleEditSelectedTiles = () => {
-    setSelectedTiles(selectedTilesArray(savedTiles(i)))
-    setTileIsSelectable(true)
-    setSelectedIndex(i)
-    setIsSaved(false)
   }
 
   return (
