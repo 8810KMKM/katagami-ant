@@ -42,13 +42,10 @@ export default props => {
   const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
 
   const displayedTiles = () => {
-    if (isSaved) {
-      return savedTiles(i)
-    }
     if (isFocused) {
       return convertedSelectedTiles
     }
-    return '-'
+    return savedTiles()
   }
 
   const handleTileSelectabe = () => {
@@ -103,13 +100,6 @@ export default props => {
   }, [isSaved])
 
   const ActivatedButtons = () => {
-    if (isSaved) {
-      return (
-        <Button color="default" onClick={handleEditSelectedTiles}>
-          <Edit />
-        </Button>
-      )
-    }
     if (isEditing) {
       return (
         <div>
@@ -122,27 +112,10 @@ export default props => {
         </div>
       )
     }
-    if (isFocused && tileIsSelectable) {
-      return (
-        <div>
-          <Button color="primary" onClick={handleSaveSelectedTiles}>
-            保存
-          </Button>
-          <Button color="secondary" onClick={handleTileUnselectabe}>
-            戻る
-          </Button>
-        </div>
-      )
-    }
     return (
-      <div>
-        <Button color="primary" onClick={handleTileSelectabe}>
-          あり
-        </Button>
-        <Button color="secondary" onClick={handleMoveToNext}>
-          なし
-        </Button>
-      </div>
+      <Button color="default" onClick={handleEditSelectedTiles}>
+        <Edit />
+      </Button>
     )
   }
 

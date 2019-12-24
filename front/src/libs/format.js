@@ -31,7 +31,7 @@ export const selectedTileNumbers = tileStates => {
     .filter(number => number !== ' ')
     .join(' ')
 
-  return numbersStr ? numbersStr : '-'
+  return numbersStr ? numbersStr : '該当無し'
 }
 
 export const selectedTilesArray = saveTiles => {

@@ -1,5 +1,5 @@
 export const tilesInit = number => {
-  for (let i = 0; i < number; i++) saveSelectedTiles('該当無し', i)
+  for (let i = 0; i < number; i++) saveSelectedTiles('-', i)
 }
 
 export const saveSelectedTiles = (tiles, labelNumber) => {
@@ -8,12 +8,12 @@ export const saveSelectedTiles = (tiles, labelNumber) => {
 
 export const tilesAreSaved = labelNumber =>
   localStorage.getItem(`label${labelNumber}`) &&
-  localStorage.getItem(`label${labelNumber}`) !== '該当なし'
+  localStorage.getItem(`label${labelNumber}`) !== '-'
 
 export const savedTiles = labelNumber =>
   tilesAreSaved(labelNumber)
     ? localStorage.getItem(`label${labelNumber}`)
-    : '該当なし'
+    : '該当無し'
 
 export const clearTiles = labelNumber => {
   localStorage.removeItem(`label${labelNumber}`)
