@@ -14,7 +14,7 @@ import SignupPage from 'pages/SignupPage'
 import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import Header from 'components/lv3/Header'
-import { isAuthenticated, logout, currentUser } from 'lib/auth'
+import { isAuthenticated, logout } from 'libs/auth'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function() {
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated())
-  const user = currentUser()
+  // const user = currentUser()
   const classes = useStyles()
 
   const handleLogout = () => {
@@ -69,9 +69,12 @@ export default function() {
       <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Box className={classes.root}>
         <Switch>
-          <Route path="/ant/:katagamiId/:userId" component={AnnotationPage} />
           <AuthRoute path="/signup" component={SignupPage} />
           <AuthRoute path="/login" component={LoginPage} />
+          <PrivateRoute
+            path="/ant/:katagamiId/:userId"
+            component={AnnotationPage}
+          />
           <PrivateRoute path="/" component={TopPage} />
         </Switch>
       </Box>

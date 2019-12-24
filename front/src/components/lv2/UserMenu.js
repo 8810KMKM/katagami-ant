@@ -13,7 +13,7 @@ import {
 import { AccountBox, ExitToApp } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
 import UserIcon from 'components/lv1/UserIcon'
-import { currentUser } from 'lib/auth'
+import { currentUser } from 'libs/auth'
 
 const useStyle = makeStyles(theme => ({
   link: {

@@ -24,3 +24,22 @@ export const labelNameJp = nameEn => {
       return '不明'
   }
 }
+
+export const convertBoolToNumOfTiles = tileStates => {
+  const numbersStr = tileStates
+    .map((tile, i) => (tile ? i : ' '))
+    .filter(number => number !== ' ')
+    .join(' ')
+
+  return numbersStr ? numbersStr : '該当無し'
+}
+
+export const convertNumToBoolOfTiles = saveTiles => {
+  let convertArray = new Array(9).fill(false)
+  if (saveTiles) {
+    saveTiles
+      .split(' ')
+      .forEach(tileNumber => (convertArray[tileNumber] = true))
+  }
+  return convertArray
+}

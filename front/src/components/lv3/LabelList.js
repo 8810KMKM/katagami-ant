@@ -1,41 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { labelNameJp } from 'lib/format'
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import {
-  Inbox,
-  RadioButtonUnchecked,
-  RadioButtonChecked,
-} from '@material-ui/icons'
+import { labelNameJp } from 'libs/format'
+import { List } from '@material-ui/core'
+import Label from 'components/lv3/Label'
+import { blueGrey, indigo } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    backgroundColor: blueGrey[50],
+  },
 }))
 
-export default function(props) {
+export default props => {
   const { labels } = props
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(0)
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <List component="nav">
-        {labels.map((label, i) => (
-          <ListItem
-            button
-            selected={selectedIndex == i}
-            onClick={() => setSelectedIndex(i)}
-          >
-            <ListItemIcon>
-              {selectedIndex === i ? (
-                <RadioButtonChecked />
-              ) : (
-                <RadioButtonUnchecked />
-              )}
-            </ListItemIcon>
-            <ListItemText>{labelNameJp(label.name)}</ListItemText>
-          </ListItem>
-        ))}
+        {labels.map((label, i) => {
+          const name = labelNameJp(label.name)
+          return (
+            <Label
+              key={i}
+              {...{ i, name, selectedIndex, setSelectedIndex, ...props }}
+            />
+          )
+        })}
       </List>
     </div>
   )

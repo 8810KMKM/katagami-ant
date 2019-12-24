@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
-import { createAnnotation, fetchLabels } from 'lib/api'
+import { createAnnotation, fetchLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
+import { tiles, clearAllTiles, initAllTiles } from 'libs/tile'
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
@@ -19,8 +20,10 @@ export default function(props) {
   const [selectedTiles, setSelectedTiles] = useState(
     new Array(tileNumber).fill(false)
   )
+  const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [islatest, setIsLatest] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleToggleTile = number => {
     setSelectedTiles(
@@ -28,10 +31,7 @@ export default function(props) {
     )
   }
 
-  useEffect(() => {
-    console.log(selectedTiles)
-  }, [selectedTiles])
-
+  // to fecth Katagami image
   useEffect(() => {
     const handleCreateAnnotation = response => {
       setAnnotation(response.id)
@@ -48,6 +48,7 @@ export default function(props) {
     })
   }, [islatest])
 
+  // to fetch labels
   useEffect(() => {
     const handleGetLabels = response => {
       setLabels(response)
@@ -55,6 +56,9 @@ export default function(props) {
     setIsLoading(true)
     fetchLabels(handleGetLabels)
   }, [islatest])
+
+  // init savedTiles (localStorage)
+  useEffect(() => initAllTiles(3), [islatest])
 
   if (isLoading) {
     return (
@@ -70,18 +74,34 @@ export default function(props) {
       <Grid container>
         <Grid item xs={7}>
           <KatagamiImage
-            katagamiUrl={katagamiUrl}
-            katagamiHeight={katagamiHeight}
-            katagamiWidth={katagamiWidth}
-            dividing={tileNumber}
-            isSelecteds={selectedTiles}
-            handleToggleTile={handleToggleTile}
+            {...{
+              katagamiUrl,
+              katagamiHeight,
+              katagamiWidth,
+              tileIsSelectable,
+              handleToggleTile,
+              tileNumber,
+              selectedTiles,
+            }}
           />
         </Grid>
         <Grid item xs={5}>
-          <LabelList labels={labels} />
+          <LabelList
+            {...{
+              labels,
+              tileIsSelectable,
+              selectedTiles,
+              setSelectedTiles,
+              setTileIsSelectable,
+              isEditing,
+              setIsEditing,
+            }}
+          />
         </Grid>
       </Grid>
+      <Button onClick={clearAllTiles} variant="contained" color="secondary">
+        クリア
+      </Button>
     </Container>
   )
 }
