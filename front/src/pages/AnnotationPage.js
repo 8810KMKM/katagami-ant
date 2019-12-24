@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
 import { createAnnotation, fetchLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
-import { Grid, Button } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { clearAllTiles, initAllTiles } from 'libs/tile'
+import { initAllTiles } from 'libs/tile'
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
@@ -98,9 +98,6 @@ export default function(props) {
           />
         </Grid>
       </Grid>
-      <Button onClick={clearAllTiles} variant="contained" color="secondary">
-        クリア
-      </Button>
     </Container>
   )
 }
