@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/styles'
 import { labelNameJp } from 'libs/format'
 import { List } from '@material-ui/core'
 import Label from 'components/lv3/Label'
+import { blueGrey, indigo } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: 400,
-    overflow: 'scroll',
+    backgroundColor: blueGrey[50],
   },
 }))
 

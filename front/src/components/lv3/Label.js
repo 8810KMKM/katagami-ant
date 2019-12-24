@@ -44,23 +44,17 @@ export default props => {
     setSelectedIndex(i)
   }
 
-  const handleMoveToNext = () => {
-    setTileIsSelectable(false)
-    setSelectedIndex(i + 1)
-  }
-
   const handleSaveSelectedTiles = () => {
     setIsEditing(false)
     setTileIsSelectable(false)
     saveSelectedTiles(convertedSelectedTiles, i)
     setSelectedTiles(new Array(9).fill(false))
-    // handleMoveToNext()
+    setSelectedIndex(i + 1)
   }
 
   const handleEditSelectedTiles = () => {
     setIsEditing(true)
     setTileIsSelectable(true)
-    setSelectedIndex(i)
     setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
   }
 
