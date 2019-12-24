@@ -33,15 +33,19 @@ export default props => {
     selectedTiles,
     setSelectedTiles,
     setTileIsSelectable,
+    isEditing,
+    setIsEditing,
   } = props
   const classes = useStyles()
   const isFocused = selectedIndex === i
-  const [isEditing, setIsEditing] = useState(false)
+  const isEditingThis = isFocused && isEditing
   const convertedSelectedTiles = convertBoolToNumOfTiles(selectedTiles)
 
   const handleSelectThis = () => {
-    setTileIsSelectable(false)
-    setSelectedIndex(i)
+    if (!(isEditing || isFocused)) {
+      setTileIsSelectable(false)
+      setSelectedIndex(i)
+    }
   }
 
   const handleSave = () => {
@@ -66,13 +70,13 @@ export default props => {
   }
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditingThis) {
       setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
     }
-  }, [isEditing])
+  }, [isEditingThis])
 
   const ActivatedButtons = () => {
-    if (isEditing) {
+    if (isEditingThis) {
       return (
         <div>
           <Button color="primary" onClick={handleSave}>
@@ -106,7 +110,7 @@ export default props => {
             {name}
           </Grid>
           <Grid item xs={4} className={classes.tile}>
-            {isEditing ? convertedSelectedTiles : savedTiles(i)}
+            {isEditingThis ? convertedSelectedTiles : savedTiles(i)}
           </Grid>
         </Grid>
       </ListItemText>

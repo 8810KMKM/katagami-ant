@@ -23,6 +23,7 @@ export default function(props) {
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [islatest, setIsLatest] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleToggleTile = number => {
     setSelectedTiles(
@@ -92,6 +93,8 @@ export default function(props) {
               selectedTiles,
               setSelectedTiles,
               setTileIsSelectable,
+              isEditing,
+              setIsEditing,
             }}
           />
         </Grid>
