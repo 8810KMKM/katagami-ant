@@ -15,7 +15,7 @@ import {
   Check,
 } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
-import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
+import { saveSelectedTiles, savedTiles } from 'libs/tile'
 import { indigo } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
