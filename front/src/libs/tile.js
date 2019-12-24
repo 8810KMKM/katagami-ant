@@ -1,4 +1,4 @@
-export const tilesInit = number => {
+export const initAllTiles = number => {
   for (let i = 0; i < number; i++) saveSelectedTiles('-', i)
 }
 

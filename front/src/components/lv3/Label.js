@@ -14,7 +14,7 @@ import {
   Cancel,
   Check,
 } from '@material-ui/icons'
-import { selectedTileNumbers, selectedTilesArray } from 'libs/format'
+import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, savedTiles, tilesAreSaved } from 'libs/tile'
 import { indigo } from '@material-ui/core/colors'
 
@@ -30,74 +30,51 @@ export default props => {
     i,
     selectedIndex,
     setSelectedIndex,
-    tileIsSelectable,
     selectedTiles,
     setSelectedTiles,
     setTileIsSelectable,
   } = props
   const classes = useStyles()
   const isFocused = selectedIndex === i
-  const [isSaved, setIsSaved] = useState(tilesAreSaved(i))
   const [isEditing, setIsEditing] = useState(false)
-  const convertedSelectedTiles = selectedTileNumbers(selectedTiles)
-
-  const displayedTiles = () => {
-    if (isFocused) {
-      return convertedSelectedTiles
-    }
-    return savedTiles()
-  }
-
-  const handleTileSelectabe = () => {
-    setTileIsSelectable(true)
-  }
-
-  const handleTileUnselectabe = () => {
-    setTileIsSelectable(false)
-  }
+  const convertedSelectedTiles = convertBoolToNumOfTiles(selectedTiles)
 
   const handleSelectThis = () => {
-    setSelectedTiles(
-      isSaved ? selectedTilesArray(savedTiles(i)) : new Array(9).fill(false)
-    )
     setTileIsSelectable(false)
     setSelectedIndex(i)
   }
 
   const handleMoveToNext = () => {
     setTileIsSelectable(false)
-    setIsSaved(true)
     setSelectedIndex(i + 1)
   }
 
   const handleSaveSelectedTiles = () => {
+    setIsEditing(false)
+    setTileIsSelectable(false)
     saveSelectedTiles(convertedSelectedTiles, i)
     setSelectedTiles(new Array(9).fill(false))
-    setIsSaved(true)
-    setTileIsSelectable(false)
     // handleMoveToNext()
   }
 
   const handleEditSelectedTiles = () => {
-    setSelectedTiles(selectedTilesArray(savedTiles(i)))
+    setIsEditing(true)
     setTileIsSelectable(true)
     setSelectedIndex(i)
-    setIsSaved(false)
-    setIsEditing(true)
+    setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
   }
 
   const handleCancelEdit = () => {
     setSelectedTiles(new Array(9).fill(false))
-    setIsSaved(true)
     setTileIsSelectable(false)
     setIsEditing(false)
   }
 
   useEffect(() => {
-    if (isSaved) {
-      setSelectedTiles(selectedTilesArray(savedTiles(i)))
+    if (isEditing) {
+      setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
     }
-  }, [isSaved])
+  }, [isEditing])
 
   const ActivatedButtons = () => {
     if (isEditing) {
@@ -134,7 +111,7 @@ export default props => {
             {name}
           </Grid>
           <Grid item xs={6} className={classes.tile}>
-            {displayedTiles()}
+            {isEditing ? convertedSelectedTiles : savedTiles(i)}
           </Grid>
         </Grid>
       </ListItemText>

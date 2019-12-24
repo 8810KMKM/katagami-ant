@@ -25,7 +25,7 @@ export const labelNameJp = nameEn => {
   }
 }
 
-export const selectedTileNumbers = tileStates => {
+export const convertBoolToNumOfTiles = tileStates => {
   const numbersStr = tileStates
     .map((tile, i) => (tile ? i : ' '))
     .filter(number => number !== ' ')
@@ -34,7 +34,7 @@ export const selectedTileNumbers = tileStates => {
   return numbersStr ? numbersStr : '該当無し'
 }
 
-export const selectedTilesArray = saveTiles => {
+export const convertNumToBoolOfTiles = saveTiles => {
   let convertArray = new Array(9).fill(false)
   if (saveTiles) {
     saveTiles

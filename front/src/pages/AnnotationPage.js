@@ -5,7 +5,7 @@ import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { tiles, clearAllTiles, tilesInit } from 'libs/tile'
+import { tiles, clearAllTiles, initAllTiles } from 'libs/tile'
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
@@ -57,7 +57,7 @@ export default function(props) {
   }, [islatest])
 
   // init savedTiles (localStorage)
-  useEffect(() => tilesInit(3), [islatest])
+  useEffect(() => initAllTiles(3), [islatest])
 
   if (isLoading) {
     return (
