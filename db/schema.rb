@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_095121) do
+ActiveRecord::Schema.define(version: 2019_12_24_093328) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -21,6 +21,18 @@ ActiveRecord::Schema.define(version: 2019_12_03_095121) do
     t.index ["katagami_id"], name: "index_annotations_on_katagami_id"
     t.index ["user_id", "katagami_id"], name: "index_annotations_on_user_id_and_katagami_id", unique: true
     t.index ["user_id"], name: "index_annotations_on_user_id"
+  end
+
+  create_table "has_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "label_id", null: false
+    t.bigint "annotation_id", null: false
+    t.bigint "katagami_id", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["annotation_id"], name: "index_has_labels_on_annotation_id"
+    t.index ["katagami_id"], name: "index_has_labels_on_katagami_id"
+    t.index ["label_id"], name: "index_has_labels_on_label_id"
   end
 
   create_table "katagamis", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -47,4 +59,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_095121) do
 
   add_foreign_key "annotations", "katagamis"
   add_foreign_key "annotations", "users"
+  add_foreign_key "has_labels", "annotations"
+  add_foreign_key "has_labels", "katagamis"
+  add_foreign_key "has_labels", "labels"
 end
