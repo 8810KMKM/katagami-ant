@@ -19,8 +19,12 @@ import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, savedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
+  text: {
+    fontSize: 20,
+  },
   tile: {
     color: indigo[600],
+    fontSize: 20,
   },
 }))
 
@@ -106,7 +110,7 @@ export default props => {
       </ListItemIcon>
       <ListItemText>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={4} className={classes.text}>
             {name}
           </Grid>
           <Grid item xs={4} className={classes.tile}>
