@@ -1,27 +1,27 @@
 export const labelNameJp = nameEn => {
   switch (nameEn) {
     case 'kasuri':
-      return '絣'
+      return { kanji: '絣', ruby: 'かすり' }
     case 'kiku':
-      return '菊'
+      return { kanji: '菊', ruby: 'きく' }
     case 'ume':
-      return '梅'
+      return { kanji: '梅', ruby: 'うめ' }
     case 'hishi':
-      return '菱'
+      return { kanji: '菱', ruby: 'ひし' }
     case 'sakura':
-      return '桜'
+      return { kanji: '桜', ruby: 'さくら' }
     case 'karakusa':
-      return '唐草'
+      return { kanji: '唐草', ruby: 'からくさ' }
     case 'chou':
-      return '蝶'
+      return { kanji: '蝶', ruby: 'ちょう' }
     case 'matsu':
-      return '松'
+      return { kanji: '松', ruby: 'まつ' }
     case 'kamenokou':
-      return '亀甲'
+      return { kanji: '亀甲', ruby: 'かめのこう' }
     case 'asanoha':
-      return '麻の葉'
+      return { kanji: '麻の葉', ruby: 'あさのは' }
     default:
-      return '不明'
+      return { kanji: '不明', ruby: 'ふめい' }
   }
 }
 

@@ -19,7 +19,8 @@ import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, savedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
-  text: {
+  name: {
+    marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
     fontSize: 20,
   },
   tile: {
@@ -40,7 +41,7 @@ export default props => {
     isEditing,
     setIsEditing,
   } = props
-  const classes = useStyles()
+  const classes = useStyles({ ruby: name.ruby })
   const isFocused = selectedIndex === i
   const isEditingThis = isFocused && isEditing
   const convertedSelectedTiles = convertBoolToNumOfTiles(selectedTiles)
@@ -80,6 +81,8 @@ export default props => {
     }
   }, [isEditingThis, i, setSelectedTiles])
 
+  console.log(typeof name.ruby.length)
+
   const ActivatedButtons = () => {
     if (isEditingThis) {
       return (
@@ -100,6 +103,13 @@ export default props => {
     )
   }
 
+  const RubyLabelName = () => (
+    <ruby>
+      {name.kanji}
+      <rt>{name.ruby}</rt>
+    </ruby>
+  )
+
   return (
     <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
@@ -110,9 +120,9 @@ export default props => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Grid container>
-          <Grid item xs={4} className={classes.text}>
-            {name}
+        <Grid container className={classes.textWrapper}>
+          <Grid item xs={4} className={classes.name}>
+            <RubyLabelName />
           </Grid>
           <Grid item xs={4} className={classes.tile}>
             {isEditingThis ? convertedSelectedTiles : savedTiles(i)}
