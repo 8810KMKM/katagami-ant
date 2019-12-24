@@ -2,15 +2,27 @@ import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
 import { createAnnotation, fetchLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { initAllTiles } from 'libs/tile'
+import { clearAllTiles, initAllTiles } from 'libs/tile'
+
+const useStyles = makeStyles(theme => ({
+  submit: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    fontSize: 20,
+  },
+}))
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
 
   const tileNumber = 9
+  const classes = useStyles()
 
   const [annotation, setAnnotation] = useState(null)
   const [katagamiUrl, setKatagamiUrl] = useState('')
@@ -97,6 +109,15 @@ export default function(props) {
             }}
           />
         </Grid>
+      </Grid>
+      <Grid className={classes.submit}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
+          完了
+        </Button>
       </Grid>
     </Container>
   )
