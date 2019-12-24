@@ -14,9 +14,9 @@ import {
   Cancel,
   Check,
 } from '@material-ui/icons'
+import { indigo } from '@material-ui/core/colors'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, savedTiles } from 'libs/tile'
-import { indigo } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
   tile: {
@@ -44,7 +44,7 @@ export default props => {
     setSelectedIndex(i)
   }
 
-  const handleSaveSelectedTiles = () => {
+  const handleSave = () => {
     setIsEditing(false)
     setTileIsSelectable(false)
     saveSelectedTiles(convertedSelectedTiles, i)
@@ -52,10 +52,11 @@ export default props => {
     setSelectedIndex(i + 1)
   }
 
-  const handleEditSelectedTiles = () => {
+  const handleEdit = () => {
     setIsEditing(true)
     setTileIsSelectable(true)
     setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
+    setSelectedIndex(i)
   }
 
   const handleCancelEdit = () => {
@@ -74,7 +75,7 @@ export default props => {
     if (isEditing) {
       return (
         <div>
-          <Button color="primary" onClick={handleSaveSelectedTiles}>
+          <Button color="primary" onClick={handleSave}>
             <Check />
           </Button>
           <Button color="secondary" onClick={handleCancelEdit}>
@@ -84,7 +85,7 @@ export default props => {
       )
     }
     return (
-      <Button color="default" onClick={handleEditSelectedTiles}>
+      <Button color="default" onClick={handleEdit} disabled={!isFocused}>
         <Edit />
       </Button>
     )
@@ -101,10 +102,10 @@ export default props => {
       </ListItemIcon>
       <ListItemText>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             {name}
           </Grid>
-          <Grid item xs={6} className={classes.tile}>
+          <Grid item xs={4} className={classes.tile}>
             {isEditing ? convertedSelectedTiles : savedTiles(i)}
           </Grid>
         </Grid>
