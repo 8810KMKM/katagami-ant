@@ -5,7 +5,7 @@ import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { tiles, clearAllTiles, initAllTiles } from 'libs/tile'
+import { clearAllTiles, initAllTiles } from 'libs/tile'
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
@@ -22,7 +22,6 @@ export default function(props) {
   )
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [islatest, setIsLatest] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
 
   const handleToggleTile = number => {
@@ -46,7 +45,7 @@ export default function(props) {
       katagamiId,
       handleCreateAnnotation,
     })
-  }, [islatest])
+  }, [katagamiId, userId])
 
   // to fetch labels
   useEffect(() => {
@@ -55,10 +54,10 @@ export default function(props) {
     }
     setIsLoading(true)
     fetchLabels(handleGetLabels)
-  }, [islatest])
+  }, [katagamiId, userId])
 
   // init savedTiles (localStorage)
-  useEffect(() => initAllTiles(3), [islatest])
+  useEffect(() => initAllTiles(3), [katagamiId, userId])
 
   if (isLoading) {
     return (

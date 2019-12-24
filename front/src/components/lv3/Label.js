@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import {
   ListItem,
@@ -48,6 +48,7 @@ export default props => {
   const handleSelectThis = () => {
     if (!(isEditing || isFocused)) {
       setTileIsSelectable(false)
+      setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
       setSelectedIndex(i)
     }
   }
@@ -77,7 +78,7 @@ export default props => {
     if (isEditingThis) {
       setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
     }
-  }, [isEditingThis])
+  }, [isEditingThis, i, setSelectedTiles])
 
   const ActivatedButtons = () => {
     if (isEditingThis) {

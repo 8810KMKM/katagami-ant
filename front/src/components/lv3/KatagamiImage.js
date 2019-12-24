@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@material-ui/core'
 import Tile from 'components/lv1/Tile'
 
-const xor = (a, b) => (a & !b) | (!a & b)
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: props => `${props.fixedWidth}px`,
@@ -12,7 +10,6 @@ const useStyles = makeStyles(theme => ({
   },
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
-    filter: props => (props.tileIsSelectable ? '' : 'grayscale(100%)'),
     backgroundSize: 'cover',
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`,
