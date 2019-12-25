@@ -15,10 +15,7 @@ class AnnotationsController < ApplicationController
   end
 
   def add_has_labels
-    user = User.find(params[:user_id])
-    katagami = Katagami.find(params[:katagami_id])
-    annotation = Annotation.find_by(user: user, katagami: katagami)
-
+    annotation = Annotation.find(params[:annotation_id])
     # {has_labels: '1 2 3,3 4,0,...'}
     params[:has_labels].split(',').each_with_index do |has_label, i|
       # {has_label: '1 2 3'}
@@ -26,7 +23,7 @@ class AnnotationsController < ApplicationController
       has_label.split(' ').each do |position|
         HasLabel.create(
           annotation: annotation,
-          katagami: katagami,
+          katagami: annotation.katagami,
           label: Label.find(i + 1),
           position: position.to_i
         )
