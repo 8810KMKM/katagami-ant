@@ -1,5 +1,5 @@
 export const initAllTiles = number => {
-  for (let i = 0; i < number; i++) saveSelectedTiles('-', i)
+  for (let i = 0; i < number; i++) saveSelectedTiles('0', i)
 }
 
 export const saveSelectedTiles = (tiles, labelNumber) => {
@@ -8,7 +8,7 @@ export const saveSelectedTiles = (tiles, labelNumber) => {
 
 export const tilesAreSaved = labelNumber =>
   localStorage.getItem(`label${labelNumber}`) &&
-  localStorage.getItem(`label${labelNumber}`) !== '-'
+  localStorage.getItem(`label${labelNumber}`) !== '0'
 
 export const savedTiles = labelNumber =>
   tilesAreSaved(labelNumber)

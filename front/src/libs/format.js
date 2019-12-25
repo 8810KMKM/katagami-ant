@@ -1,3 +1,5 @@
+import { savedTiles } from './tile'
+
 export const labelNameJp = nameEn => {
   switch (nameEn) {
     case 'kasuri':
@@ -42,4 +44,10 @@ export const convertNumToBoolOfTiles = saveTiles => {
       .forEach(tileNumber => (convertArray[tileNumber] = true))
   }
   return convertArray
+}
+
+export const hasLabelsForPost = () => {
+  let hasLabel = ''
+  for (let i = 0; i < 10; i++) hasLabel += savedTiles(i)
+  return hasLabel
 }
