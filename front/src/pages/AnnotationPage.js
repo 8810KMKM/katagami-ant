@@ -118,7 +118,7 @@ export default function(props) {
       <Grid className={classes.submit}>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.button}
           onClick={() =>
             postHasLabels({
