@@ -46,8 +46,5 @@ export const convertNumToBoolOfTiles = saveTiles => {
   return convertArray
 }
 
-export const hasLabelsForPost = () => {
-  let hasLabel = ''
-  for (let i = 0; i < 10; i++) hasLabel += savedTiles(i)
-  return hasLabel
-}
+export const hasLabelsForPost = labels =>
+  labels.map((label, i) => label.id + ' ' + savedTiles(i)).join(',')

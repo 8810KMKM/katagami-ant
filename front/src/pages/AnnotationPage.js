@@ -6,7 +6,8 @@ import { Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { clearAllTiles, initAllTiles } from 'libs/tile'
+import { initAllTiles } from 'libs/tile'
+import { hasLabelsForPost } from 'libs/format'
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -68,7 +69,7 @@ export default function(props) {
     fetchLabels(handleGetLabels)
   }, [katagamiId, userId])
 
-  // init savedTiles (localStorage)
+  // init diplayedTiles (localStorage)
   useEffect(() => initAllTiles(3), [katagamiId, userId])
 
   if (isLoading) {

@@ -6,14 +6,14 @@ export const saveSelectedTiles = (tiles, labelNumber) => {
   localStorage.setItem(`label${labelNumber}`, tiles)
 }
 
-export const tilesAreSaved = labelNumber =>
-  localStorage.getItem(`label${labelNumber}`) &&
-  localStorage.getItem(`label${labelNumber}`) !== '0'
-
 export const savedTiles = labelNumber =>
-  tilesAreSaved(labelNumber)
-    ? localStorage.getItem(`label${labelNumber}`)
-    : '該当無し'
+  localStorage.getItem(`label${labelNumber}`)
+
+export const tilesAreSaved = labelNumber =>
+  savedTiles(labelNumber) && savedTiles(labelNumber) !== '0'
+
+export const diplayedTiles = labelNumber =>
+  tilesAreSaved(labelNumber) ? savedTiles(labelNumber) : '該当無し'
 
 export const clearTiles = labelNumber => {
   localStorage.removeItem(`label${labelNumber}`)
@@ -31,5 +31,5 @@ export const clearAllTiles = () => {
 }
 
 export const tiles = () => {
-  for (let i = 0; i < 3; i++) console.log(savedTiles(i))
+  for (let i = 0; i < 3; i++) console.log(diplayedTiles(i))
 }
