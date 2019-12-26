@@ -8,6 +8,24 @@ const palette = {
   info: { main: '#004d40' },
   success: { main: '#26c6da' },
 }
+
+const typography = {
+  h1: {
+    fontSize: 32,
+    fontWeight: 700,
+    color: palette.primary.main,
+  },
+  body1: {
+    fontSize: 16,
+  },
+  body2: {
+    fontSize: 12,
+  },
+  button: {
+    fontSize: 16,
+  },
+}
+
 const themeName = 'Hayato OKUMA Katagami annotation tool theme'
 
-export default createMuiTheme({ palette, themeName })
+export default createMuiTheme({ palette, typography, themeName })

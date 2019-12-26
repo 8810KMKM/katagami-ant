@@ -6,6 +6,7 @@ import {
   ListItemText,
   Button,
   Grid,
+  Typography,
 } from '@material-ui/core'
 import {
   RadioButtonUnchecked,
@@ -14,19 +15,14 @@ import {
   Cancel,
   Check,
 } from '@material-ui/icons'
-import { indigo } from '@material-ui/core/colors'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
   name: {
     marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
-    fontSize: 20,
   },
-  tile: {
-    color: indigo[600],
-    fontSize: 20,
-  },
+  tile: {},
 }))
 
 export default props => {
@@ -104,10 +100,18 @@ export default props => {
   }
 
   const RubyLabelName = () => (
-    <ruby>
-      {name.kanji}
-      <rt>{name.ruby}</rt>
-    </ruby>
+    <Typography variant="body1">
+      <ruby>
+        {name.kanji}
+        <rt>{name.ruby}</rt>
+      </ruby>
+    </Typography>
+  )
+
+  const DisplayedTiles = () => (
+    <Typography variant="body1" color="primary">
+      {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
+    </Typography>
   )
 
   return (
@@ -120,12 +124,12 @@ export default props => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Grid container className={classes.textWrapper}>
+        <Grid container>
           <Grid item xs={4} className={classes.name}>
             <RubyLabelName />
           </Grid>
           <Grid item xs={4} className={classes.tile}>
-            {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
+            <DisplayedTiles />
           </Grid>
         </Grid>
       </ListItemText>

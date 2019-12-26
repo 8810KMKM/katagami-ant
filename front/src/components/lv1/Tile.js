@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 40,
   },
   selected: {
-    backgroundColor: 'rgba(205, 220, 57, 0.8)',
+    backgroundColor: 'rgba(133, 97, 197, 0.7)',
   },
 }))
 
