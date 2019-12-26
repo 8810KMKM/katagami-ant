@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  button: {
+    width: 120,
+  },
 }))
 
 export default function(props) {
@@ -116,6 +119,7 @@ export default function(props) {
         <Button
           variant="contained"
           color="secondary"
+          className={classes.button}
           onClick={() =>
             postHasLabels({
               annotationId: annotation,

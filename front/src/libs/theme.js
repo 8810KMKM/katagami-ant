@@ -17,12 +17,16 @@ const typography = {
   },
   body1: {
     fontSize: 16,
+    color: '#030303',
   },
   body2: {
-    fontSize: 12,
+    fontSize: 20,
+    fontWeight: 700,
+    color: '#fafafa',
   },
   button: {
     fontSize: 16,
+    color: '#fafafa',
   },
 }
 
