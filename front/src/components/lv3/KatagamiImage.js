@@ -49,7 +49,7 @@ export default function(props) {
           key={i}
           number={i}
           square={tileSquare}
-          isSelected={selectedTiles[i]}
+          isSelected={selectedTiles[i - 1]}
           handleToggleTile={handleToggleTile}
         />
       )

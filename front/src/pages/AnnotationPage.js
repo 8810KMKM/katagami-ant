@@ -38,8 +38,9 @@ export default function(props) {
   const [isEditing, setIsEditing] = useState(false)
 
   const handleToggleTile = number => {
+    console.log(selectedTiles)
     setSelectedTiles(
-      selectedTiles.map((tile, i) => (i === number ? !tile : tile))
+      selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )
   }
 

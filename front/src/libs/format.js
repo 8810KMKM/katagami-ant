@@ -29,7 +29,7 @@ export const labelNameJp = nameEn => {
 
 export const convertBoolToNumOfTiles = tileStates => {
   const numbersStr = tileStates
-    .map((tile, i) => (tile ? i : ' '))
+    .map((tile, i) => (tile ? i + 1 : ' '))
     .filter(number => number !== ' ')
     .join(' ')
 
@@ -41,7 +41,7 @@ export const convertNumToBoolOfTiles = saveTiles => {
   if (saveTiles) {
     saveTiles
       .split(' ')
-      .forEach(tileNumber => (convertArray[tileNumber] = true))
+      .forEach(tileNumber => (convertArray[tileNumber - 1] = true))
   }
   return convertArray
 }

@@ -111,7 +111,7 @@ export default props => {
   }
 
   const RubyLabelName = () => (
-    <Typography variant="body1">
+    <Typography>
       <ruby>
         {name.kanji}
         <rt>{name.ruby}</rt>
