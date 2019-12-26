@@ -4,4 +4,6 @@ class Annotation < ApplicationRecord
   
   belongs_to :user
   belongs_to :katagami
+
+  has_many :has_labels
 end

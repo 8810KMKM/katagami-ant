@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { labelNameJp } from 'libs/format'
 import { List } from '@material-ui/core'
-import Label from 'components/lv3/Label'
+import Label from 'components/lv2/Label'
 import { blueGrey } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({

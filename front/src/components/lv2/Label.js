@@ -16,7 +16,7 @@ import {
 } from '@material-ui/icons'
 import { indigo } from '@material-ui/core/colors'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
-import { saveSelectedTiles, savedTiles } from 'libs/tile'
+import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
   name: {
@@ -49,7 +49,7 @@ export default props => {
   const handleSelectThis = () => {
     if (!(isEditing || isFocused)) {
       setTileIsSelectable(false)
-      setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
+      setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
       setSelectedIndex(i)
     }
   }
@@ -65,7 +65,7 @@ export default props => {
   const handleEdit = () => {
     setIsEditing(true)
     setTileIsSelectable(true)
-    setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
+    setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
     setSelectedIndex(i)
   }
 
@@ -77,7 +77,7 @@ export default props => {
 
   useEffect(() => {
     if (isEditingThis) {
-      setSelectedTiles(convertNumToBoolOfTiles(savedTiles(i)))
+      setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
     }
   }, [isEditingThis, i, setSelectedTiles])
 
@@ -125,7 +125,7 @@ export default props => {
             <RubyLabelName />
           </Grid>
           <Grid item xs={4} className={classes.tile}>
-            {isEditingThis ? convertedSelectedTiles : savedTiles(i)}
+            {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
           </Grid>
         </Grid>
       </ListItemText>

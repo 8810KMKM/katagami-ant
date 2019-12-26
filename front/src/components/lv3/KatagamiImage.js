@@ -42,7 +42,7 @@ export default function(props) {
 
   const TilesOnKatagami = () => {
     const labels = []
-    for (let i = 0; i < tileNumber; i++) {
+    for (let i = 1; i <= tileNumber; i++) {
       labels.push(
         <Tile
           key={i}

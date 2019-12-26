@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
-import { createAnnotation, fetchLabels } from 'libs/api'
+import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { clearAllTiles, initAllTiles } from 'libs/tile'
+import { initAllTiles } from 'libs/tile'
+import { hasLabelsForPost } from 'libs/format'
+
+const useStyles = makeStyles(theme => ({
+  submit: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    fontSize: 20,
+  },
+}))
 
 export default function(props) {
   const { userId, katagamiId } = props.match.params
 
   const tileNumber = 9
+  const classes = useStyles()
 
   const [annotation, setAnnotation] = useState(null)
   const [katagamiUrl, setKatagamiUrl] = useState('')
@@ -28,6 +41,10 @@ export default function(props) {
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number ? !tile : tile))
     )
+  }
+
+  const handleCompleteAnnotation = response => {
+    console.log(response)
   }
 
   // to fecth Katagami image
@@ -56,7 +73,7 @@ export default function(props) {
     fetchLabels(handleGetLabels)
   }, [katagamiId, userId])
 
-  // init savedTiles (localStorage)
+  // init diplayedTiles (localStorage)
   useEffect(() => initAllTiles(3), [katagamiId, userId])
 
   if (isLoading) {
@@ -98,9 +115,22 @@ export default function(props) {
           />
         </Grid>
       </Grid>
-      <Button onClick={clearAllTiles} variant="contained" color="secondary">
-        クリア
-      </Button>
+      <Grid className={classes.submit}>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={() =>
+            postHasLabels({
+              annotationId: annotation,
+              hasLabels: hasLabelsForPost(labels),
+              handleCompleteAnnotation: handleCompleteAnnotation,
+            })
+          }
+        >
+          完了
+        </Button>
+      </Grid>
     </Container>
   )
 }

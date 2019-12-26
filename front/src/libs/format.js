@@ -1,3 +1,5 @@
+import { savedTiles } from './tile'
+
 export const labelNameJp = nameEn => {
   switch (nameEn) {
     case 'kasuri':
@@ -43,3 +45,6 @@ export const convertNumToBoolOfTiles = saveTiles => {
   }
   return convertArray
 }
+
+export const hasLabelsForPost = labels =>
+  labels.map((label, i) => label.id + ' ' + savedTiles(i)).join(',')

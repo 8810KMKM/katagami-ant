@@ -48,6 +48,7 @@ export const createAnnotation = async props => {
 
   await fetchPost({
     url: `${baseUrl}/annotations/${katagamiId}/${userId}`,
+    body: new FormData(),
     successAction: handleCreateAnnotation,
   })
 }
@@ -56,6 +57,20 @@ export const fetchLabels = async handleGetLabels => {
   await fetchGet({
     url: `${baseUrl}/labels`,
     successAction: handleGetLabels,
+  })
+}
+
+export const postHasLabels = async props => {
+  const { annotationId, hasLabels, handleCompleteAnnotation } = props
+
+  const body = new FormData()
+  body.append('annotation_id', annotationId)
+  body.append('has_labels', hasLabels)
+
+  await fetchPost({
+    url: `${baseUrl}/annotations/add_has_labels`,
+    body: body,
+    successAction: handleCompleteAnnotation,
   })
 }
 

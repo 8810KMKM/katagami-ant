@@ -7,6 +7,7 @@ class Katagami < ApplicationRecord
   validates :height, presence: true, allow_nil: false
 
   has_many :annotations
+  has_many :has_labels
 
   mount_uploader :cw_obj, KatagamiUploader
 
