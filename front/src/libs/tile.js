@@ -23,7 +23,7 @@ export const clearAllTiles = () => {
   console.log('* --- * --- * --- *')
   tiles()
   console.log(' ||| ')
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     clearTiles(i)
   }
   tiles()
@@ -31,5 +31,5 @@ export const clearAllTiles = () => {
 }
 
 export const tiles = () => {
-  for (let i = 0; i < 10; i++) console.log(savedTiles(i))
+  for (let i = 0; i < 3; i++) console.log(savedTiles(i))
 }
