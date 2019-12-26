@@ -20,9 +20,18 @@ import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
   name: {
-    marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
+    // marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
   },
-  tile: {},
+  tiles: {
+    paddingTop: 6,
+  },
+  buttons: {
+    width: 128,
+  },
+  single: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }))
 
 export default props => {
@@ -82,7 +91,7 @@ export default props => {
   const ActivatedButtons = () => {
     if (isEditingThis) {
       return (
-        <div>
+        <div classes={classes.buttons}>
           <Button color="primary" onClick={handleSave}>
             <Check />
           </Button>
@@ -93,9 +102,11 @@ export default props => {
       )
     }
     return (
-      <Button color="default" onClick={handleEdit} disabled={!isFocused}>
-        <Edit />
-      </Button>
+      <div className={classes.buttons + ' ' + classes.single}>
+        <Button color="default" onClick={handleEdit} disabled={!isFocused}>
+          <Edit />
+        </Button>
+      </div>
     )
   }
 
@@ -109,7 +120,7 @@ export default props => {
   )
 
   const DisplayedTiles = () => (
-    <Typography variant="body1" color="primary">
+    <Typography variant="body1" color="primary" className={classes.tiles}>
       {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
     </Typography>
   )
