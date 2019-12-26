@@ -107,9 +107,7 @@ export default function({ handleLogout }) {
               <ListItemIcon>
                 <AccountBox color="primary" />
               </ListItemIcon>
-              <ListItemText>
-                <Typography color="primary">マイページ</Typography>
-              </ListItemText>
+              <ListItemText primary="マイページ" />
             </ListItem>
           </Link>
         </MenuItem>
@@ -118,9 +116,7 @@ export default function({ handleLogout }) {
             <ListItemIcon>
               <ExitToApp color="primary" />
             </ListItemIcon>
-            <ListItemText>
-              <Typography color="primary">ログアウト</Typography>
-            </ListItemText>
+            <ListItemText primary="ログアウト" />
           </ListItem>
         </MenuItem>
       </Menu>
