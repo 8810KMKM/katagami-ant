@@ -13,9 +13,9 @@
 ActiveRecord::Schema.define(version: 2019_12_24_093328) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "katagami_id", null: false
-    t.integer "status", default: 0, null: false
+    t.bigint "user_id"
+    t.bigint "katagami_id"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["katagami_id"], name: "index_annotations_on_katagami_id"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
-import { createAnnotation, fetchLabels } from 'libs/api'
+import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -41,6 +41,10 @@ export default function(props) {
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number ? !tile : tile))
     )
+  }
+
+  const handleCompleteAnnotation = response => {
+    console.log(response)
   }
 
   // to fecth Katagami image
@@ -116,6 +120,13 @@ export default function(props) {
           variant="contained"
           color="secondary"
           className={classes.button}
+          onClick={() =>
+            postHasLabels({
+              annotationId: annotation,
+              hasLabels: hasLabelsForPost(labels),
+              handleCompleteAnnotation: handleCompleteAnnotation,
+            })
+          }
         >
           完了
         </Button>
