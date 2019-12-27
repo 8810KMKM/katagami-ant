@@ -1,8 +1,14 @@
 import React from 'react'
-import { GridList, GridListTile } from '@material-ui/core'
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import KatagamiCard from 'components/lv2/KatagamiCard'
 import { currentUser } from 'libs/auth'
+import theme from 'libs/theme'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,25 +17,52 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     overflow: 'hidden',
   },
-  gridList: {
-    width: '100%',
+  tableHead: {
+    backgroundColor: theme.palette.primary.light,
+  },
+  done: {
+    color: theme.palette.primary.main,
+  },
+  yet: {
+    color: theme.palette.secondary.main,
   },
 }))
 
 export default function(props) {
   const { katagamis } = props
   const user = currentUser()
-  const classes = useStyles()
+  const classes = useStyles(theme)
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={160} className={classes.gridList} cols={3}>
-        {katagamis.map(katagami => (
-          <GridListTile key={katagami.id}>
-            <KatagamiCard katagami={katagami} userId={user.id} />
-          </GridListTile>
-        ))}
-      </GridList>
+      <Table>
+        <TableHead>
+          <TableRow className={classes.tableHead}>
+            <TableCell align="right">id</TableCell>
+            <TableCell align="left">ファイル名</TableCell>
+            <TableCell align="right">アノテーション件数</TableCell>
+            <TableCell align="center">あなたの達成度</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {katagamis.map(katagami => (
+            <TableRow key={katagami.id}>
+              <TableCell align="right">{katagami.id}</TableCell>
+              <TableCell>{katagami.name}</TableCell>
+              <TableCell align="right">{katagami.annotation_num}</TableCell>
+              {katagami.done_by_current_user ? (
+                <TableCell align="center" className={classes.done}>
+                  完了
+                </TableCell>
+              ) : (
+                <TableCell align="center" className={classes.yet}>
+                  未達成
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   )
 }
