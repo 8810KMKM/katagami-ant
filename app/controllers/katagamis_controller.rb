@@ -7,8 +7,9 @@ class KatagamisController < ApplicationController
               .pluck(:id)
 
     # 型紙一覧の情報 アノテーション件数を表示するためinclude
-    # TODO : ページネーションへの対応
-    katagamis = Katagami.includes(:annotations).order(created_at: 'DESC')
+    katagamis = Katagami.includes(:annotations)
+                        .order(created_at: 'DESC')
+                        .page(params[:page]).per(5)
 
     # ある型紙 x をログイン中のユーザはアノテーション済みか ?
     # => A のなかに x が入っているか ?
