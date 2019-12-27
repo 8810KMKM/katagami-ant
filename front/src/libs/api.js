@@ -42,7 +42,7 @@ export const fetchKatagamis = async props => {
   body.append('user_id', userId)
   body.append('page', page)
 
-  await fetchGet({
+  await fetchPost({
     url: `${baseUrl}/katagamis`,
     body: body,
     successAction: handleGetKatagamis,
