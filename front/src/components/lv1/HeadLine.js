@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { indigo } from '@material-ui/core/colors'
 import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

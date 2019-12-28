@@ -5,10 +5,18 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TableFooter,
+  IconButton,
+  TablePagination,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { currentUser } from 'libs/auth'
 import theme from 'libs/theme'
+import {
+  FirstPage,
+  KeyboardArrowRight,
+  KeyboardArrowLeft,
+  LastPage,
+} from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +28,11 @@ const useStyles = makeStyles(theme => ({
   tableHead: {
     backgroundColor: theme.palette.primary.light,
   },
+  tableRow: {
+    '& *': {
+      fontWeight: 'normal',
+    },
+  },
   done: {
     color: theme.palette.primary.main,
   },
@@ -30,8 +43,26 @@ const useStyles = makeStyles(theme => ({
 
 export default function(props) {
   const { katagamis } = props
-  const user = currentUser()
   const classes = useStyles(theme)
+
+  const PaginationActions = () => {
+    return (
+      <div className={classes.footer}>
+        <IconButton>
+          <FirstPage />
+        </IconButton>
+        <IconButton>
+          <KeyboardArrowLeft />
+        </IconButton>
+        <IconButton>
+          <KeyboardArrowRight />
+        </IconButton>
+        <IconButton>
+          <LastPage />
+        </IconButton>
+      </div>
+    )
+  }
 
   return (
     <div className={classes.root}>
@@ -46,7 +77,7 @@ export default function(props) {
         </TableHead>
         <TableBody>
           {katagamis.map(katagami => (
-            <TableRow key={katagami.id}>
+            <TableRow key={katagami.id} className={classes.tableRow}>
               <TableCell align="right">{katagami.id}</TableCell>
               <TableCell>{katagami.name}</TableCell>
               <TableCell align="right">{katagami.annotation_num}</TableCell>
@@ -62,6 +93,11 @@ export default function(props) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow className={classes.tableRow}>
+            <TablePagination ActionsComponent={PaginationActions} />
+          </TableRow>
+        </TableFooter>
       </Table>
     </div>
   )

@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
+import { jaJP } from '@material-ui/core/locale'
 
 const palette = {
   primary: { main: '#00796B' },
@@ -32,4 +33,4 @@ const typography = {
 
 const themeName = 'Hayato OKUMA Katagami annotation tool theme'
 
-export default createMuiTheme({ palette, typography, themeName })
+export default createMuiTheme({ palette, typography, themeName }, jaJP)
