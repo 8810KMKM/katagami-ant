@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Table,
   TableHead,
@@ -10,6 +10,7 @@ import {
   TablePagination,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { currentUser } from 'libs/auth'
 import theme from 'libs/theme'
 import {
   FirstPage,
@@ -39,22 +40,42 @@ const useStyles = makeStyles(theme => ({
   yet: {
     color: theme.palette.secondary.main,
   },
+  footer: {
+    marginTop: theme.spacing(20),
+  },
+  footerButtons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 }))
 
 export default function(props) {
-  const { katagamis } = props
+  const { katagamis, handlePaginate } = props
+  const [page, setPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const user = currentUser()
   const classes = useStyles(theme)
 
   const PaginationActions = () => {
+    const { count, page, rowsPerPage, onChangePage } = props
+
+    const handleFirstPageButtonClick = () => {
+      onChangePage({ page: 1, per: rowsPerPage })
+    }
+
+    const handleLastPageButtonClick = () => {
+      onChangePage({ page: 0, per: rowsPerPage })
+    }
+
     return (
-      <div className={classes.footer}>
+      <div className={classes.footerButtons}>
         <IconButton>
           <FirstPage />
         </IconButton>
         <IconButton>
           <KeyboardArrowLeft />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => console.log('hoge')}>
           <KeyboardArrowRight />
         </IconButton>
         <IconButton>
@@ -93,9 +114,17 @@ export default function(props) {
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
+        <TableFooter className={classes.footer}>
           <TableRow className={classes.tableRow}>
-            <TablePagination ActionsComponent={PaginationActions} />
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              count={10}
+              rowsPerPage={5}
+              page={0}
+              onChangePage={handlePaginate}
+              onChangeRowsPerPage={handlePaginate}
+              ActionsComponent={PaginationActions}
+            />
           </TableRow>
         </TableFooter>
       </Table>

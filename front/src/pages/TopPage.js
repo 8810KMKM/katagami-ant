@@ -7,26 +7,28 @@ import { currentUser } from 'libs/auth'
 
 export default function() {
   const [katagamis, setKatagamis] = useState([])
+  const [count, setCount] = useState(0)
   const [isLatest, setIsLateset] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handlePagenate = page => {
-    const handleGetKatagamis = katagamis => {
-      console.log(katagamis)
-      setKatagamis(katagamis)
+  const handlePaginate = ({ page, per }) => {
+    const handleGetKatagamis = response => {
+      setKatagamis(response.katagamis)
+      setCount(response.count)
       setIsLoading(false)
     }
     setIsLoading(true)
     fetchKatagamis({
       userId: currentUser().id,
       page: page,
+      per: per,
       handleGetKatagamis: handleGetKatagamis,
     })
   }
 
   useEffect(() => {
     setIsLoading(true)
-    handlePagenate(1)
+    handlePaginate({ page: 1, per: 5 })
   }, [isLatest])
 
   if (isLoading) {
@@ -40,7 +42,7 @@ export default function() {
   return (
     <Container>
       <HeadLine>画像一覧</HeadLine>
-      <KatagamiList katagamis={katagamis} />
+      <KatagamiList katagamis={katagamis} handlePaginate={handlePaginate} />
     </Container>
   )
 }
