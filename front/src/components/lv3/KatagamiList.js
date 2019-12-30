@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Table,
   TableHead,
@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
+import { fetchKatagamis } from 'libs/api'
 import theme from 'libs/theme'
 import {
   FirstPage,
@@ -49,40 +50,80 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function(props) {
-  const { katagamis, handlePaginate } = props
-  const [page, setPage] = useState(1)
+export default function() {
+  const [katagamis, setKatagamis] = useState([])
+  const [count, setCount] = useState(0)
+  const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLatest, setIsLatest] = useState(true)
   const user = currentUser()
   const classes = useStyles(theme)
 
-  const PaginationActions = () => {
+  const handlePaginate = ({ page, per }) => {
+    const handleGetKatagamis = response => {
+      setKatagamis(response.katagamis)
+      setCount(response.count)
+      setPage(page)
+      setIsLoading(false)
+    }
+    setIsLoading(true)
+    fetchKatagamis({
+      userId: currentUser().id,
+      page: page + 1,
+      per: per,
+      handleGetKatagamis: handleGetKatagamis,
+    })
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    handlePaginate({
+      page: page,
+      per: rowsPerPage,
+    })
+  }, [isLatest])
+
+  const PaginationActions = props => {
     const { count, page, rowsPerPage, onChangePage } = props
 
-    const handleFirstPageButtonClick = () => {
-      onChangePage({ page: 1, per: rowsPerPage })
+    const handleFirstPageButtonClick = event => {
+      onChangePage(event, 0)
     }
 
-    const handleLastPageButtonClick = () => {
-      onChangePage({ page: 0, per: rowsPerPage })
+    const handleBackButtonClick = event => {
+      onChangePage(event, page - 1)
+    }
+
+    const handleNextButtonClick = event => {
+      onChangePage(event, page + 1)
+    }
+
+    const handleLastPageButtonClick = event => {
+      onChangePage(event, Math.ceil(count / rowsPerPage))
     }
 
     return (
       <div className={classes.footerButtons}>
-        <IconButton>
+        <IconButton onClick={handleFirstPageButtonClick}>
           <FirstPage />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleBackButtonClick}>
           <KeyboardArrowLeft />
         </IconButton>
-        <IconButton onClick={() => console.log('hoge')}>
+        <IconButton onClick={handleNextButtonClick}>
           <KeyboardArrowRight />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleLastPageButtonClick}>
           <LastPage />
         </IconButton>
       </div>
     )
+  }
+
+  const handleChangePage = (event, newPage) => {
+    handlePaginate({ page: newPage, per: rowsPerPage })
+    setPage(newPage)
   }
 
   return (
@@ -118,10 +159,10 @@ export default function(props) {
           <TableRow className={classes.tableRow}>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
-              count={10}
-              rowsPerPage={5}
-              page={0}
-              onChangePage={handlePaginate}
+              count={count}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
               onChangeRowsPerPage={handlePaginate}
               ActionsComponent={PaginationActions}
             />
