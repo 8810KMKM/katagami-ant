@@ -131,6 +131,12 @@ export default function() {
     setPage(newPage)
   }
 
+  const handleChangeRowsPerPage = event => {
+    handlePaginate({ page: 0, per: parseInt(event.target.value, 10) })
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
   return (
     <div className={classes.root}>
       <Table>
@@ -168,7 +174,7 @@ export default function() {
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
-              onChangeRowsPerPage={handlePaginate}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
               ActionsComponent={PaginationActions}
             />
           </TableRow>
