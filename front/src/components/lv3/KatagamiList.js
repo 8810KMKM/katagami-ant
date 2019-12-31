@@ -57,6 +57,8 @@ export default function() {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [isLoading, setIsLoading] = useState(false)
   const [isLatest, setIsLatest] = useState(true)
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const classes = useStyles(theme)
 
   const handlePaginate = ({ page, per }) => {
@@ -165,6 +167,11 @@ export default function() {
               )}
             </TableRow>
           ))}
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 55 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )}
         </TableBody>
         <TableFooter className={classes.footer}>
           <TableRow className={classes.tableRow}>
