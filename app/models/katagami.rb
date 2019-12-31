@@ -11,6 +11,8 @@ class Katagami < ApplicationRecord
 
   mount_uploader :cw_obj, KatagamiUploader
 
+  @@_count = 0
+
   def self.s3_bucket
     Aws::S3::Resource.new(
       region: 'ap-northeast-1',
@@ -22,5 +24,15 @@ class Katagami < ApplicationRecord
   def presigned_url
     target = Katagami.s3_bucket.objects.select { |object| object.key === name }
     target[0].presigned_url(:get)
+  end
+
+  def self._count
+    @@_count = self.count if @@_count == 0
+    @@_count
+  end
+
+  def self.add_count n
+    @@_count += n
+    p @@_count
   end
 end

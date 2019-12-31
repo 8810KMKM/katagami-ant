@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
     backgroundSize: 'cover',
+    border: props => (props.tileIsSelectable ? '2px solid #673ab7' : 'none'),
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`,
   },
@@ -48,7 +49,7 @@ export default function(props) {
           key={i}
           number={i}
           square={tileSquare}
-          isSelected={selectedTiles[i]}
+          isSelected={selectedTiles[i - 1]}
           handleToggleTile={handleToggleTile}
         />
       )

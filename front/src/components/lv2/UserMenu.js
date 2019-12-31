@@ -8,27 +8,32 @@ import {
   Modal,
   Grid,
   Button,
-  Box,
+  Typography,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from '@material-ui/core'
 import { AccountBox, ExitToApp } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
 import UserIcon from 'components/lv1/UserIcon'
 import { currentUser } from 'libs/auth'
+import theme from 'libs/theme'
 
 const useStyle = makeStyles(theme => ({
   link: {
     display: 'flex',
     flexDirection: 'row',
     textDecoration: 'none',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    color: grey[900],
   },
   menuItem: {
-    padding: '6px 32px',
+    width: 320,
   },
   icon: {
+    display: 'inlineBlock',
     marginTop: 5,
-    marginRight: 3,
+    marginRight: 8,
   },
   modal: {
     display: 'flex',
@@ -36,15 +41,16 @@ const useStyle = makeStyles(theme => ({
     justifyContent: 'center',
   },
   modalBody: {
-    width: 240,
+    width: 280,
     height: 120,
     padding: '16px 24px',
     backgroundColor: grey[50],
   },
   text: {
-    paddingBottom: 8,
+    padding: '24px 0',
   },
   button: {
+    width: 88,
     margin: '0 auto',
   },
 }))
@@ -54,7 +60,7 @@ export default function({ handleLogout }) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const open = Boolean(anchorEl)
   const user = currentUser()
-  const classes = useStyle()
+  const classes = useStyle(theme)
 
   const handleSafetyLogout = () => {
     setModalIsOpen(false)
@@ -97,17 +103,21 @@ export default function({ handleLogout }) {
           onClick={() => setAnchorEl(false)}
         >
           <Link to={`/users/${user.id}`} className={classes.link}>
-            <Box className={classes.icon}>
-              <AccountBox />
-            </Box>
-            マイページ
+            <ListItem>
+              <ListItemIcon>
+                <AccountBox color="primary" />
+              </ListItemIcon>
+              <ListItemText primary="マイページ" />
+            </ListItem>
           </Link>
         </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleModalOpen}>
-          <Box className={classes.icon}>
-            <ExitToApp />
-          </Box>
-          ログアウト
+          <ListItem>
+            <ListItemIcon>
+              <ExitToApp color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="ログアウト" />
+          </ListItem>
         </MenuItem>
       </Menu>
       <Modal
@@ -118,7 +128,7 @@ export default function({ handleLogout }) {
         onClose={() => setModalIsOpen(false)}
       >
         <div className={classes.modalBody}>
-          <p className={classes.text}>ログアウトしますか？</p>
+          <Typography className={classes.text}>ログアウトしますか？</Typography>
           <Grid container>
             <Grid item xs={8}>
               <Button

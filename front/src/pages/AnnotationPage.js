@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
   },
   button: {
-    fontSize: 20,
+    width: 120,
   },
 }))
 
@@ -38,8 +38,9 @@ export default function(props) {
   const [isEditing, setIsEditing] = useState(false)
 
   const handleToggleTile = number => {
+    console.log(selectedTiles)
     setSelectedTiles(
-      selectedTiles.map((tile, i) => (i === number ? !tile : tile))
+      selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )
   }
 
@@ -118,7 +119,7 @@ export default function(props) {
       <Grid className={classes.submit}>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.button}
           onClick={() =>
             postHasLabels({

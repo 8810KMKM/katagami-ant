@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post '/login' , to: 'users#login'
   get 'users/:id', to: 'users#show'
   # Katagami
-  get '/katagamis', to: 'katagamis#index'
+  post '/katagamis', to: 'katagamis#index'
   # Annotation
   post '/annotations/:katagami_id/:user_id', to: 'annotations#create'
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'

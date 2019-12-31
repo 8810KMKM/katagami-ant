@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     backgroundColor: grey[50],
     color: grey[800],
-    padding: '24px 40px 64px 40px',
+    padding: '40px 40px 64px 40px',
   },
 }))
 

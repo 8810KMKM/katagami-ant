@@ -6,6 +6,7 @@ import {
   ListItemText,
   Button,
   Grid,
+  Typography,
 } from '@material-ui/core'
 import {
   RadioButtonUnchecked,
@@ -14,18 +15,22 @@ import {
   Cancel,
   Check,
 } from '@material-ui/icons'
-import { indigo } from '@material-ui/core/colors'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
   name: {
-    marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
-    fontSize: 20,
+    // marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
   },
-  tile: {
-    color: indigo[600],
-    fontSize: 20,
+  tiles: {
+    paddingTop: 6,
+  },
+  buttons: {
+    width: 128,
+  },
+  single: {
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }))
 
@@ -86,7 +91,7 @@ export default props => {
   const ActivatedButtons = () => {
     if (isEditingThis) {
       return (
-        <div>
+        <div classes={classes.buttons}>
           <Button color="primary" onClick={handleSave}>
             <Check />
           </Button>
@@ -97,17 +102,27 @@ export default props => {
       )
     }
     return (
-      <Button color="default" onClick={handleEdit} disabled={!isFocused}>
-        <Edit />
-      </Button>
+      <div className={classes.buttons + ' ' + classes.single}>
+        <Button color="default" onClick={handleEdit} disabled={!isFocused}>
+          <Edit />
+        </Button>
+      </div>
     )
   }
 
   const RubyLabelName = () => (
-    <ruby>
-      {name.kanji}
-      <rt>{name.ruby}</rt>
-    </ruby>
+    <Typography>
+      <ruby>
+        {name.kanji}
+        <rt>{name.ruby}</rt>
+      </ruby>
+    </Typography>
+  )
+
+  const DisplayedTiles = () => (
+    <Typography variant="body1" color="primary" className={classes.tiles}>
+      {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
+    </Typography>
   )
 
   return (
@@ -120,12 +135,12 @@ export default props => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Grid container className={classes.textWrapper}>
+        <Grid container>
           <Grid item xs={4} className={classes.name}>
             <RubyLabelName />
           </Grid>
           <Grid item xs={4} className={classes.tile}>
-            {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
+            <DisplayedTiles />
           </Grid>
         </Grid>
       </ListItemText>

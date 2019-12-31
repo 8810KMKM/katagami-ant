@@ -53,3 +53,5 @@ gem 'rails-i18n'
 gem 'carrierwave'
 # awsにアプリケーションからアクセスするため
 gem 'aws-sdk'
+# 型紙一覧にページネーションを適用するため
+gem 'kaminari'

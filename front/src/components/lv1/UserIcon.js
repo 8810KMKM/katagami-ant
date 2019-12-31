@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { randomColor } from 'libs/color'
 
@@ -21,5 +21,9 @@ export default function({ email, id, size }) {
     size: size,
   })
 
-  return <Avatar className={classes.icon}>{email[0].toUpperCase()}</Avatar>
+  return (
+    <Avatar className={classes.icon}>
+      <Typography variant="body2">{email[0].toUpperCase()}</Typography>
+    </Avatar>
+  )
 }

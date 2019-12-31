@@ -36,9 +36,16 @@ export const fetchUser = async (id, handleGetUser) => {
   })
 }
 
-export const fetchKatagamis = async handleGetKatagamis => {
-  await fetchGet({
+export const fetchKatagamis = async props => {
+  const { userId, page, per, handleGetKatagamis } = props
+  const body = new FormData()
+  body.append('user_id', userId)
+  body.append('page', page)
+  body.append('per', per)
+
+  await fetchPost({
     url: `${baseUrl}/katagamis`,
+    body: body,
     successAction: handleGetKatagamis,
   })
 }

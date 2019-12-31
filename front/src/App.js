@@ -7,7 +7,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
 import TopPage from 'pages/TopPage'
 import SignupPage from 'pages/SignupPage'
@@ -15,6 +15,7 @@ import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import Header from 'components/lv3/Header'
 import { isAuthenticated, logout } from 'libs/auth'
+import theme from 'libs/theme'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,19 +66,25 @@ export default function() {
   }
 
   return (
-    <BrowserRouter>
-      <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-      <Box className={classes.root}>
-        <Switch>
-          <AuthRoute path="/signup" component={SignupPage} />
-          <AuthRoute path="/login" component={LoginPage} />
-          <PrivateRoute
-            path="/ant/:katagamiId/:userId"
-            component={AnnotationPage}
-          />
-          <PrivateRoute path="/" component={TopPage} />
-        </Switch>
-      </Box>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Header
+          isLoggedIn={isLoggedIn}
+          handleLogout={handleLogout}
+          theme={theme}
+        />
+        <Box className={classes.root}>
+          <Switch>
+            <AuthRoute path="/signup" component={SignupPage} />
+            <AuthRoute path="/login" component={LoginPage} />
+            <PrivateRoute
+              path="/ant/:katagamiId/:userId"
+              component={AnnotationPage}
+            />
+            <PrivateRoute path="/" component={TopPage} />
+          </Switch>
+        </Box>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
