@@ -57,7 +57,6 @@ export default function() {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [isLoading, setIsLoading] = useState(false)
   const [isLatest, setIsLatest] = useState(true)
-  const user = currentUser()
   const classes = useStyles(theme)
 
   const handlePaginate = ({ page, per }) => {
@@ -100,21 +99,27 @@ export default function() {
     }
 
     const handleLastPageButtonClick = event => {
-      onChangePage(event, Math.ceil(count / rowsPerPage))
+      onChangePage(event, Math.ceil(count / rowsPerPage) - 1)
     }
 
     return (
       <div className={classes.footerButtons}>
-        <IconButton onClick={handleFirstPageButtonClick}>
+        <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0}>
           <FirstPage />
         </IconButton>
-        <IconButton onClick={handleBackButtonClick}>
+        <IconButton onClick={handleBackButtonClick} disabled={page === 0}>
           <KeyboardArrowLeft />
         </IconButton>
-        <IconButton onClick={handleNextButtonClick}>
+        <IconButton
+          onClick={handleNextButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        >
           <KeyboardArrowRight />
         </IconButton>
-        <IconButton onClick={handleLastPageButtonClick}>
+        <IconButton
+          onClick={handleLastPageButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        >
           <LastPage />
         </IconButton>
       </div>
