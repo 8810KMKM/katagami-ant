@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
+  name: { width: 600 },
   done: { color: theme.palette.primary.main },
   yet: { color: theme.palette.secondary.main },
 }))
@@ -18,7 +19,7 @@ export default props => {
       {katagamis.map(katagami => (
         <TableRow key={katagami.id} className={classes.tableRow}>
           <TableCell align="right">{katagami.id}</TableCell>
-          <TableCell>{katagami.name}</TableCell>
+          <TableCell className={classes.name}>{katagami.name}</TableCell>
           <TableCell align="right">{katagami.annotation_num}</TableCell>
           {katagami.done_by_current_user ? (
             <TableCell align="center" className={classes.done}>

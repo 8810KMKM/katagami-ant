@@ -33,8 +33,6 @@ export default function() {
   const [count, setCount] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLatest, setIsLatest] = useState(true)
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const classes = useStyles(theme)
@@ -44,9 +42,7 @@ export default function() {
       setKatagamis(response.katagamis)
       setCount(response.count)
       setPage(page)
-      setIsLoading(false)
     }
-    setIsLoading(true)
     fetchKatagamis({
       userId: currentUser().id,
       page: page + 1,
@@ -56,20 +52,14 @@ export default function() {
   }
 
   useEffect(() => {
-    setIsLoading(true)
-    handlePaginate({
-      page: page,
-      per: rowsPerPage,
-    })
-  }, [isLatest])
+    handlePaginate({ page: page, per: rowsPerPage })
+  }, [page, rowsPerPage])
 
   const handleChangePage = (event, newPage) => {
-    handlePaginate({ page: newPage, per: rowsPerPage })
     setPage(newPage)
   }
 
   const handleChangeRowsPerPage = event => {
-    handlePaginate({ page: 0, per: parseInt(event.target.value, 10) })
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
