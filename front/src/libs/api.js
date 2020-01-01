@@ -44,7 +44,7 @@ export const fetchKatagamis = async props => {
   body.append('per', per)
 
   await fetchPost({
-    url: `${baseUrl}/katagamis`,
+    url: `${baseUrl}/katagamis/${page}/${per}`,
     body: body,
     successAction: handleGetKatagamis,
   })

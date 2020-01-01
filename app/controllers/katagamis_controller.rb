@@ -10,6 +10,7 @@ class KatagamisController < ApplicationController
     katagamis = Katagami.includes(:annotations)
                         .page(params[:page]).per(params[:per])
 
+
     # ある型紙 x をログイン中のユーザはアノテーション済みか ?
     # => A のなかに x が入っているか ?
     render json: {
