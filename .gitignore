@@ -12,6 +12,9 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+# redis
+app/redis/*
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
