@@ -55,3 +55,6 @@ gem 'carrierwave'
 gem 'aws-sdk'
 # 型紙一覧にページネーションを適用するため
 gem 'kaminari'
+# キャッシュストア用
+gem 'redis'
+gem 'redis-rails'
