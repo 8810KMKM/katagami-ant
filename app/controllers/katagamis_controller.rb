@@ -1,9 +1,4 @@
 class KatagamisController < ApplicationController
-  def hoge
-    # Rails.cache.write('age', 10)
-    render json: cache_age
-  end
-
   def index
     # A.ログイン中のユーザがアノテーション済みの型紙のidsを取得
     katagami_ids_current_user_done_annotation = 
@@ -31,11 +26,4 @@ class KatagamisController < ApplicationController
       }
     }
   end
-
-  private
-    def cache_age
-      Rails.cache.fetch('age') do
-        10
-      end
-    end
 end
