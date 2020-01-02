@@ -17,14 +17,14 @@ Rails.application.configure do
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    config.cache_store = :memory_store
+    config.cache_store = :redis_store, 'redis://redis:6379/0', { expires_in: 1.hour }
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :redis_store, "redis://localhost:6379"
+    config.cache_store = :null_store
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
