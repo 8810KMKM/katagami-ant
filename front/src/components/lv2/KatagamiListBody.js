@@ -1,18 +1,25 @@
 import React from 'react'
-import { TableRow, TableCell, TableBody } from '@material-ui/core'
+import {
+  TableRow,
+  TableCell,
+  TableBody,
+  Button,
+  IconButton,
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { NoteAdd, List, Create, Link } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
-  name: { width: 600 },
   done: { color: theme.palette.primary.main },
   yet: { color: theme.palette.secondary.main },
+  button: { padding: 4 },
 }))
 
 export default props => {
-  const { katagamis, emptyRows } = props
+  const { katagamis, emptyRows, handleSelectId } = props
   const classes = useStyles()
   return (
     <TableBody>
@@ -23,13 +30,27 @@ export default props => {
           <TableCell align="right">{katagami.annotation_num}</TableCell>
           {katagami.done_by_current_user ? (
             <TableCell align="center" className={classes.done}>
-              完了
+              実行済
             </TableCell>
           ) : (
             <TableCell align="center" className={classes.yet}>
-              未達成
+              未実行
             </TableCell>
           )}
+          <TableCell align="center">
+            <IconButton className={classes.button}>
+              <Link />
+            </IconButton>
+          </TableCell>
+          <TableCell>
+            <IconButton
+              color="primary"
+              className={classes.button}
+              onClick={() => handleSelectId(katagami.id)}
+            >
+              <Create />
+            </IconButton>
+          </TableCell>
         </TableRow>
       ))}
       {emptyRows > 0 && (

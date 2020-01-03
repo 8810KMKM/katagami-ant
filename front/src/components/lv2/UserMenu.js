@@ -5,17 +5,13 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Modal,
-  Grid,
-  Button,
-  Typography,
   ListItem,
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core'
 import { AccountBox, ExitToApp } from '@material-ui/icons'
-import { grey } from '@material-ui/core/colors'
 import UserIcon from 'components/lv1/UserIcon'
+import Modal from 'components/lv2/Modal'
 import { currentUser } from 'libs/auth'
 import theme from 'libs/theme'
 
@@ -35,24 +31,6 @@ const useStyle = makeStyles(theme => ({
     marginTop: 5,
     marginRight: 8,
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalBody: {
-    width: 280,
-    height: 120,
-    padding: '16px 24px',
-    backgroundColor: grey[50],
-  },
-  text: {
-    padding: '24px 0',
-  },
-  button: {
-    width: 88,
-    margin: '0 auto',
-  },
 }))
 
 export default function({ handleLogout }) {
@@ -71,6 +49,10 @@ export default function({ handleLogout }) {
   const handleModalOpen = () => {
     setAnchorEl(false)
     setModalIsOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setModalIsOpen(false)
   }
 
   return (
@@ -121,37 +103,15 @@ export default function({ handleLogout }) {
         </MenuItem>
       </Menu>
       <Modal
-        aria-labelledby="logunt-modal"
-        aria-describedby="logout-modal-description"
-        className={classes.modal}
-        open={modalIsOpen}
-        onClose={() => setModalIsOpen(false)}
-      >
-        <div className={classes.modalBody}>
-          <Typography className={classes.text}>ログアウトしますか？</Typography>
-          <Grid container>
-            <Grid item xs={8}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={handleSafetyLogout}
-              >
-                はい
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={() => setModalIsOpen(false)}
-              >
-                いいえ
-              </Button>
-            </Grid>
-          </Grid>
-        </div>
-      </Modal>
+        isOpen={modalIsOpen}
+        onClose={handleModalClose}
+        title="ログアウトしますか？"
+        text="ログアウトした場合, 編集中の情報は保存されません."
+        yesText="はい"
+        noText="いいえ"
+        handleAnswerYes={handleSafetyLogout}
+        handleAnswerNo={handleModalClose}
+      />
     </div>
   )
 }

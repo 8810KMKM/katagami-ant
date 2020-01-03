@@ -1,17 +1,6 @@
 class AnnotationsController < ApplicationController
   def create
-    ant_params = {
-      katagami: Katagami.find(params[:katagami_id]),
-      user: User.find(params[:user_id])
-    }
-    annotation = Annotation.find_by(ant_params) || Annotation.create(ant_params)
-
-    render json: {
-      id: annotation.id,
-      katagami_url: ant_params[:katagami].presigned_url,
-      katagami_width: ant_params[:katagami].width,
-      katagami_height: ant_params[:katagami].height
-    }
+    render json: cache_annotation(params)
   end
 
   def add_has_labels
@@ -43,4 +32,22 @@ class AnnotationsController < ApplicationController
       p e.message
       render json: []
   end
+
+  private
+    def cache_annotation(params)
+      Rails.cache.fetch('annotation-' + params[:katagami_id] + '-' + params[:user_id]) do
+        ant_params = {
+          katagami: Katagami.find(params[:katagami_id]),
+          user: User.find(params[:user_id])
+        }
+        annotation = Annotation.find_by(ant_params) || Annotation.create(ant_params)
+    
+        {
+          id: annotation.id,
+          katagami_url: ant_params[:katagami].presigned_url,
+          katagami_width: ant_params[:katagami].width,
+          katagami_height: ant_params[:katagami].height
+        }
+      end
+    end
 end
