@@ -22,10 +22,8 @@ class Katagami < ApplicationRecord
   end
 
   def presigned_url
-    Rails.cache.fetch('katagami-' + self.id) do
-      target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      target[0].presigned_url(:get)
-    end
+    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
+    target[0].presigned_url(:get)
   end
 
   def self._count
