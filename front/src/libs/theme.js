@@ -16,6 +16,11 @@ const typography = {
     fontWeight: 700,
     color: palette.primary.main,
   },
+  h2: {
+    fontSize: 24,
+    fontWeight: 700,
+    color: palette.primary.main,
+  },
   body1: {
     fontSize: 16,
     color: '#030303',

@@ -41,17 +41,21 @@ const useStyle = makeStyles(theme => ({
     justifyContent: 'center',
   },
   modalBody: {
-    width: 280,
-    height: 120,
-    padding: '16px 24px',
+    width: 640,
+    padding: '16px 24px 24px 24px',
     backgroundColor: grey[50],
   },
   text: {
     padding: '24px 0',
   },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: 24,
+  },
   button: {
     width: 88,
-    margin: '0 auto',
+    marginLeft: 24,
   },
 }))
 
@@ -128,28 +132,29 @@ export default function({ handleLogout }) {
         onClose={() => setModalIsOpen(false)}
       >
         <div className={classes.modalBody}>
-          <Typography className={classes.text}>ログアウトしますか？</Typography>
-          <Grid container>
-            <Grid item xs={8}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={handleSafetyLogout}
-              >
-                はい
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={() => setModalIsOpen(false)}
-              >
-                いいえ
-              </Button>
-            </Grid>
-          </Grid>
+          <Typography variant="h2" className={classes.text}>
+            ログアウトしますか？
+          </Typography>
+          <Typography>
+            ログアウトした場合, 編集中の情報は保存されません.
+          </Typography>
+          <div className={classes.buttonWrapper}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={handleSafetyLogout}
+            >
+              はい
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => setModalIsOpen(false)}
+            >
+              いいえ
+            </Button>
+          </div>
         </div>
       </Modal>
     </div>
