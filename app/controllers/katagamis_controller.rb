@@ -15,7 +15,6 @@ class KatagamisController < ApplicationController
         # 型紙一覧の情報 アノテーション件数を表示するためinclude
         katagamis = Katagami.includes(:annotations)
                             .page(params[:page]).per(params[:per])
-                            .order(created_at: 'DESC')
 
 
         # ある型紙 x をログイン中のユーザはアノテーション済みか ?
