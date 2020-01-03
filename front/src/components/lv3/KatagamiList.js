@@ -13,6 +13,7 @@ import { fetchKatagamis } from 'libs/api'
 import theme from 'libs/theme'
 import PaginationActions from 'components/lv2/PaginationActions'
 import KatagamiListBody from 'components/lv2/KatagamiListBody'
+import Modal from 'components/lv2/Modal'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +21,10 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     overflow: 'hidden',
+  },
+  antButton: {
+    left: '85%',
+    marginBottom: 16,
   },
   tableRow: {
     '& *': { fontWeight: 'normal' },
@@ -33,8 +38,11 @@ export default function() {
   const [count, setCount] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [selectedId, setSelectedId] = useState(0)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
+  const user = currentUser()
   const classes = useStyles(theme)
 
   const handlePaginate = ({ page, per }) => {
@@ -44,16 +52,12 @@ export default function() {
       setPage(page)
     }
     fetchKatagamis({
-      userId: currentUser().id,
+      userId: user.id,
       page: page + 1,
       per: per,
       handleGetKatagamis: handleGetKatagamis,
     })
   }
-
-  useEffect(() => {
-    handlePaginate({ page: page, per: rowsPerPage })
-  }, [page, rowsPerPage])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -64,6 +68,23 @@ export default function() {
     setPage(0)
   }
 
+  const handleDoAnnotation = () => {
+    window.location.href = `ant/${selectedId}/${user.id}`
+  }
+
+  const handleModalClose = () => {
+    setModalIsOpen(false)
+  }
+
+  const handleSelectId = id => {
+    setSelectedId(id)
+    setModalIsOpen(true)
+  }
+
+  useEffect(() => {
+    handlePaginate({ page: page, per: rowsPerPage })
+  }, [page, rowsPerPage])
+
   return (
     <div className={classes.root}>
       <Table>
@@ -72,10 +93,16 @@ export default function() {
             <TableCell align="right">id</TableCell>
             <TableCell align="left">ファイル名</TableCell>
             <TableCell align="right">アノテーション件数</TableCell>
-            <TableCell align="center">あなたの達成度</TableCell>
+            <TableCell align="center">ステータス</TableCell>
+            <TableCell align="center">結果一覧</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
-        <KatagamiListBody katagamis={katagamis} emptyRows={emptyRows} />
+        <KatagamiListBody
+          katagamis={katagamis}
+          emptyRows={emptyRows}
+          handleSelectId={handleSelectId}
+        />
         <TableFooter className={classes.footer}>
           <TableRow className={classes.tableRow}>
             <TablePagination
@@ -90,6 +117,16 @@ export default function() {
           </TableRow>
         </TableFooter>
       </Table>
+      <Modal
+        isOpen={modalIsOpen}
+        onClose={handleModalClose}
+        title="アノテーションを実行しますか？"
+        text="1回約5分で完了します."
+        yesText="はい"
+        noText="いいえ"
+        handleAnswerYes={handleDoAnnotation}
+        handleAnswerNo={handleModalClose}
+      />
     </div>
   )
 }
