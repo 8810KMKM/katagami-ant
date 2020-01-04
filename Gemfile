@@ -58,3 +58,5 @@ gem 'kaminari'
 # キャッシュストア用
 gem 'redis'
 gem 'redis-rails'
+# デバッグ用
+gem 'pry-byebug'

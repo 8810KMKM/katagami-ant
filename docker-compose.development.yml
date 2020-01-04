@@ -3,6 +3,8 @@ services:
   web:
     build: .
     command: /bin/sh -c "rm -f /katagami-ant/tmp/pids/server.pid && bundle exec rails s -p '3001' -b '0.0.0.0'"
+    tty: true
+    stdin_open: true
     environment:
       - DATABASE=katagami-ant_development
       - DATABASE_USER=root
