@@ -35,10 +35,10 @@ class AnnotationsController < ApplicationController
 
   private
     def cache_annotation(params)
-      Rails.cache.fetch('annotation-' + params[:katagami_id] + '-' + params[:user_id]) do
+      Rails.cache.fetch('annotation-' + params[:katagami] + '-' + params[:user]) do
         ant_params = {
-          katagami: Katagami.find(params[:katagami_id]),
-          user: User.find(params[:user_id])
+          katagami: Katagami.find(params[:katagami]),
+          user: User.find(params[:user])
         }
         annotation = Annotation.find_by(ant_params) || Annotation.create(ant_params)
     
