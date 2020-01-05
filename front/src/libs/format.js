@@ -1,5 +1,6 @@
 import { savedTiles } from './tile'
 
+// APIから取得したラベル名を日本語化
 export const labelNameJp = nameEn => {
   switch (nameEn) {
     case 'kasuri':
@@ -27,6 +28,7 @@ export const labelNameJp = nameEn => {
   }
 }
 
+// ラベル付け : state (Array of Boolean) => レンダリング用 (String)
 export const convertBoolToNumOfTiles = tileStates => {
   const numbersStr = tileStates
     .map((tile, i) => (tile ? i + 1 : ' '))
@@ -36,6 +38,7 @@ export const convertBoolToNumOfTiles = tileStates => {
   return numbersStr ? numbersStr : '該当無し'
 }
 
+// ラベル付け : レンダリング用 (String) => state (Array of Boolean)
 export const convertNumToBoolOfTiles = saveTiles => {
   let convertArray = new Array(9).fill(false)
   if (saveTiles) {
@@ -46,5 +49,10 @@ export const convertNumToBoolOfTiles = saveTiles => {
   return convertArray
 }
 
+// ラベル付け : 保存済み (Array of Number) => POST用 (String)
 export const hasLabelsForPost = labels =>
   labels.map((label, i) => label.id + ' ' + savedTiles(i)).join(',')
+
+// idを0詰め表示
+export const zeroPaddingOf = (num, zeros) =>
+  (new Array(zeros).fill(0).join('') + num).slice(-1 * zeros)
