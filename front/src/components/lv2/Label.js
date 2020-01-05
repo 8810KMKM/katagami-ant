@@ -4,7 +4,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Button,
+  IconButton,
   Grid,
   Typography,
 } from '@material-ui/core'
@@ -19,15 +19,8 @@ import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
-  name: {
-    // marginLeft: props => (props.ruby.length === 3 ? -4 : 0),
-  },
-  tiles: {
-    paddingTop: 6,
-  },
-  buttons: {
-    width: 128,
-  },
+  tiles: { paddingTop: 6 },
+  buttons: { width: 128 },
   single: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -86,26 +79,24 @@ export default props => {
     }
   }, [isEditingThis, i, setSelectedTiles])
 
-  console.log(typeof name.ruby.length)
-
   const ActivatedButtons = () => {
     if (isEditingThis) {
       return (
         <div classes={classes.buttons}>
-          <Button color="primary" onClick={handleSave}>
+          <IconButton color="primary" onClick={handleSave}>
             <Check />
-          </Button>
-          <Button color="secondary" onClick={handleCancelEdit}>
+          </IconButton>
+          <IconButton color="secondary" onClick={handleCancelEdit}>
             <Cancel />
-          </Button>
+          </IconButton>
         </div>
       )
     }
     return (
       <div className={classes.buttons + ' ' + classes.single}>
-        <Button color="default" onClick={handleEdit} disabled={!isFocused}>
+        <IconButton color="default" onClick={handleEdit} disabled={!isFocused}>
           <Edit />
-        </Button>
+        </IconButton>
       </div>
     )
   }
