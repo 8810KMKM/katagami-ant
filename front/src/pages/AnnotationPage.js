@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'components/lv1/Container'
 import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
-import HeadLine from 'components/lv1/HeadLine'
 import { Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import HeadLine from 'components/lv1/HeadLine'
+import Modal from 'components/lv2/Modal'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import { initAllTiles } from 'libs/tile'
-import { hasLabelsForPost } from 'libs/format'
-import Modal from 'components/lv2/Modal'
+import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -24,6 +24,7 @@ export default function(props) {
   const { userId, katagamiId } = props.match.params
 
   const tileNumber = 9
+  const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const classes = useStyles()
 
   const [annotation, setAnnotation] = useState(null)
@@ -104,7 +105,7 @@ export default function(props) {
 
   return (
     <Container>
-      <HeadLine>型紙 id : {katagamiId}</HeadLine>
+      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
       <Grid container>
         <Grid item xs={7}>
           <KatagamiImage
