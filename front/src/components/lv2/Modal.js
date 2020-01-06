@@ -14,9 +14,7 @@ const useStyles = makeStyles(theme => ({
     padding: '16px 24px 24px 24px',
     backgroundColor: grey[50],
   },
-  text: {
-    padding: '24px 0',
-  },
+  text: { padding: '24px 0' },
   buttonWrapper: {
     display: 'flex',
     justifyContent: 'flex-end',

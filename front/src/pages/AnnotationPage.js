@@ -9,15 +9,14 @@ import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import { initAllTiles } from 'libs/tile'
 import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
+import LoadingModal from 'components/lv2/LoadingModal'
 
 const useStyles = makeStyles(theme => ({
   submit: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  button: {
-    width: 120,
-  },
+  button: { width: 120 },
 }))
 
 export default function(props) {
@@ -39,6 +38,8 @@ export default function(props) {
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modal2IsOpen, setModal2IsOpen] = useState(false)
+  const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
     console.log(selectedTiles)
@@ -49,13 +50,21 @@ export default function(props) {
 
   const handleSaveAnnotation = () => {
     const handleCompleteAnnotation = response => {
-      window.location.href = '/'
+      setIsPosting(false)
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 2000)
     }
-    postHasLabels({
-      annotationId: annotation,
-      hasLabels: hasLabelsForPost(labels),
-      handleCompleteAnnotation: handleCompleteAnnotation,
-    })
+    setIsPosting(true)
+    setModalIsOpen(false)
+    setModal2IsOpen(true)
+    setTimeout(() => {
+      postHasLabels({
+        annotationId: annotation,
+        hasLabels: hasLabelsForPost(labels),
+        handleCompleteAnnotation: handleCompleteAnnotation,
+      })
+    }, 2000)
   }
 
   const handleModalOpen = () => {
@@ -153,6 +162,12 @@ export default function(props) {
         noText="戻る"
         handleAnswerYes={handleSaveAnnotation}
         handleAnswerNo={handleModalClose}
+      />
+      <LoadingModal
+        isLoading={isPosting}
+        isOpen={modal2IsOpen}
+        loadingText="結果を保存中です..."
+        completeText="保存が完了しました！ ホームに戻ります..."
       />
     </Container>
   )
