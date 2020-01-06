@@ -170,7 +170,7 @@ export default function(props) {
         isLoading={isPosting}
         isOpen={modal2IsOpen}
         loadingText="結果を保存中です..."
-        completeText="保存が完了しました！"
+        completeText="保存が完了しました！ ホームに戻ります..."
       />
     </Container>
   )

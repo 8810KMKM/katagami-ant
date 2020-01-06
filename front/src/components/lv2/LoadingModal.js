@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Modal, Button, Typography, LinearProgress } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors'
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
   modalBody: {
     width: 640,
-    padding: '16px 24px 24px 24px',
+    padding: '40px 24px 48px',
     backgroundColor: grey[50],
   },
   text: {
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
   line: {
     height: 8,
     borderRadius: 2,
+    marginTop: 16,
   },
 }))
 
@@ -31,15 +32,21 @@ export default props => {
     <Modal open={isOpen} className={classes.modal}>
       <div className={classes.modalBody}>
         {isLoading ? (
-          <Typography>{loadingText}</Typography>
+          <div>
+            <Typography color="primary">{loadingText}</Typography>
+            <LinearProgress className={classes.line} />
+          </div>
         ) : (
-          <Typography>{completeText}</Typography>
+          <div>
+            <Typography color="secondary">{completeText}</Typography>
+            <LinearProgress
+              variant="determinate"
+              color="secondary"
+              className={classes.line}
+              value={100}
+            />
+          </div>
         )}
-        <LinearProgress
-          variant="determinate"
-          className={classes.line}
-          value={!isLoading}
-        />
       </div>
     </Modal>
   )
