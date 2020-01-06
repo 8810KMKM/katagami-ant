@@ -37,8 +37,8 @@ export default function(props) {
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [modal2IsOpen, setModal2IsOpen] = useState(false)
+  const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false)
+  const [loadingModalIsOpen, setLoadingModalIsOpen] = useState(false)
   const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
@@ -56,23 +56,23 @@ export default function(props) {
       }, 2000)
     }
     setIsPosting(true)
-    setModalIsOpen(false)
-    setModal2IsOpen(true)
+    setConfirmModalIsOpen(false)
+    setLoadingModalIsOpen(true)
     setTimeout(() => {
-      postHasLabels({
-        annotationId: annotation,
-        hasLabels: hasLabelsForPost(labels),
-        handleCompleteAnnotation: handleCompleteAnnotation,
-      })
+      // postHasLabels({
+      //   annotationId: annotation,
+      //   hasLabels: hasLabelsForPost(labels),
+      //   handleCompleteAnnotation: handleCompleteAnnotation,
+      // })
     }, 2000)
   }
 
   const handleModalOpen = () => {
-    setModalIsOpen(true)
+    setConfirmModalIsOpen(true)
   }
 
   const handleModalClose = () => {
-    setModalIsOpen(false)
+    setConfirmModalIsOpen(false)
   }
 
   // to fecth Katagami image
@@ -154,7 +154,7 @@ export default function(props) {
         </Button>
       </Grid>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={confirmModalIsOpen}
         onClose={handleModalClose}
         title="アノテーション結果を保存しますか？"
         text="「該当無し」という結果もデータとして保存されます."
@@ -165,7 +165,7 @@ export default function(props) {
       />
       <LoadingModal
         isLoading={isPosting}
-        isOpen={modal2IsOpen}
+        isOpen={loadingModalIsOpen}
         loadingText="結果を保存中です..."
         completeText="保存が完了しました！ ホームに戻ります..."
       />
