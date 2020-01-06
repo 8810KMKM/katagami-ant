@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   root: {
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 }))
 
@@ -22,7 +23,7 @@ export default props => {
     <AppBar postion="static" color={isAnnotationPage ? 'secondary' : 'primary'}>
       <Toolbar>
         <Grid container className={classes.root}>
-          <Grid item xs={4}>
+          <Grid item xs={7}>
             {isAnnotationPage ? (
               <Typography variant="body2">
                 アノテーション実行中です.
