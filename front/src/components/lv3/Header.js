@@ -9,6 +9,21 @@ const useStyles = makeStyles(theme => ({
   root: {
     alignItems: 'center',
   },
+  skeletonWrapper: {
+    backgroundColor: theme.palette.warning.main,
+    display: 'flex',
+    alignItems: 'center',
+    padding: 0,
+    margin: 0,
+  },
+  skeleton: {
+    backgroundColor: theme.palette.secondary.main,
+    height: 66,
+    width: '100vw',
+    display: 'flex',
+    alignItems: 'center',
+    margin: 0,
+  },
 }))
 
 export default function(props) {
@@ -19,25 +34,25 @@ export default function(props) {
   const classes = useStyles()
 
   return (
-    <AppBar postion="static">
+    <AppBar postion="static" color={isAnnotationPage ? 'secondary' : 'primary'}>
       <Toolbar>
-        {isAnnotationPage ? (
-          <Typography>
-            アノテーション中
-            (ブラウザの「戻るボタン」等でページを離れると実行中のデータは保存されません.)
-          </Typography>
-        ) : (
-          <Grid container className={classes.root}>
-            <Grid item xs={11}>
+        <Grid container className={classes.root}>
+          <Grid item xs={11}>
+            {isAnnotationPage ? (
+              <Typography variant="body2">
+                アノテーション実行中です.
+                ブラウザの「戻るボタン」等でページを離れると実行中のデータは保存されません.)
+              </Typography>
+            ) : (
               <AppLogo />
-            </Grid>
-            {isLoggedIn && (
-              <Grid item xs={1}>
-                <UserMenu handleLogout={handleLogout} />
-              </Grid>
             )}
           </Grid>
-        )}
+          {isLoggedIn && (
+            <Grid item xs={1}>
+              <UserMenu handleLogout={handleLogout} />
+            </Grid>
+          )}
+        </Grid>
       </Toolbar>
     </AppBar>
   )
