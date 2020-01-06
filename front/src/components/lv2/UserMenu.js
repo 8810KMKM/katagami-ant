@@ -32,7 +32,8 @@ const useStyle = makeStyles(theme => ({
   },
 }))
 
-export default function({ handleLogout }) {
+export default props => {
+  const { handleLogout } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const open = Boolean(anchorEl)

@@ -15,7 +15,7 @@ const useStyle = makeStyles(theme => ({
   },
 }))
 
-export default function() {
+export default () => {
   const classes = useStyle({ size: 24 })
 
   return (

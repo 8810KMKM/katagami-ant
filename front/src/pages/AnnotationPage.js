@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function(props) {
+export default props => {
   const { userId, katagamiId } = props.match.params
 
   const tileNumber = 9

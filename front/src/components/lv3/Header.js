@@ -9,24 +9,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     alignItems: 'center',
   },
-  skeletonWrapper: {
-    backgroundColor: theme.palette.warning.main,
-    display: 'flex',
-    alignItems: 'center',
-    padding: 0,
-    margin: 0,
-  },
-  skeleton: {
-    backgroundColor: theme.palette.secondary.main,
-    height: 66,
-    width: '100vw',
-    display: 'flex',
-    alignItems: 'center',
-    margin: 0,
-  },
 }))
 
-export default function(props) {
+export default props => {
   const { isLoggedIn, handleLogout } = props
 
   let location = useLocation()
@@ -37,7 +22,7 @@ export default function(props) {
     <AppBar postion="static" color={isAnnotationPage ? 'secondary' : 'primary'}>
       <Toolbar>
         <Grid container className={classes.root}>
-          <Grid item xs={11}>
+          <Grid item xs={4}>
             {isAnnotationPage ? (
               <Typography variant="body2">
                 アノテーション実行中です.

@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   footer: { marginTop: theme.spacing(20) },
 }))
 
-export default function() {
+export default () => {
   const [katagamis, setKatagamis] = useState([])
   const [count, setCount] = useState(0)
   const [page, setPage] = useState(0)

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function() {
+export default () => {
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated())
   // const user = currentUser()
   const classes = useStyles()

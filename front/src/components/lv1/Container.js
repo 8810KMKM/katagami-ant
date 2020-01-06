@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function(props) {
+export default props => {
   const classes = useStyles()
   return <Container className={classes.container}>{props.children}</Container>
 }
