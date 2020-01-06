@@ -16,9 +16,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  button: {
-    width: 120,
-  },
+  button: { width: 120 },
 }))
 
 export default function(props) {
@@ -48,11 +46,6 @@ export default function(props) {
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )
-  }
-
-  const handleLoadingToPost = () => {
-    setModalIsOpen(false)
-    setModal2IsOpen(true)
   }
 
   const handleSaveAnnotation = () => {

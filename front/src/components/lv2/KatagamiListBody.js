@@ -1,13 +1,7 @@
 import React from 'react'
-import {
-  TableRow,
-  TableCell,
-  TableBody,
-  Button,
-  IconButton,
-} from '@material-ui/core'
+import { TableRow, TableCell, TableBody, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { NoteAdd, List, Create, Link } from '@material-ui/icons'
+import { Create, Link } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   tableRow: {

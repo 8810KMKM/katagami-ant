@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Modal, Button, Typography, LinearProgress } from '@material-ui/core'
+import { Modal, Typography, LinearProgress } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
