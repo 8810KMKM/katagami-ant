@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function(props) {
+export default props => {
   const {
     katagamiUrl,
     katagamiWidth,

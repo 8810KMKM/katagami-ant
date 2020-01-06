@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   root: { marginBottom: 40 },
 }))
 
-export default function(props) {
+export default props => {
   const classes = useStyles()
 
   return (

@@ -16,10 +16,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  button: { width: 120 },
+  button: {
+    width: 180,
+    marginLeft: 24,
+  },
 }))
 
-export default function(props) {
+export default props => {
   const { userId, katagamiId } = props.match.params
 
   const tileNumber = 9
@@ -37,8 +40,9 @@ export default function(props) {
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [modal2IsOpen, setModal2IsOpen] = useState(false)
+  const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false)
+  const [loadingModalIsOpen, setLoadingModalIsOpen] = useState(false)
+  const [backModalIsOpen, setBackModalIsOpen] = useState(false)
   const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
@@ -56,8 +60,8 @@ export default function(props) {
       }, 2000)
     }
     setIsPosting(true)
-    setModalIsOpen(false)
-    setModal2IsOpen(true)
+    setConfirmModalIsOpen(false)
+    setLoadingModalIsOpen(true)
     setTimeout(() => {
       postHasLabels({
         annotationId: annotation,
@@ -67,12 +71,24 @@ export default function(props) {
     }, 2000)
   }
 
-  const handleModalOpen = () => {
-    setModalIsOpen(true)
+  const handleConfirmModalOpen = () => {
+    setConfirmModalIsOpen(true)
   }
 
-  const handleModalClose = () => {
-    setModalIsOpen(false)
+  const handleConfirmModalClose = () => {
+    setConfirmModalIsOpen(false)
+  }
+
+  const handleBackToTop = () => {
+    window.location.href = '/'
+  }
+
+  const handleBackModalOpen = () => {
+    setBackModalIsOpen(true)
+  }
+
+  const handleBackModalClose = () => {
+    setBackModalIsOpen(false)
   }
 
   // to fecth Katagami image
@@ -148,24 +164,41 @@ export default function(props) {
           variant="contained"
           color="primary"
           className={classes.button}
-          onClick={handleModalOpen}
+          onClick={handleConfirmModalOpen}
         >
           完了
         </Button>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={handleBackModalOpen}
+        >
+          中断してトップへ
+        </Button>
       </Grid>
       <Modal
-        isOpen={modalIsOpen}
-        onClose={handleModalClose}
+        isOpen={confirmModalIsOpen}
+        onClose={handleConfirmModalClose}
         title="アノテーション結果を保存しますか？"
         text="「該当無し」という結果もデータとして保存されます."
         yesText="保存"
         noText="戻る"
         handleAnswerYes={handleSaveAnnotation}
-        handleAnswerNo={handleModalClose}
+        handleAnswerNo={handleConfirmModalClose}
+      />
+      <Modal
+        isOpen={backModalIsOpen}
+        onClose={handleConfirmModalClose}
+        title="トップに戻りますか？"
+        text="編集中の情報は保存されません."
+        yesText="はい"
+        noText="いいえ"
+        handleAnswerYes={handleBackToTop}
+        handleAnswerNo={handleBackModalClose}
       />
       <LoadingModal
         isLoading={isPosting}
-        isOpen={modal2IsOpen}
+        isOpen={loadingModalIsOpen}
         loadingText="結果を保存中です..."
         completeText="保存が完了しました！ ホームに戻ります..."
       />

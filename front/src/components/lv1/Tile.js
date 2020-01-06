@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function(props) {
+export default props => {
   const { number, square, isSelected, handleToggleTile } = props
   const classes = useStyles()
 

@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function({ setAuth }) {
+export default props => {
+  const { setAuth } = props
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
