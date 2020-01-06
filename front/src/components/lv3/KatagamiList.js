@@ -83,7 +83,7 @@ export default function() {
 
   useEffect(() => {
     handlePaginate({ page: page, per: rowsPerPage })
-  })
+  }, [page, rowsPerPage])
 
   return (
     <div className={classes.root}>
