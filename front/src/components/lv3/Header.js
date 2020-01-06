@@ -23,7 +23,7 @@ export default props => {
     <AppBar postion="static" color={isAnnotationPage ? 'secondary' : 'primary'}>
       <Toolbar>
         <Grid container className={classes.root}>
-          <Grid item xs={7}>
+          <Grid item xs={8}>
             {isAnnotationPage ? (
               <Typography variant="body2">
                 アノテーション実行中です.
