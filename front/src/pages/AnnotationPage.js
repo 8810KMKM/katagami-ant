@@ -58,16 +58,20 @@ export default function(props) {
   const handleSaveAnnotation = () => {
     const handleCompleteAnnotation = response => {
       setIsPosting(false)
-      // window.location.href = '/'
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 2000)
     }
     setIsPosting(true)
     setModalIsOpen(false)
     setModal2IsOpen(true)
-    // postHasLabels({
-    //   annotationId: annotation,
-    //   hasLabels: hasLabelsForPost(labels),
-    //   handleCompleteAnnotation: handleCompleteAnnotation,
-    // })
+    setTimeout(() => {
+      postHasLabels({
+        annotationId: annotation,
+        hasLabels: hasLabelsForPost(labels),
+        handleCompleteAnnotation: handleCompleteAnnotation,
+      })
+    }, 2000)
   }
 
   const handleModalOpen = () => {
