@@ -32,7 +32,10 @@ export default props => {
             </TableCell>
           )}
           <TableCell align="center">
-            <IconButton className={classes.button}>
+            <IconButton
+              className={classes.button}
+              onClick={() => (window.location.href = `/results/${katagami.id}`)}
+            >
               <Equalizer />
             </IconButton>
           </TableCell>
