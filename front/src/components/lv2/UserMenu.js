@@ -5,7 +5,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  ListItem,
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core'
@@ -47,7 +46,7 @@ export default function({ handleLogout }) {
   }
 
   const handleModalOpen = () => {
-    setAnchorEl(false)
+    setAnchorEl(true)
     setModalIsOpen(true)
   }
 
@@ -85,21 +84,17 @@ export default function({ handleLogout }) {
           onClick={() => setAnchorEl(false)}
         >
           <Link to={`/users/${user.id}`} className={classes.link}>
-            <ListItem>
-              <ListItemIcon>
-                <AccountBox color="primary" />
-              </ListItemIcon>
-              <ListItemText primary="マイページ" />
-            </ListItem>
+            <ListItemIcon>
+              <AccountBox color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="マイページ" />
           </Link>
         </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleModalOpen}>
-          <ListItem>
-            <ListItemIcon>
-              <ExitToApp color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="ログアウト" />
-          </ListItem>
+          <ListItemIcon>
+            <ExitToApp color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="ログアウト" />
         </MenuItem>
       </Menu>
       <Modal
