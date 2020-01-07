@@ -4,23 +4,25 @@ class KatagamisController < ApplicationController
   end
 
   def show
-    katagami = Katagami.includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+    katagami = cache_katagami(params)
+    whole_labels = katagami.annotations.map {|ant| 
+      ant.has_labels.map {|has_label| has_label.label.name}
+    }.join(',')
+     .split(',')
+     .to_set.reject {|name| name == ''}
     
-    render json: katagami.annotations.map {|ant| 
-      {
-        id: ant.id,
-        user: ant.user.email,
-        has_labels_count: ant.has_labels.map {|has_label| 
-          {
-            position: has_label.position,
-            label: has_label.label.name
-          }
-        }
-      }
+    render json: {
+      whole_labels: whole_labels
     }
   end
 
   private
+    def cache_katagami(params)
+      Rails.cache.fetch('katagami-' + params[:id]) do
+        katagami = Katagami.includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+      end
+    end
+
     def cache_katagamis(params)
       Rails.cache.fetch('katagamis-' + params[:page] + '-' + params[:per]) do
         # A.ログイン中のユーザがアノテーション済みの型紙のidsを取得
