@@ -3,7 +3,7 @@ class KatagamisController < ApplicationController
     render json: cache_katagamis(params)
   end
 
-  def show  
+  def show
     render json: cache_katagami(params)
   end
 
@@ -14,15 +14,35 @@ class KatagamisController < ApplicationController
         # 全アノテーションでラベル付けされているラベル一覧
         whole_labels = katagami.annotations.map {|ant| 
           ant.has_labels.map {|has_label| has_label.label.name}
-        }.join(',')
-        .split(',')
+        }.join(' ')
+        .split(' ')
         .to_set
         .reject {|name| name == ''}
 
+        # A. ポジション毎のラベル付け状況
+        has_labels_by_position = katagami.annotations.map {|ant| 
+          ant.has_labels.map {|has_label| 
+            {
+              user: ant.user_id,
+              position: has_label.position, 
+              label: has_label.label.name
+            }
+          }
+        }.flatten.group_by {|label| label[:position]}
+
+        # Aのラベル付けを更にラベル名毎にグループ化
+        has_labels_by_position_by_label = has_labels_by_position.map {|k, v| 
+          {
+            position: k,
+            score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+          }
+        }
+            
         {
           katagami_url: katagami.presigned_url,
-          whole_labels: whole_labels,
           annotation_num: katagami.annotations.size,
+          whole_labels: whole_labels,
+          has_labels: has_labels_by_position_by_label,
         }
       end
     end
