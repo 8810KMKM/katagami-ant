@@ -11,6 +11,7 @@ class KatagamisController < ApplicationController
     def cache_katagami(params)
       Rails.cache.fetch('katagami-' + params[:id]) do
         katagami = Katagami.includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+        # 全アノテーションでラベル付けされているラベル一覧
         whole_labels = katagami.annotations.map {|ant| 
           ant.has_labels.map {|has_label| has_label.label.name}
         }.join(',')
@@ -20,7 +21,8 @@ class KatagamisController < ApplicationController
 
         {
           katagami_url: katagami.presigned_url,
-          whole_labels: whole_labels
+          whole_labels: whole_labels,
+          annotation_num: katagami.annotations.size,
         }
       end
     end
