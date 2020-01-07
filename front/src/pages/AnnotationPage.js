@@ -46,7 +46,6 @@ export default props => {
   const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
-    console.log(selectedTiles)
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )

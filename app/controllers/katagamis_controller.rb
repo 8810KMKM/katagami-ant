@@ -40,6 +40,8 @@ class KatagamisController < ApplicationController
             
         {
           katagami_url: katagami.presigned_url,
+          katagami_width: katagami.width,
+          katagami_height: katagami.height,
           annotation_num: katagami.annotations.size,
           whole_labels: whole_labels,
           has_labels: has_labels_by_position_by_label,
