@@ -7,12 +7,10 @@ import { fetchKatagamiResult } from 'libs/api'
 import LoadingModal from 'components/lv2/LoadingModal'
 import { Grid } from '@material-ui/core'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import ResultGraph from 'components/lv3/ResultGraph'
+import ResultGraph from 'components/lv2/ResultGraph'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    border: '1px solid',
-  },
+  root: {},
 }))
 
 export default props => {
