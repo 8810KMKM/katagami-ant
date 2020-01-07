@@ -31,7 +31,7 @@ export default props => {
   return (
     <div>
       <Typography variant="h2" className={classes.title}>
-        分割毎のラベル付け分布
+        {`分割[${position}]のラベル付け分布`}
       </Typography>
       <Grid container direction="column" className={classes.root}>
         <Grid item xs={4}>

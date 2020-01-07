@@ -34,6 +34,10 @@ const typography = {
     fontSize: 16,
     color: '#fafafa',
   },
+  caption: {
+    fontSize: 12,
+    color: palette.info.main,
+  },
 }
 
 const themeName = 'Hayato OKUMA Katagami annotation tool theme'

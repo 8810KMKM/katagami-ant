@@ -66,7 +66,7 @@ export default props => {
     />
   ) : (
     <Container>
-      <HeadLine>アノテーション結果 / 型紙 id : {zeroPaddingId}</HeadLine>
+      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
       <Grid container>
         <Grid item xs={6}>
           <KatagamiImage
