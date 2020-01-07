@@ -3,6 +3,23 @@ class KatagamisController < ApplicationController
     render json: cache_katagamis(params)
   end
 
+  def show
+    katagami = Katagami.includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+    
+    render json: katagami.annotations.map {|ant| 
+      {
+        id: ant.id,
+        user: ant.user.email,
+        has_labels_count: ant.has_labels.map {|has_label| 
+          {
+            position: has_label.position,
+            label: has_label.label.name
+          }
+        }
+      }
+    }
+  end
+
   private
     def cache_katagamis(params)
       Rails.cache.fetch('katagamis-' + params[:page] + '-' + params[:per]) do

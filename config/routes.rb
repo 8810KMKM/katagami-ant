@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'users#show'
   # Katagami
   get '/katagamis/:user/:page/:per', to: 'katagamis#index'
+  get '/katagamis/show/:id', to: 'katagamis#show'
   # Annotation
   post '/annotations/:katagami/:user', to: 'annotations#create'
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'
