@@ -3,23 +3,31 @@ class KatagamisController < ApplicationController
     render json: cache_katagamis(params)
   end
 
-  def show
-    katagami = cache_katagami(params)
-    whole_labels = katagami.annotations.map {|ant| 
-      ant.has_labels.map {|has_label| has_label.label.name}
-    }.join(',')
-     .split(',')
-     .to_set.reject {|name| name == ''}
-    
-    render json: {
-      whole_labels: whole_labels
-    }
+  def show  
+    render json: cache_katagami(params)
   end
 
   private
     def cache_katagami(params)
       Rails.cache.fetch('katagami-' + params[:id]) do
         katagami = Katagami.includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+        whole_labels = katagami.annotations.map {|ant| 
+          ant.has_labels.map {|has_label| has_label.label.name}
+        }.join(',')
+        .split(',')
+        .to_set
+        .reject {|name| name == ''}
+
+        {
+          katagami_url: katagami.presigned_url,
+          whole_labels: whole_labels
+        }
+      end
+    end
+
+    def cache_image(katagami)
+      Rails.cache.fetch('katagami_image-' + katagami.id) do
+        katagami.presigned_url
       end
     end
 
