@@ -23,7 +23,7 @@ class KatagamisController < ApplicationController
         has_labels_by_position = katagami.annotations.map {|ant| 
           ant.has_labels.map {|has_label| 
             {
-              user: ant.user_id,
+              user: ant.user.email,
               position: has_label.position, 
               label: has_label.label.name
             }
