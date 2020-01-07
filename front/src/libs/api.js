@@ -1,5 +1,6 @@
 const baseUrl = 'http://localhost:3001'
 
+// User
 export const signup = async props => {
   const { email, password, passwordConfirmation, handleAuth } = props
 
@@ -36,6 +37,7 @@ export const fetchUser = async (id, handleGetUser) => {
   })
 }
 
+// Katagami
 export const fetchKatagamis = async props => {
   const { userId, page, per, handleGetKatagamis } = props
 
@@ -45,6 +47,15 @@ export const fetchKatagamis = async props => {
   })
 }
 
+export const fetchKatagamiResult = async props => {
+  const { katagamiId, handleGetKatagamiResult } = props
+  await fetchGet({
+    url: `${baseUrl}/katagamis/show/${katagamiId}`,
+    successAction: handleGetKatagamiResult,
+  })
+}
+
+// Annotation
 export const createAnnotation = async props => {
   const { katagamiId, userId, handleCreateAnnotation } = props
 
@@ -52,13 +63,6 @@ export const createAnnotation = async props => {
     url: `${baseUrl}/annotations/${katagamiId}/${userId}`,
     body: new FormData(),
     successAction: handleCreateAnnotation,
-  })
-}
-
-export const fetchLabels = async handleGetLabels => {
-  await fetchGet({
-    url: `${baseUrl}/labels`,
-    successAction: handleGetLabels,
   })
 }
 
@@ -73,6 +77,14 @@ export const postHasLabels = async props => {
     url: `${baseUrl}/annotations/add_has_labels`,
     body: body,
     successAction: handleCompleteAnnotation,
+  })
+}
+
+// Label
+export const fetchLabels = async handleGetLabels => {
+  await fetchGet({
+    url: `${baseUrl}/labels`,
+    successAction: handleGetLabels,
   })
 }
 
