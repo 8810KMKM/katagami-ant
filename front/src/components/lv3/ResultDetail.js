@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import ResultGraph from 'components/lv2/ResultGraph'
 import { graphDataOf } from 'libs/format'
 import UserList from 'components/lv2/UserList'
@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.main,
   },
+  title: { margin: '0 0 16px 60px' },
 }))
 
 export default props => {
@@ -28,13 +29,18 @@ export default props => {
   const classes = useStyles()
 
   return (
-    <Grid container direction="column" className={classes.root}>
-      <Grid item xs={4}>
-        <UserList {...{ users }} />
+    <div>
+      <Typography variant="h2" className={classes.title}>
+        分割毎のラベル付け分布
+      </Typography>
+      <Grid container direction="column" className={classes.root}>
+        <Grid item xs={4}>
+          <UserList {...{ users, activeIndex }} />
+        </Grid>
+        <Grid item xs={8}>
+          <ResultGraph {...{ data, activeIndex, handleSelectUsers }} />
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <ResultGraph {...{ data, activeIndex, handleSelectUsers }} />
-      </Grid>
-    </Grid>
+    </div>
   )
 }

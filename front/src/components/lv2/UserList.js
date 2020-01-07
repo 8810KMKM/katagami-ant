@@ -1,20 +1,35 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { Typography, Paper } from '@material-ui/core'
+import { Info } from '@material-ui/icons'
+import { Skeleton } from '@material-ui/lab'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    border: '1px solid',
+    height: 160,
+    width: 440,
+    overflow: 'scroll',
+    padding: 8,
+    margin: '0 0 16px 60px',
+    border: props =>
+      props.activeIndex > -1
+        ? `2px solid ${theme.palette.primary.light}`
+        : 'none',
   },
 }))
 
 export default props => {
-  const { users } = props
-  const classes = useStyles()
+  const { users, activeIndex } = props
+  const classes = useStyles({ activeIndex })
+
   return (
-    <ul>
-      {users.map(user => (
-        <li key={user}>{user}</li>
-      ))}
-    </ul>
+    <Paper className={classes.root}>
+      <Typography>ラベル付けしたユーザー</Typography>
+      <ul>
+        {users.map(user => (
+          <li key={user}>{user}</li>
+        ))}
+      </ul>
+    </Paper>
   )
 }
