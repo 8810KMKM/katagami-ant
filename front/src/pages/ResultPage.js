@@ -26,7 +26,6 @@ export default props => {
   const [selectedTiles, setSelectedTiles] = useState(
     new Array(tileNumber).fill(false)
   )
-  const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [annotationNum, setAnnotationNum] = useState(0)
   const [wholeLabels, setWholeLabels] = useState([])
   const [hasLabels, setHasLabels] = useState([])
@@ -34,7 +33,7 @@ export default props => {
 
   const handleToggleTile = number => {
     setSelectedTiles(
-      selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
+      selectedTiles.map((tile, i) => (i === number - 1 ? true : false))
     )
   }
 
@@ -65,7 +64,7 @@ export default props => {
               katagamiUrl,
               katagamiHeight,
               katagamiWidth,
-              tileIsSelectable,
+              tileIsSelectable: true,
               handleToggleTile,
               tileNumber,
               selectedTiles,

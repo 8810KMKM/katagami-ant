@@ -7,6 +7,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: props => `${props.fixedWidth}px`,
     pointerEvents: props => (props.tileIsSelectable ? '' : 'none'),
+    cursor: 'pointer',
   },
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
