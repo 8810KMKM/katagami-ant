@@ -16,7 +16,7 @@ const useStyle = makeStyles({
 })
 
 export default props => {
-  const { email, id, size } = props
+  const { email, size } = props
   const classes = useStyle({
     color: randomColor(email),
     size: size,

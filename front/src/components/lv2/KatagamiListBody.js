@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableRow, TableCell, TableBody, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { Create, Link } from '@material-ui/icons'
+import { Create, Equalizer } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   tableRow: {
@@ -32,8 +32,11 @@ export default props => {
             </TableCell>
           )}
           <TableCell align="center">
-            <IconButton className={classes.button}>
-              <Link />
+            <IconButton
+              className={classes.button}
+              onClick={() => (window.location.href = `/results/${katagami.id}`)}
+            >
+              <Equalizer />
             </IconButton>
           </TableCell>
           <TableCell>

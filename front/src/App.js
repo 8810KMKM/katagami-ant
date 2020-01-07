@@ -16,6 +16,7 @@ import AnnotationPage from 'pages/AnnotationPage'
 import Header from 'components/lv3/Header'
 import { isAuthenticated, logout } from 'libs/auth'
 import theme from 'libs/theme'
+import ResultPage from 'pages/ResultPage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,6 +82,7 @@ export default () => {
               path="/ant/:katagamiId/:userId"
               component={AnnotationPage}
             />
+            <PrivateRoute path="/results/:katagamiId" component={ResultPage} />
             <PrivateRoute path="/" component={TopPage} />
           </Switch>
         </Box>
