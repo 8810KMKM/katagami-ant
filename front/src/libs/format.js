@@ -56,3 +56,36 @@ export const hasLabelsForPost = labels =>
 // idを0詰め表示
 export const zeroPaddingOf = (num, zeros) =>
   (new Array(zeros).fill(0).join('') + num).slice(-1 * zeros)
+
+export const graphDataOf = (hasLabels, wholeLabels, position) => {
+  const [hasLabel] = hasLabels.filter(
+    hasLabel => hasLabel.position === parseInt(position, 10)
+  )
+
+  if (hasLabel === undefined) {
+    return wholeLabels.map(label => ({
+      label: labelNameJp(label).kanji,
+      users: [],
+      score: 0,
+    }))
+  }
+
+  const _score = hasLabel.score
+
+  return wholeLabels.map(label => {
+    const s = _score[label]
+    const hasScore = s !== undefined
+    return {
+      label: labelNameJp(label).kanji,
+      users: hasScore ? s : [],
+      score: hasScore ? s.length : 0,
+    }
+  })
+  // return Object.keys(_score).map(label => {
+  //   return {
+  //     label: labelNameJp(label).kanji,
+  //     users: _score[label],
+  //     score: _score[label].length,
+  //   }
+  // })
+}

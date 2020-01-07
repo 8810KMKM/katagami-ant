@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
-import { zeroPaddingOf } from 'libs/format'
+import { zeroPaddingOf, convertBoolToNumOfTiles } from 'libs/format'
 import { fetchKatagamiResult } from 'libs/api'
 import LoadingModal from 'components/lv2/LoadingModal'
-import { Typography, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import KatagamiImage from 'components/lv3/KatagamiImage'
+import ResultGraph from 'components/lv3/ResultGraph'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,32 +53,42 @@ export default props => {
       katagamiId,
       handleGetKatagamiResult,
     })
+    handleToggleTile(1)
   }, [katagamiId])
 
-  return (
+  return isLoading ? (
+    <LoadingModal
+      isLoading={isLoading}
+      isOpen={isLoading}
+      loadingText="データを取得中です..."
+      completeText="取得が完了しました！"
+    />
+  ) : (
     <Container>
       <HeadLine>アノテーション結果 / 型紙 id : {zeroPaddingId}</HeadLine>
       <Grid container>
-        <Grid item={7}>
+        <Grid item xs={6}>
           <KatagamiImage
             {...{
               katagamiUrl,
               katagamiHeight,
               katagamiWidth,
               tileIsSelectable: true,
+              fixedWidth: 584,
               handleToggleTile,
               tileNumber,
               selectedTiles,
             }}
           />
         </Grid>
+        <Grid item xs={6}>
+          <ResultGraph
+            hasLabels={hasLabels}
+            position={convertBoolToNumOfTiles(selectedTiles)}
+            wholeLabels={wholeLabels}
+          />
+        </Grid>
       </Grid>
-      <LoadingModal
-        isLoading={isLoading}
-        isOpen={isLoading}
-        loadingText="データを取得中です..."
-        completeText="取得が完了しました！"
-      />
     </Container>
   )
 }

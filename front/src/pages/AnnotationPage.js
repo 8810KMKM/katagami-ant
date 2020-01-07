@@ -141,6 +141,7 @@ export default props => {
               handleToggleTile,
               tileNumber,
               selectedTiles,
+              fixedWidth: 640,
             }}
           />
         </Grid>

@@ -27,8 +27,8 @@ export default props => {
     selectedTiles,
     handleToggleTile,
     tileIsSelectable,
+    fixedWidth,
   } = props
-  const fixedWidth = 640
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
   const tileSquare = Math.sqrt(tileNumber)
   const tileHeight = fixedHeight / tileSquare

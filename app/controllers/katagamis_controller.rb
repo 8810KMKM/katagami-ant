@@ -43,7 +43,7 @@ class KatagamisController < ApplicationController
           katagami_width: katagami.width,
           katagami_height: katagami.height,
           annotation_num: katagami.annotations.size,
-          whole_labels: whole_labels,
+          whole_labels: Label.all.pluck(:name),
           has_labels: has_labels_by_position_by_label,
         }
       end
