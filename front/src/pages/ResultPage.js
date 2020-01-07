@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/styles'
 import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
 import { zeroPaddingOf, convertBoolToNumOfTiles } from 'libs/format'
@@ -7,18 +6,12 @@ import { fetchKatagamiResult } from 'libs/api'
 import LoadingModal from 'components/lv2/LoadingModal'
 import { Grid } from '@material-ui/core'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import ResultGraph from 'components/lv2/ResultGraph'
 import ResultDetail from 'components/lv3/ResultDetail'
-
-const useStyles = makeStyles(theme => ({
-  root: {},
-}))
 
 export default props => {
   const { katagamiId } = props.match.params
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const tileNumber = 9
-  const classes = useStyles()
 
   const [katagamiUrl, setKatagamiUrl] = useState('')
   const [katagamiWidth, setKatagamiWidth] = useState(0)
@@ -43,7 +36,7 @@ export default props => {
       selectedTiles.map((tile, i) => (i === number - 1 ? true : false))
     )
     setActiveIndex(-1)
-    setUsers(new Array())
+    setUsers([])
   }
 
   useEffect(() => {

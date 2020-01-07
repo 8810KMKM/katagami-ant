@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import ResultGraph from 'components/lv2/ResultGraph'
 import { graphDataOf } from 'libs/format'
 import UserList from 'components/lv2/UserList'
