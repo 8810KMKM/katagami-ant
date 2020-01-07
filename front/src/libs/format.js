@@ -57,11 +57,8 @@ export const hasLabelsForPost = labels =>
 export const zeroPaddingOf = (num, zeros) =>
   (new Array(zeros).fill(0).join('') + num).slice(-1 * zeros)
 
-export const graphDataOf = (hasLabels, wholeLabels, position) => {
-  const [hasLabel] = hasLabels.filter(
-    hasLabel => hasLabel.position === parseInt(position, 10)
-  )
-
+// グラフに使うデータを整形
+export const graphDataOf = (hasLabel, wholeLabels) => {
   if (hasLabel === undefined) {
     return wholeLabels.map(label => ({
       label: labelNameJp(label).kanji,
@@ -81,11 +78,4 @@ export const graphDataOf = (hasLabels, wholeLabels, position) => {
       score: hasScore ? s.length : 0,
     }
   })
-  // return Object.keys(_score).map(label => {
-  //   return {
-  //     label: labelNameJp(label).kanji,
-  //     users: _score[label],
-  //     score: _score[label].length,
-  //   }
-  // })
 }

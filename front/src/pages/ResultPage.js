@@ -8,6 +8,7 @@ import LoadingModal from 'components/lv2/LoadingModal'
 import { Grid } from '@material-ui/core'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultGraph from 'components/lv2/ResultGraph'
+import ResultDetail from 'components/lv3/ResultDetail'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -29,11 +30,20 @@ export default props => {
   const [wholeLabels, setWholeLabels] = useState([])
   const [hasLabels, setHasLabels] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const [users, setUsers] = useState([])
+
+  const handleSelectUsers = (data, index) => {
+    setActiveIndex(index)
+    setUsers(data.users)
+  }
 
   const handleToggleTile = number => {
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? true : false))
     )
+    setActiveIndex(-1)
+    setUsers(new Array())
   }
 
   useEffect(() => {
@@ -80,10 +90,15 @@ export default props => {
           />
         </Grid>
         <Grid item xs={6}>
-          <ResultGraph
-            hasLabels={hasLabels}
-            position={convertBoolToNumOfTiles(selectedTiles)}
-            wholeLabels={wholeLabels}
+          <ResultDetail
+            {...{
+              hasLabels,
+              wholeLabels,
+              users,
+              activeIndex,
+              handleSelectUsers,
+              position: convertBoolToNumOfTiles(selectedTiles),
+            }}
           />
         </Grid>
       </Grid>
