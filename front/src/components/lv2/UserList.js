@@ -19,14 +19,23 @@ export default props => {
   const isActive = activeIndex > -1
   const classes = useStyles({ isActive })
 
+  const handleLinkToUser = id => {
+    window.location.href = `/users/${id}`
+  }
+
   return (
     <Paper className={classes.root}>
       <Typography>ラベル付けしたユーザー</Typography>
       {isActive ? (
         <ul>
-          {users.map(user => (
-            <li key={user}>{user}</li>
-          ))}
+          {users.map(user => {
+            const [id, email] = user.split(' ')
+            return (
+              <li key={id} onClick={() => handleLinkToUser(id)}>
+                {email}
+              </li>
+            )
+          })}
         </ul>
       ) : (
         <Typography variant="caption">
