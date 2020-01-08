@@ -4,4 +4,5 @@ class HasLabel < ApplicationRecord
   belongs_to :katagami
 
   validates :position, presence: true, allow_nil: false
+  validates :position, uniqueness: { scope: [:annotation_id, :label_id] }
 end
