@@ -22,8 +22,8 @@ class AnnotationsController < ApplicationController
             position: position
           )
         end
+        new_status += 1
       end
-      new_status += 1
     end
       annotation.update(status: new_status)
       p annotation
