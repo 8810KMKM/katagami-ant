@@ -101,7 +101,8 @@ class KatagamisController < ApplicationController
             {
               id: katagami.id,
               name: katagami.name,
-              annotation_num: katagami.annotations.size,
+              annotation_num: katagami.annotations.sum(:status),
+              status: annotation.status
             }
           }
         }
