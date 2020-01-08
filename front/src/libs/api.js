@@ -82,9 +82,10 @@ export const postHasLabels = async props => {
 }
 
 // Label
-export const fetchLabels = async handleGetLabels => {
+export const fetchLabels = async props => {
+  const { userId, katagamiId, num, handleGetLabels } = props
   await fetchGet({
-    url: `${baseUrl}/labels`,
+    url: `${baseUrl}/labels/target/${katagamiId}/${userId}/${num}`,
     successAction: handleGetLabels,
   })
 }

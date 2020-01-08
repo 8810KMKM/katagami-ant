@@ -12,7 +12,7 @@ class LabelsController < ApplicationController
     rest_num = 10 - annotation.status
     target_num = params[:num].to_i
 
-    if rest_label_num - target_num < 0
+    if rest_num - target_num < 0
       render json: []
     else
       render json: 

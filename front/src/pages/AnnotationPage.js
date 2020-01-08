@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { userId, katagamiId } = props.match.params
+  const { userId, katagamiId, num } = props.match.params
 
   const tileNumber = 9
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
@@ -113,11 +113,16 @@ export default props => {
       setLabels(response)
     }
     setIsLoading(true)
-    fetchLabels(handleGetLabels)
+    fetchLabels({
+      userId,
+      katagamiId,
+      handleGetLabels,
+      num,
+    })
   }, [katagamiId, userId])
 
   // init diplayedTiles (localStorage)
-  useEffect(() => initAllTiles(3), [katagamiId, userId])
+  useEffect(() => initAllTiles(num), [katagamiId, userId])
 
   if (isLoading) {
     return (

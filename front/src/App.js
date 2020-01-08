@@ -80,7 +80,7 @@ export default () => {
             <AuthRoute path="/signup" component={SignupPage} />
             <AuthRoute path="/login" component={LoginPage} />
             <PrivateRoute
-              path="/ant/:katagamiId/:userId"
+              path="/ant/:katagamiId/:userId/:num"
               component={AnnotationPage}
             />
             <PrivateRoute path="/results/:katagamiId" component={ResultPage} />
