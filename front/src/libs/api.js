@@ -30,9 +30,10 @@ export const login = async props => {
   })
 }
 
-export const fetchUser = async (id, handleGetUser) => {
+export const fetchUser = async props => {
+  const { userId, handleGetUser } = props
   await fetchGet({
-    url: `${baseUrl}/users/${id}`,
+    url: `${baseUrl}/users/${userId}`,
     successAction: handleGetUser,
   })
 }
