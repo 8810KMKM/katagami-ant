@@ -7,7 +7,7 @@ class AnnotationsController < ApplicationController
     annotation = Annotation.find(params[:annotation_id])
     # {has_labels: '4 1 2 3,2 3 4,1 0'}
     # {has_labels: 'label.id [positions],label.id [position]'}
-    annotation.update(status: 1)
+    new_status = annotation.status
 
     HasLabel.transaction do
       params[:has_labels].split(',').each do |has_label|
@@ -22,9 +22,10 @@ class AnnotationsController < ApplicationController
             position: position
           )
         end
+        new_status += 1
       end
     end
-      annotation.update(status: 2)
+      annotation.update(status: new_status)
       p annotation
       render json: annotation.has_labels
 

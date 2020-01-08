@@ -7,6 +7,7 @@ import {
   TableFooter,
   TablePagination,
   Typography,
+  Tooltip,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
@@ -78,7 +79,7 @@ export default props => {
   }
 
   const handleDoAnnotation = () => {
-    window.location.href = `ant/${selectedId}/${user.id}`
+    window.location.href = `ant/${selectedId}/${user.id}/2`
   }
 
   const handleModalClose = () => {
@@ -112,8 +113,15 @@ export default props => {
           <TableRow className={classes.header}>
             <TableCell align="right">id</TableCell>
             <TableCell align="left">ファイル名</TableCell>
-            <TableCell align="right">アノテーション件数</TableCell>
-            {!isInUserPage && <TableCell align="center">ステータス</TableCell>}
+            <Tooltip
+              title="あなたがアノテーション済みのラベル数"
+              placement="top"
+            >
+              <TableCell align="center">達成度</TableCell>
+            </Tooltip>
+            <Tooltip title="達成度10のアノテーションの総数" placement="top">
+              <TableCell align="right">アノテーション件数</TableCell>
+            </Tooltip>
             <TableCell align="center">結果一覧</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>

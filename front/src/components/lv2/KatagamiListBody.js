@@ -15,23 +15,26 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   const { katagamis, emptyRows, handleSelectId, isInUserPage } = props
   const classes = useStyles()
+
+  const UserStatus = ({ status }) =>
+    status === 10 ? (
+      <TableCell align="center" className={classes.done}>
+        完了
+      </TableCell>
+    ) : (
+      <TableCell align="center" className={classes.yet}>
+        {`${status} / 10`}
+      </TableCell>
+    )
+
   return (
     <TableBody>
       {katagamis.map(katagami => (
         <TableRow key={katagami.id} className={classes.tableRow}>
           <TableCell align="right">{katagami.id}</TableCell>
           <TableCell className={classes.name}>{katagami.name}</TableCell>
+          <UserStatus status={katagami.status} />
           <TableCell align="right">{katagami.annotation_num}</TableCell>
-          {!isInUserPage &&
-            (katagami.done_by_current_user ? (
-              <TableCell align="center" className={classes.done}>
-                実行済
-              </TableCell>
-            ) : (
-              <TableCell align="center" className={classes.yet}>
-                未実行
-              </TableCell>
-            ))}
           <TableCell align="center">
             <IconButton
               className={classes.button}
