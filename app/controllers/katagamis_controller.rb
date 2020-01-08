@@ -27,7 +27,7 @@ class KatagamisController < ApplicationController
         has_labels_by_position = katagami.annotations.map {|ant| 
           ant.has_labels.map {|has_label| 
             {
-              user: ant.user.email,
+              user: ant.user.id.to_s + ' ' + ant.user.email,
               position: has_label.position, 
               label: has_label.label.name
             }
@@ -90,10 +90,11 @@ class KatagamisController < ApplicationController
     def cache_owned_katagamis(params)
       Rails.cache.fetch('owned_katagamis-' + params[:page] + '-' + params[:per] + '-' + params[:owned_user]) do
         user = User.includes(annotations: [{katagami: :annotations}]).find(params[:owned_user])
+        annotations = user.annotations.page(params[:page]).per(params[:per])
         {
           owned_user_email: user.email,
           count: user.annotations.size,
-          katagamis: user.annotations.map {|annotation| 
+          katagamis: annotations.map {|annotation| 
             katagami = annotation.katagami
             {
               id: katagami.id,

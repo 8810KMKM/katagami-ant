@@ -12,6 +12,12 @@ const useStyles = makeStyles(theme => ({
     border: props =>
       props.isActive ? `2px solid ${theme.palette.primary.light}` : 'none',
   },
+  user: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
 }))
 
 export default props => {
@@ -19,14 +25,27 @@ export default props => {
   const isActive = activeIndex > -1
   const classes = useStyles({ isActive })
 
+  const handleLinkToUser = id => {
+    window.location.href = `/users/${id}`
+  }
+
   return (
     <Paper className={classes.root}>
       <Typography>ラベル付けしたユーザー</Typography>
       {isActive ? (
         <ul>
-          {users.map(user => (
-            <li key={user}>{user}</li>
-          ))}
+          {users.map(user => {
+            const [id, email] = user.split(' ')
+            return (
+              <li
+                key={id}
+                className={classes.user}
+                onClick={() => handleLinkToUser(id)}
+              >
+                {email}
+              </li>
+            )
+          })}
         </ul>
       ) : (
         <Typography variant="caption">
