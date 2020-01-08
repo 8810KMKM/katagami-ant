@@ -12,6 +12,12 @@ const useStyles = makeStyles(theme => ({
     border: props =>
       props.isActive ? `2px solid ${theme.palette.primary.light}` : 'none',
   },
+  user: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
 }))
 
 export default props => {
@@ -31,7 +37,11 @@ export default props => {
           {users.map(user => {
             const [id, email] = user.split(' ')
             return (
-              <li key={id} onClick={() => handleLinkToUser(id)}>
+              <li
+                key={id}
+                className={classes.user}
+                onClick={() => handleLinkToUser(id)}
+              >
                 {email}
               </li>
             )
