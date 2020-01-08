@@ -91,6 +91,7 @@ class KatagamisController < ApplicationController
       Rails.cache.fetch('owned_katagamis-' + params[:page] + '-' + params[:per] + '-' + params[:owned_user]) do
         user = User.includes(annotations: [{katagami: :annotations}]).find(params[:owned_user])
         {
+          owned_user_email: user.email,
           count: user.annotations.size,
           katagamis: user.annotations.map {|annotation| 
             katagami = annotation.katagami
