@@ -30,19 +30,20 @@ export const login = async props => {
   })
 }
 
-export const fetchUser = async (id, handleGetUser) => {
+export const fetchUser = async props => {
+  const { userId, handleGetUser } = props
   await fetchGet({
-    url: `${baseUrl}/users/${id}`,
+    url: `${baseUrl}/users/${userId}`,
     successAction: handleGetUser,
   })
 }
 
 // Katagami
 export const fetchKatagamis = async props => {
-  const { userId, page, per, handleGetKatagamis } = props
+  const { userId, page, per, ownedUserId, handleGetKatagamis } = props
 
   await fetchGet({
-    url: `${baseUrl}/katagamis/${userId}/${page}/${per}`,
+    url: `${baseUrl}/katagamis/${userId}/${page}/${per}/${ownedUserId}`,
     successAction: handleGetKatagamis,
   })
 }
@@ -50,7 +51,7 @@ export const fetchKatagamis = async props => {
 export const fetchKatagamiResult = async props => {
   const { katagamiId, handleGetKatagamiResult } = props
   await fetchGet({
-    url: `${baseUrl}/katagamis/show/${katagamiId}`,
+    url: `${baseUrl}/katagamis/${katagamiId}`,
     successAction: handleGetKatagamiResult,
   })
 }

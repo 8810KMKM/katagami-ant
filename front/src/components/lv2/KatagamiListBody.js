@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { katagamis, emptyRows, handleSelectId } = props
+  const { katagamis, emptyRows, handleSelectId, isInUserPage } = props
   const classes = useStyles()
   return (
     <TableBody>
@@ -22,15 +22,16 @@ export default props => {
           <TableCell align="right">{katagami.id}</TableCell>
           <TableCell className={classes.name}>{katagami.name}</TableCell>
           <TableCell align="right">{katagami.annotation_num}</TableCell>
-          {katagami.done_by_current_user ? (
-            <TableCell align="center" className={classes.done}>
-              実行済
-            </TableCell>
-          ) : (
-            <TableCell align="center" className={classes.yet}>
-              未実行
-            </TableCell>
-          )}
+          {!isInUserPage &&
+            (katagami.done_by_current_user ? (
+              <TableCell align="center" className={classes.done}>
+                実行済
+              </TableCell>
+            ) : (
+              <TableCell align="center" className={classes.yet}>
+                未実行
+              </TableCell>
+            ))}
           <TableCell align="center">
             <IconButton
               className={classes.button}

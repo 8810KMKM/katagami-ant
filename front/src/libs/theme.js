@@ -19,6 +19,7 @@ const typography = {
   h2: {
     fontSize: 24,
     fontWeight: 700,
+    marginBottom: 8,
     color: palette.primary.main,
   },
   body1: {

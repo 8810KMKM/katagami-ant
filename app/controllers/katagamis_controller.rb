@@ -1,6 +1,10 @@
 class KatagamisController < ApplicationController
   def index
-    render json: cache_katagamis(params)
+    if params[:owned_user] != '0'
+      render json: cache_owned_katagamis(params)
+    else
+      render json: cache_katagamis(params)
+    end
   end
 
   def show
@@ -77,6 +81,24 @@ class KatagamisController < ApplicationController
               annotation_num: katagami.annotations.size,
               done_by_current_user: 
                 !!user_done_ids.index(katagami.id)
+            }
+          }
+        }
+      end
+    end
+
+    def cache_owned_katagamis(params)
+      Rails.cache.fetch('owned_katagamis-' + params[:page] + '-' + params[:per] + '-' + params[:owned_user]) do
+        user = User.includes(annotations: [{katagami: :annotations}]).find(params[:owned_user])
+        {
+          owned_user_email: user.email,
+          count: user.annotations.size,
+          katagamis: user.annotations.map {|annotation| 
+            katagami = annotation.katagami
+            {
+              id: katagami.id,
+              name: katagami.name,
+              annotation_num: katagami.annotations.size,
             }
           }
         }

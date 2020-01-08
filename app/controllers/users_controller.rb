@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   def show
-    user = User.find(params[:id])
-    render json: user
+    render json: cache_user(params)
   end
   
   def signup
@@ -56,5 +55,23 @@ class UsersController < ApplicationController
         end
       end
       errors
+    end
+
+    def cache_user(params)
+      Rails.cache.fetch('user-' + params[:id]) do
+        user = User.includes(annotations: [{katagami: :annotations}]).find(params[:id])
+        {
+          id: params[:id],
+          email: user.email,
+          katagamis: user.annotations.map {|annotation| 
+            katagami = annotation.katagami
+            {
+              id: katagami.id,
+              name: katagami.name,
+              annotation_num: katagami.annotations.size,
+            }
+          }
+        }
+      end
     end
 end
