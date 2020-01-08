@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
   footer: { marginTop: theme.spacing(20) },
 }))
 
-export default () => {
+export default props => {
+  const { ownedUser, setEmail } = props
   const [katagamis, setKatagamis] = useState([])
   const [count, setCount] = useState(0)
   const [page, setPage] = useState(0)
@@ -43,6 +44,7 @@ export default () => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const user = currentUser()
+  const isInUserPage = ownedUser !== undefined
   const classes = useStyles(theme)
 
   const handlePaginate = ({ page, per }) => {
@@ -50,11 +52,15 @@ export default () => {
       setKatagamis(response.katagamis)
       setCount(response.count)
       setPage(page)
+      if (isInUserPage) {
+        setEmail(response.email)
+      }
     }
     fetchKatagamis({
       userId: user.id,
       page: page + 1,
       per: per,
+      ownedUserId: isInUserPage ? ownedUser : 0,
       handleGetKatagamis: handleGetKatagamis,
     })
   }
