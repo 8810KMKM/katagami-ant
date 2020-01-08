@@ -40,10 +40,12 @@ export const fetchUser = async props => {
 
 // Katagami
 export const fetchKatagamis = async props => {
-  const { userId, page, per, handleGetKatagamis } = props
+  const { userId, page, per, ownedUserId, handleGetKatagamis } = props
 
   await fetchGet({
-    url: `${baseUrl}/katagamis/${userId}/${page}/${per}`,
+    url: `${baseUrl}/katagamis/${userId}/${page}/${per}/${
+      ownedUserId === undefined ? 0 : ownedUserId
+    }`,
     successAction: handleGetKatagamis,
   })
 }

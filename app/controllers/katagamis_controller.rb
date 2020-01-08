@@ -1,6 +1,6 @@
 class KatagamisController < ApplicationController
   def index
-    if params[:owned_user]
+    if params[:owned_user] != '0'
       render json: cache_owned_katagamis(params)
     else
       render json: cache_katagamis(params)
