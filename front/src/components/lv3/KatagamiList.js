@@ -119,8 +119,8 @@ export default props => {
             >
               <TableCell align="center">達成度</TableCell>
             </Tooltip>
-            <Tooltip title="達成度10のアノテーションの総数" placement="top">
-              <TableCell align="right">アノテーション件数</TableCell>
+            <Tooltip title="達成度1以上のユーザー数" placement="top">
+              <TableCell align="right">ユーザー数</TableCell>
             </Tooltip>
             <TableCell align="center">結果一覧</TableCell>
             <TableCell align="center"></TableCell>
