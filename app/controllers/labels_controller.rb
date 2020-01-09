@@ -1,5 +1,6 @@
 class LabelsController < ApplicationController
   def get_random
+<<<<<<< Updated upstream
     rand_id = Label.pluck(:id).shuffle[0..2]
     render json: Label.where(id: rand_id)
   end
@@ -19,4 +20,9 @@ class LabelsController < ApplicationController
         Label.where(id: [1..rest_num]).order(id: 'DESC').limit(target_num)
     end
   end
+=======
+    rand_id = Label.pluck(:id).shuffle[0]
+    render json: [Label.where(id: rand_id)]
+  end
+>>>>>>> Stashed changes
 end

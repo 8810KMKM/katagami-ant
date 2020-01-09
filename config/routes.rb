@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'
   # Label
   get '/labels', to: 'labels#get_random'
+<<<<<<< Updated upstream
   get '/labels/target/:katagami/:user/:num', to: 'labels#target'
+=======
+>>>>>>> Stashed changes
 end
