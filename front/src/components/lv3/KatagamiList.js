@@ -8,6 +8,9 @@ import {
   TablePagination,
   Typography,
   Tooltip,
+  FormControlLabel,
+  Checkbox,
+  Button,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
@@ -31,6 +34,9 @@ const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
+  checkBox: {
+    margin: '0 0 8px 0',
+  },
   header: { backgroundColor: theme.palette.primary.light },
   footer: { marginTop: theme.spacing(20) },
   profile: { marginBottom: 40 },
@@ -45,6 +51,7 @@ export default props => {
   const [selectedId, setSelectedId] = useState(0)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [ownedUserEmail, setOwnedUserEmail] = useState('')
+  const [isFiltering, setIsFiltering] = useState(false)
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const user = currentUser()
@@ -91,6 +98,10 @@ export default props => {
     setModalIsOpen(true)
   }
 
+  const handleToggleCheck = () => {
+    setIsFiltering(!isFiltering)
+  }
+
   useEffect(() => {
     handlePaginate({ page: page, per: rowsPerPage })
   }, [page, rowsPerPage])
@@ -108,6 +119,20 @@ export default props => {
           <Typography variant="h2">アノテーション済みの型紙一覧</Typography>
         </div>
       )}
+      <FormControlLabel
+        control={
+          <Checkbox
+            color="primary"
+            checked={isFiltering}
+            onChange={handleToggleCheck}
+            value="isFiltering"
+          />
+        }
+        label="達成度が「完了」の型紙を除く"
+      />
+      <Button variant="contained" color="primary">
+        更新
+      </Button>
       <Table>
         <TableHead>
           <TableRow className={classes.header}>
