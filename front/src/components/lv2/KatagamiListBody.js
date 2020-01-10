@@ -8,7 +8,10 @@ const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
-  done: { color: theme.palette.primary.main },
+  done: {
+    color: theme.palette.primary.main,
+    fontWeight: 'bold',
+  },
   doing: { color: theme.palette.secondary.main },
   yet: { color: grey[800] },
   button: { padding: 4 },
@@ -39,6 +42,17 @@ export default props => {
           <TableCell align="right">{katagami.id}</TableCell>
           <TableCell className={classes.name}>{katagami.name}</TableCell>
           <UserStatus status={katagami.status} />
+          <TableCell align="left">
+            {katagami.status < 10 && (
+              <IconButton
+                color="secondary"
+                className={classes.button}
+                onClick={() => handleSelectId(katagami.id)}
+              >
+                <Create />
+              </IconButton>
+            )}
+          </TableCell>
           <TableCell align="right">{katagami.annotation_num}</TableCell>
           <TableCell align="center">
             <IconButton
@@ -46,15 +60,6 @@ export default props => {
               onClick={() => (window.location.href = `/results/${katagami.id}`)}
             >
               <Equalizer />
-            </IconButton>
-          </TableCell>
-          <TableCell>
-            <IconButton
-              color="primary"
-              className={classes.button}
-              onClick={() => handleSelectId(katagami.id)}
-            >
-              <Create />
             </IconButton>
           </TableCell>
         </TableRow>
