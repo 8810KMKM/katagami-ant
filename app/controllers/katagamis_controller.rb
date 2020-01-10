@@ -21,22 +21,34 @@ class KatagamisController < ApplicationController
     else  
       # 全型紙のidと合わせて, ログインユーザのアノテーション状況を取得
       katagami_ant_statuses = Katagami
-                        .includes(annotations: [:user])
-                        .where(annotations: {user_id: params[:user]})
-                        .pluck(:id, :'annotations.status')
-                        .to_h
+                                .includes(annotations: [:user])
+                                .where(annotations: {user_id: params[:user]})
+                                .pluck(:id, :'annotations.status')
+                                .to_h
 
       # 指定されたページ内の型紙一覧
-      katagamis = Katagami.includes(:annotations).page(params[:page]).per(params[:per])
+      if params[:except_done] == '1'
+        katagamis = Katagami
+                      .includes(:annotations)
+                      .order('annotations.status').order(:id)
+                      .page(params[:page]).per(params[:per])
+                      .pluck(:id, :name, :ant_num)
+      else
+        katagamis = Katagami
+                      .includes(:annotations)
+                      .page(params[:page])
+                      .per(params[:per])
+                      .pluck(:id, :name, :ant_num)
+      end
 
       render json: {
         count: Katagami._count,
         katagamis: katagamis.map {|katagami|
-          status = katagami_ant_statuses.find {|k, v| k == katagami.id}
+          status = katagami_ant_statuses.find {|k, v| k == katagami[0]}
           {
-            id: katagami.id,
-            name: katagami.name,
-            annotation_num: katagami.annotations.size,
+            id: katagami[0],
+            name: katagami[1],
+            annotation_num: katagami[2],
             status: status ? status[1] : 0
           }
         }
