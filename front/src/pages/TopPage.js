@@ -6,7 +6,7 @@ import HeadLine from 'components/lv1/HeadLine'
 export default () => {
   return (
     <Container>
-      <HeadLine>画像一覧</HeadLine>
+      <HeadLine>型紙一覧</HeadLine>
       <KatagamiList />
     </Container>
   )
