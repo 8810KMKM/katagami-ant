@@ -2,13 +2,15 @@ import React from 'react'
 import { TableRow, TableCell, TableBody, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Create, Equalizer } from '@material-ui/icons'
+import { grey } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
   done: { color: theme.palette.primary.main },
-  yet: { color: theme.palette.secondary.main },
+  doing: { color: theme.palette.secondary.main },
+  yet: { color: grey[800] },
   button: { padding: 4 },
 }))
 
@@ -22,7 +24,10 @@ export default props => {
         完了
       </TableCell>
     ) : (
-      <TableCell align="center" className={classes.yet}>
+      <TableCell
+        align="center"
+        className={status === 0 ? classes.yet : classes.doing}
+      >
         {`${status} / 10`}
       </TableCell>
     )
