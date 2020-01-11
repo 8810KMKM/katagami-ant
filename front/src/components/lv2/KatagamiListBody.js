@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { katagamis, emptyRows, handleSelectId, isInUserPage } = props
+  const { katagamis, emptyRows, handleSelectId } = props
   const classes = useStyles()
 
   const UserStatus = ({ status }) =>

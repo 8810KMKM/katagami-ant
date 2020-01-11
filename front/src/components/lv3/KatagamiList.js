@@ -13,10 +13,10 @@ import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
 import { fetchKatagamis } from 'libs/api'
 import theme from 'libs/theme'
+import SortingSelect from 'components/lv1/SortingSelect'
 import PaginationActions from 'components/lv2/PaginationActions'
 import KatagamiListBody from 'components/lv2/KatagamiListBody'
 import Modal from 'components/lv2/Modal'
-import SortingSelect from 'components/lv1/SortingSelect'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,7 +59,6 @@ export default props => {
     const handleGetKatagamis = response => {
       setKatagamis(response.katagamis)
       setCount(response.count)
-      setPage(page)
     }
     fetchKatagamis({
       userId: user.id,
@@ -147,7 +146,6 @@ export default props => {
             katagamis,
             emptyRows,
             handleSelectId,
-            isInUserPage,
           }}
           katagamis={katagamis}
           emptyRows={emptyRows}

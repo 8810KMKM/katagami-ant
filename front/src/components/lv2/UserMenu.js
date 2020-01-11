@@ -9,10 +9,10 @@ import {
   ListItemText,
 } from '@material-ui/core'
 import { AccountBox, ExitToApp } from '@material-ui/icons'
-import UserIcon from 'components/lv1/UserIcon'
-import Modal from 'components/lv2/Modal'
 import { currentUser } from 'libs/auth'
 import theme from 'libs/theme'
+import UserIcon from 'components/lv1/UserIcon'
+import Modal from 'components/lv2/Modal'
 
 const useStyle = makeStyles(theme => ({
   link: {

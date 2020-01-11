@@ -1,9 +1,9 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import AppLogo from 'components/lv1/AppLogo'
 import UserMenu from 'components/lv2/UserMenu'
-import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {

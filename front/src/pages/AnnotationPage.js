@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import Container from 'components/lv1/Container'
 import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { Grid, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { initAllTiles } from 'libs/tile'
+import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
+import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
+import LoadingModal from 'components/lv1/LoadingModal'
 import Modal from 'components/lv2/Modal'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
-import { initAllTiles } from 'libs/tile'
-import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
-import LoadingModal from 'components/lv2/LoadingModal'
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -105,7 +105,7 @@ export default props => {
       katagamiId,
       handleCreateAnnotation,
     })
-  }, [katagamiId, userId])
+  }, [katagamiId, userId, num])
 
   // to fetch labels
   useEffect(() => {
@@ -119,10 +119,10 @@ export default props => {
       handleGetLabels,
       num,
     })
-  }, [katagamiId, userId])
+  }, [katagamiId, userId, num])
 
   // init diplayedTiles (localStorage)
-  useEffect(() => initAllTiles(num), [katagamiId, userId])
+  useEffect(() => initAllTiles(num), [katagamiId, userId, num])
 
   if (isLoading) {
     return (
