@@ -13,6 +13,64 @@ class Katagami < ApplicationRecord
 
   @@_count = 0
 
+  # 全型紙のidと合わせて, ログインユーザのアノテーション状況(達成度)を取得
+  def self.ant_statuses(user)
+    includes(annotations: [:user]).where(annotations: {user_id: user})
+    .pluck(:id, :'annotations.status').to_h
+  end
+
+  # 指定されたページ内の型紙一覧
+  def self.pagination(params)
+    case params[:sort_by]
+    when '1' # 達成度の昇順
+      condition = ['annotations.status', :id]
+    when '2' # ユーザー数の昇順
+      condition = [:ant_num, :id]
+    else # 指定なし
+      condition = :id
+    end
+
+    includes(:annotations).order(condition).page(params[:page]).per(params[:per])
+    .pluck(:id, :name, :ant_num)
+  end
+
+  # トップページの型紙一覧
+  def self.listing_for_top(params)
+    katagamis = Katagami.pagination(params)
+    ant_statuses = Katagami.ant_statuses(params[:user])
+
+    {
+      count: Katagami._count,
+      katagamis: katagamis.map {|katagami|
+        status = ant_statuses.find {|k, v| k == katagami[0]}
+        {
+          id: katagami[0],
+          name: katagami[1],
+          annotation_num: katagami[2],
+          status: status ? status[1] : 0
+        }
+      }
+    }
+  end
+
+  def self.listing_for_user(params)
+    katagamis = includes(:annotations)
+                  .where(annotations: {user_id: params[:owned_user]}).order(:id)
+                  .page(params[:page]).per(params[:per])
+                  .pluck(:id, :name, :ant_num, :'annotations.status')
+                  .map {|katagami| {
+                    id: katagami[0],
+                    name: katagami[1],
+                    annotation_num: katagami[2],
+                    status: katagami[3]
+                  }}
+
+    {
+      count: katagamis.size,
+      katagamis: katagamis
+    }
+  end
+
   def self.s3_bucket
     Aws::S3::Resource.new(
       region: 'ap-northeast-1',

@@ -84,7 +84,7 @@ export default () => {
               component={AnnotationPage}
             />
             <PrivateRoute path="/results/:katagamiId" component={ResultPage} />
-            <PrivateRoute path="/users/:userId" component={UserPage} />
+            <PrivateRoute path="/users/:userId/:email" component={UserPage} />
             <PrivateRoute path="/" component={TopPage} />
           </Switch>
         </Box>

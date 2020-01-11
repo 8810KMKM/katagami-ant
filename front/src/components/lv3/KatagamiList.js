@@ -39,7 +39,6 @@ const useStyles = makeStyles(theme => ({
   },
   header: { backgroundColor: theme.palette.primary.light },
   footer: { marginTop: theme.spacing(20) },
-  profile: { marginBottom: 40 },
 }))
 
 export default props => {
@@ -50,8 +49,6 @@ export default props => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [selectedId, setSelectedId] = useState(0)
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [ownedUserEmail, setOwnedUserEmail] = useState('')
-  const [isFiltering, setIsFiltering] = useState(false)
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const user = currentUser()
@@ -63,9 +60,6 @@ export default props => {
       setKatagamis(response.katagamis)
       setCount(response.count)
       setPage(page)
-      if (isInUserPage) {
-        setOwnedUserEmail(response.owned_user_email)
-      }
     }
     fetchKatagamis({
       userId: user.id,
@@ -98,10 +92,6 @@ export default props => {
     setModalIsOpen(true)
   }
 
-  const handleToggleCheck = () => {
-    setIsFiltering(!isFiltering)
-  }
-
   useEffect(() => {
     handlePaginate({ page: page, per: rowsPerPage })
   }, [page, rowsPerPage])
@@ -109,27 +99,8 @@ export default props => {
   return (
     <div className={classes.root}>
       {isInUserPage && (
-        <div>
-          <div className={classes.profile}>
-            <Typography variant="h2">プロフィール</Typography>
-            <Typography className={classes.email}>
-              メールアドレス : {ownedUserEmail}
-            </Typography>
-          </div>
-          <Typography variant="h2">アノテーション済みの型紙一覧</Typography>
-        </div>
+        <Typography variant="h2">アノテーション済みの型紙</Typography>
       )}
-      <FormControlLabel
-        control={
-          <Checkbox
-            color="primary"
-            checked={isFiltering}
-            onChange={handleToggleCheck}
-            value="isFiltering"
-          />
-        }
-        label="達成度が「完了」の型紙を除く"
-      />
       <Button variant="contained" color="primary">
         更新
       </Button>
