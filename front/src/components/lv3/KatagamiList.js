@@ -8,9 +8,6 @@ import {
   TablePagination,
   Typography,
   Tooltip,
-  FormControlLabel,
-  Checkbox,
-  Button,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
@@ -19,6 +16,7 @@ import theme from 'libs/theme'
 import PaginationActions from 'components/lv2/PaginationActions'
 import KatagamiListBody from 'components/lv2/KatagamiListBody'
 import Modal from 'components/lv2/Modal'
+import SortingSelect from 'components/lv1/SortingSelect'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,6 +47,8 @@ export default props => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [selectedId, setSelectedId] = useState(0)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [selectIsOpen, setSelectIsOpen] = useState(false)
+  const [sorting, setSorting] = useState('')
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const user = currentUser()
@@ -66,6 +66,7 @@ export default props => {
       page: page + 1,
       per: per,
       ownedUserId: isInUserPage ? ownedUser : 0,
+      sorting: sorting !== '' ? sorting : 0,
       handleGetKatagamis: handleGetKatagamis,
     })
   }
@@ -92,18 +93,36 @@ export default props => {
     setModalIsOpen(true)
   }
 
+  const handleSelectOpen = () => {
+    setSelectIsOpen(true)
+  }
+  const handleSelectClose = () => {
+    setSelectIsOpen(false)
+  }
+  const handleChangeSorting = event => {
+    setPage(0)
+    setRowsPerPage(5)
+    setSorting(event.target.value)
+  }
+
   useEffect(() => {
     handlePaginate({ page: page, per: rowsPerPage })
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, sorting])
 
   return (
     <div className={classes.root}>
       {isInUserPage && (
         <Typography variant="h2">アノテーション済みの型紙</Typography>
       )}
-      <Button variant="contained" color="primary">
-        更新
-      </Button>
+      <SortingSelect
+        {...{
+          sorting,
+          selectIsOpen,
+          handleChangeSorting,
+          handleSelectOpen,
+          handleSelectClose,
+        }}
+      />
       <Table>
         <TableHead>
           <TableRow className={classes.header}>

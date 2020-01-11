@@ -21,7 +21,7 @@ class Katagami < ApplicationRecord
 
   # 指定されたページ内の型紙一覧
   def self.pagination(params)
-    case params[:sort_by]
+    case params[:sorting]
     when '1' # 達成度の昇順
       condition = ['annotations.status', :id]
     when '2' # ユーザー数の昇順
