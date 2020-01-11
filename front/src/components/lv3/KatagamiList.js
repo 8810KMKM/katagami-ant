@@ -111,18 +111,19 @@ export default props => {
 
   return (
     <div className={classes.root}>
-      {isInUserPage && (
+      {isInUserPage ? (
         <Typography variant="h2">アノテーション済みの型紙</Typography>
+      ) : (
+        <SortingSelect
+          {...{
+            sorting,
+            selectIsOpen,
+            handleChangeSorting,
+            handleSelectOpen,
+            handleSelectClose,
+          }}
+        />
       )}
-      <SortingSelect
-        {...{
-          sorting,
-          selectIsOpen,
-          handleChangeSorting,
-          handleSelectOpen,
-          handleSelectClose,
-        }}
-      />
       <Table>
         <TableHead>
           <TableRow className={classes.header}>
