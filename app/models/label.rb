@@ -8,4 +8,13 @@ class Label < ApplicationRecord
       Label.all.pluck(:name)
     end
   end
+
+  def self.listing_for_ant(params)
+    annotation = Annotation.find_by(katagami_id: params[:katagami], user_id: params[:user])
+    rest_num = 10 - annotation.status
+    target_num = params[:num].to_i
+
+    rest_num - target_num < 0 ?
+      [] : Label.where(id: [1..rest_num]).order(id: 'DESC').limit(target_num)
+  end
 end
