@@ -17,6 +17,7 @@ class Katagami < ApplicationRecord
     .pluck(:id, :'annotations.status').to_h
   end
 
+  # トップページの型紙一覧
   def self.listing_for_top(params)
     katagamis = Katagami.all.pluck(:id, :name, :ant_num)
     statuses = ant_statuses(params[:user])
@@ -28,15 +29,51 @@ class Katagami < ApplicationRecord
     katagamis
       .map  {|k| k << (statuses[k[0]] ? statuses[k[0]] : 0)}
       .sort {|a, b| a[sortIndex] <=> b[sortIndex]}[top..bottom]
-      .format_for_responce(katagamis.size)
+      .format_for_index(katagamis.size)
   end
 
+  # ユーザーページの型紙一覧
   def self.listing_for_user(params)
     includes(:annotations)
       .where(annotations: {user_id: params[:owned_user]}).order(:id)
       .page(params[:page]).per(params[:per])
       .pluck(:id, :name, :ant_num, :'annotations.status')
-      .format_for_responce
+      .format_for_index
+  end
+
+  # アノテーション結果ページのリソース
+  def self.ant_result(params)
+    katagami = includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
+
+    {
+      katagami_url: katagami.presigned_url,
+      katagami_width: katagami.width,
+      katagami_height: katagami.height,
+      annotation_num: katagami.annotations.size,
+      whole_labels: Label.listing,
+      has_labels: katagami.classified_has_labels
+    }
+  end
+
+  # ラベル名, ポジションでhas_labelをクラス分け
+  def classified_has_labels
+    annotations
+      .map {|ant| 
+        ant.has_labels.map {|has_label| 
+          {
+            user: ant.user.id.to_s + ' ' + ant.user.email,
+            position: has_label.position, 
+            label: has_label.label.name
+          }
+        }
+      }
+      .flatten.group_by {|label| label[:position]}
+      .map {|k, v| 
+        {
+          position: k,
+          score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+        }
+      }
   end
 
   def self.s3_bucket
@@ -47,14 +84,18 @@ class Katagami < ApplicationRecord
     ).bucket('katagami-ant')
   end
 
+  # S3バケットに対して認証済みurlを取得
+  # デフォルトの有効期限が1時間なので, それに対応してfetchさせる.
   def presigned_url
-    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-    target[0].presigned_url(:get)
+    Rails.cache.fetch('katagami_image-' + id.to_s) do
+      target = Katagami.s3_bucket.objects.select { |object| object.key === name }
+      target[0].presigned_url(:get)
+    end
   end
 end
 
 class Array
-  def format_for_responce(count=self.size)
+  def format_for_index(count=self.size)
     {
       count: count,
       katagamis: self.map {|k| {
