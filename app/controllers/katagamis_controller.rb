@@ -1,11 +1,7 @@
 class KatagamisController < ApplicationController
   def index
-    # ユーザーページ内の一覧 (アノテーション済みの型紙のみ)
-    if params[:owned_user] != '0'
-      render json: Katagami.listing_for_user(params)
-    else
-      render json: Katagami.listing_for_top(params)
-    end
+    render json: params[:owned_user] != '0' ? 
+      Katagami.listing_for_user(params) : Katagami.listing_for_top(params)
   end
 
   def show
