@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_140015) do
+ActiveRecord::Schema.define(version: 2020_01_10_155156) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_140015) do
     t.datetime "updated_at", null: false
     t.string "cw_obj", null: false
     t.string "name", null: false
+    t.integer "ant_num", default: 0
   end
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

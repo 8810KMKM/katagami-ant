@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/styles'
 import { currentUser } from 'libs/auth'
 import { fetchKatagamis } from 'libs/api'
 import theme from 'libs/theme'
+import SortingSelect from 'components/lv1/SortingSelect'
 import PaginationActions from 'components/lv2/PaginationActions'
 import KatagamiListBody from 'components/lv2/KatagamiListBody'
 import Modal from 'components/lv2/Modal'
@@ -31,9 +32,11 @@ const useStyles = makeStyles(theme => ({
   tableRow: {
     '& *': { fontWeight: 'normal' },
   },
+  checkBox: {
+    margin: '0 0 8px 0',
+  },
   header: { backgroundColor: theme.palette.primary.light },
   footer: { marginTop: theme.spacing(20) },
-  profile: { marginBottom: 40 },
 }))
 
 export default props => {
@@ -44,7 +47,8 @@ export default props => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [selectedId, setSelectedId] = useState(0)
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [ownedUserEmail, setOwnedUserEmail] = useState('')
+  const [selectIsOpen, setSelectIsOpen] = useState(false)
+  const [sorting, setSorting] = useState('')
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
   const user = currentUser()
@@ -55,16 +59,13 @@ export default props => {
     const handleGetKatagamis = response => {
       setKatagamis(response.katagamis)
       setCount(response.count)
-      setPage(page)
-      if (isInUserPage) {
-        setOwnedUserEmail(response.owned_user_email)
-      }
     }
     fetchKatagamis({
       userId: user.id,
       page: page + 1,
       per: per,
       ownedUserId: isInUserPage ? ownedUser : 0,
+      sorting: sorting !== '' ? sorting : 0,
       handleGetKatagamis: handleGetKatagamis,
     })
   }
@@ -91,22 +92,36 @@ export default props => {
     setModalIsOpen(true)
   }
 
+  const handleSelectOpen = () => {
+    setSelectIsOpen(true)
+  }
+  const handleSelectClose = () => {
+    setSelectIsOpen(false)
+  }
+  const handleChangeSorting = event => {
+    setPage(0)
+    setRowsPerPage(5)
+    setSorting(event.target.value)
+  }
+
   useEffect(() => {
     handlePaginate({ page: page, per: rowsPerPage })
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, sorting])
 
   return (
     <div className={classes.root}>
-      {isInUserPage && (
-        <div>
-          <div className={classes.profile}>
-            <Typography variant="h2">プロフィール</Typography>
-            <Typography className={classes.email}>
-              メールアドレス : {ownedUserEmail}
-            </Typography>
-          </div>
-          <Typography variant="h2">アノテーション済みの型紙一覧</Typography>
-        </div>
+      {isInUserPage ? (
+        <Typography variant="h2">アノテーション済みの型紙</Typography>
+      ) : (
+        <SortingSelect
+          {...{
+            sorting,
+            selectIsOpen,
+            handleChangeSorting,
+            handleSelectOpen,
+            handleSelectClose,
+          }}
+        />
       )}
       <Table>
         <TableHead>
@@ -131,7 +146,6 @@ export default props => {
             katagamis,
             emptyRows,
             handleSelectId,
-            isInUserPage,
           }}
           katagamis={katagamis}
           emptyRows={emptyRows}

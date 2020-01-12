@@ -25,8 +25,8 @@ export default props => {
   const isActive = activeIndex > -1
   const classes = useStyles({ isActive })
 
-  const handleLinkToUser = id => {
-    window.location.href = `/users/${id}`
+  const handleLinkToUser = (id, email) => {
+    window.location.href = `/users/${id}/${email}`
   }
 
   return (
@@ -40,7 +40,7 @@ export default props => {
               <li
                 key={id}
                 className={classes.user}
-                onClick={() => handleLinkToUser(id)}
+                onClick={() => handleLinkToUser(id, email)}
               >
                 {email}
               </li>

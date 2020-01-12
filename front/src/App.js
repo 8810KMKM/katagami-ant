@@ -9,13 +9,13 @@ import {
 } from 'react-router-dom'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
+import { isAuthenticated, logout } from 'libs/auth'
+import theme from 'libs/theme'
+import Header from 'components/lv3/Header'
 import TopPage from 'pages/TopPage'
 import SignupPage from 'pages/SignupPage'
 import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
-import Header from 'components/lv3/Header'
-import { isAuthenticated, logout } from 'libs/auth'
-import theme from 'libs/theme'
 import ResultPage from 'pages/ResultPage'
 import UserPage from 'pages/UserPage'
 
@@ -84,7 +84,7 @@ export default () => {
               component={AnnotationPage}
             />
             <PrivateRoute path="/results/:katagamiId" component={ResultPage} />
-            <PrivateRoute path="/users/:userId" component={UserPage} />
+            <PrivateRoute path="/users/:userId/:email" component={UserPage} />
             <PrivateRoute path="/" component={TopPage} />
           </Switch>
         </Box>
