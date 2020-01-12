@@ -11,7 +11,7 @@ class Label < ApplicationRecord
 
   def self.listing_for_ant(params)
     annotation = Annotation.find_by(katagami_id: params[:katagami], user_id: params[:user])
-    rest_num = 10 - annotation.status
+    rest_num = annotation ? 10 - annotation.status : 10
     target_num = params[:num].to_i
 
     rest_num - target_num < 0 ?
