@@ -34,7 +34,7 @@ class Annotation < ApplicationRecord
     new_status = self.status
 
     HasLabel.transaction do
-      # {has_labels: 'label_id [positions], label_id [positions]'}
+      # {has_labels: 'label_id division [positions],label_id division [positions]'}
       params[:has_labels].split(',').each do |has_label|
         self.add(has_label)
         new_status += 1
@@ -51,10 +51,11 @@ class Annotation < ApplicationRecord
   def add(has_label)
     _has_label = has_label.split(' ').map { |n| n.to_i }
     label = Label.find(_has_label.shift) # has_labelの先頭はlabel_id
+    division = _has_label.shift # その次はdivision
 
     _has_label.each {|position|
       HasLabel.create(
-        annotation: self, katagami: self.katagami, label: label, position: position
+        annotation: self, katagami: self.katagami, label: label, division: division, position: position
       )
     }
   end
