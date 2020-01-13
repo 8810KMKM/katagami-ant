@@ -14,6 +14,7 @@ import {
   Edit,
   Cancel,
   Check,
+  Info,
 } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
@@ -24,6 +25,11 @@ const useStyles = makeStyles(theme => ({
   single: {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+  hint: {
+    padding: 0,
+    lineHeight: 16,
+    margin: '0 0 6px 4px',
   },
 }))
 
@@ -38,6 +44,7 @@ export default props => {
     setTileIsSelectable,
     isEditing,
     setIsEditing,
+    handleToggleHint,
   } = props
   const classes = useStyles({ ruby: name.ruby })
   const isFocused = selectedIndex === i
@@ -107,6 +114,13 @@ export default props => {
         {name.kanji}
         <rt>{name.ruby}</rt>
       </ruby>
+      <IconButton
+        disabled={!isFocused}
+        onClick={handleToggleHint}
+        className={classes.hint}
+      >
+        <Info fontSize="small" />
+      </IconButton>
     </Typography>
   )
 

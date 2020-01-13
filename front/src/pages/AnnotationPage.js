@@ -13,6 +13,7 @@ import KatagamiImage from 'components/lv3/KatagamiImage'
 
 const useStyles = makeStyles(theme => ({
   submit: {
+    marginTop: 24,
     display: 'flex',
     justifyContent: 'flex-end',
   },
@@ -162,24 +163,24 @@ export default props => {
               setIsEditing,
             }}
           />
+          <Grid className={classes.submit}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={handleConfirmModalOpen}
+            >
+              完了
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={handleBackModalOpen}
+            >
+              中断してトップへ
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid className={classes.submit}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          onClick={handleConfirmModalOpen}
-        >
-          完了
-        </Button>
-        <Button
-          variant="contained"
-          className={classes.button}
-          onClick={handleBackModalOpen}
-        >
-          中断してトップへ
-        </Button>
       </Grid>
       <Modal
         isOpen={confirmModalIsOpen}
