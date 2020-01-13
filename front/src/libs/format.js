@@ -1,8 +1,8 @@
-import { savedTiles } from './tile'
+import { savedTiles, getDivision } from './tile'
+import { MAX_DIVISION } from 'datas/tile'
 
 // APIから取得したラベル名を日本語化
 export const labelNameJp = nameEn => {
-  console.log(nameEn)
   switch (nameEn) {
     case 'kasuri':
       return { kanji: '絣', ruby: 'かすり' }
@@ -41,7 +41,7 @@ export const convertBoolToNumOfTiles = tileStates => {
 
 // ラベル付け : レンダリング用 (String) => state (Array of Boolean)
 export const convertNumToBoolOfTiles = saveTiles => {
-  let convertArray = new Array(9).fill(false)
+  let convertArray = new Array(MAX_DIVISION).fill(false)
   if (saveTiles) {
     saveTiles
       .split(' ')
@@ -52,7 +52,9 @@ export const convertNumToBoolOfTiles = saveTiles => {
 
 // ラベル付け : 保存済み (Array of Number) => POST用 (String)
 export const hasLabelsForPost = labels =>
-  labels.map((label, i) => label.id + ' ' + savedTiles(i)).join(',')
+  labels
+    .map((label, i) => label.id + ' ' + getDivision(i) + ' ' + savedTiles(i))
+    .join(',')
 
 // idを0詰め表示
 export const zeroPaddingOf = (num, zeros) =>

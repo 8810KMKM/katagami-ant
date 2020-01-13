@@ -4,6 +4,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { graphDataOf } from 'libs/format'
 import UserList from 'components/lv2/UserList'
 import ResultGraph from 'components/lv2/ResultGraph'
+import { DIVISIONS } from 'datas/tile'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   const {
     hasLabels,
+    division,
     wholeLabels,
     position,
     users,
@@ -22,9 +24,14 @@ export default props => {
     handleSelectUsers,
   } = props
 
-  const [hasLabel] = hasLabels.filter(
-    hasLabel => hasLabel.position === parseInt(position, 10)
-  )
+  const _has_labels = hasLabels[DIVISIONS.indexOf(division)]
+
+  const [hasLabel] = _has_labels
+    ? _has_labels.filter(
+        hasLabel => hasLabel.position === parseInt(position, 10)
+      )
+    : []
+  console.log(hasLabel)
   const data = graphDataOf(hasLabel, wholeLabels)
   const classes = useStyles()
 

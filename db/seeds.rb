@@ -8,7 +8,6 @@ Katagami.transaction do
       cw_obj: open(item_url)
     )
     katagami.save!
-    Katagami.add_count 1
   end
 end
 

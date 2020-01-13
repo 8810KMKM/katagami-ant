@@ -7,7 +7,10 @@ export default props => {
   return (
     <BarChart width={520} height={240} data={data}>
       <XAxis dataKey="label" />
-      <YAxis allowDecimals={false} />
+      <YAxis
+        allowDecimals={false}
+        domain={[0, dataMax => (dataMax ? dataMax : 1)]}
+      />
       <Bar dataKey="score" onClick={handleSelectUsers}>
         {data.map((entry, index) => (
           <Cell

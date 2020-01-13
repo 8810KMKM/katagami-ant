@@ -5,19 +5,20 @@ import { zeroPaddingOf, convertBoolToNumOfTiles } from 'libs/format'
 import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
 import LoadingModal from 'components/lv1/LoadingModal'
+import DivisionSelect from 'components/lv1/DivisionSelect'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultDetail from 'components/lv3/ResultDetail'
+import { MAX_DIVISION } from 'datas/tile'
 
 export default props => {
   const { katagamiId } = props.match.params
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
-  const tileNumber = 9
 
   const [katagamiUrl, setKatagamiUrl] = useState('')
   const [katagamiWidth, setKatagamiWidth] = useState(0)
   const [katagamiHeight, setKatagamiHeight] = useState(0)
   const [selectedTiles, setSelectedTiles] = useState(
-    new Array(tileNumber).fill(false)
+    new Array(MAX_DIVISION).fill(false)
   )
   const [annotationNum, setAnnotationNum] = useState(0)
   const [wholeLabels, setWholeLabels] = useState([])
@@ -25,6 +26,8 @@ export default props => {
   const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const [users, setUsers] = useState([])
+  const [division, setDivision] = useState(12)
+  const [selectIsOpen, setSelectIsOpen] = useState(false)
 
   const handleSelectUsers = (data, index) => {
     setActiveIndex(index)
@@ -37,6 +40,20 @@ export default props => {
     )
     setActiveIndex(-1)
     setUsers([])
+  }
+
+  const handleSelectOpen = () => {
+    setSelectIsOpen(true)
+  }
+
+  const handleSelectClose = () => {
+    setSelectIsOpen(false)
+  }
+
+  const handleChangeDivision = event => {
+    setSelectedTiles(new Array(MAX_DIVISION).fill(false))
+    handleToggleTile(1)
+    setDivision(event.target.value)
   }
 
   useEffect(() => {
@@ -67,6 +84,16 @@ export default props => {
   ) : (
     <Container>
       <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
+      <DivisionSelect
+        {...{
+          division,
+          selectIsOpen,
+          handleChangeDivision,
+          handleSelectOpen,
+          handleSelectClose,
+          tileIsSelectable: true,
+        }}
+      />
       <Grid container>
         <Grid item xs={6}>
           <KatagamiImage
@@ -77,7 +104,7 @@ export default props => {
               tileIsSelectable: true,
               fixedWidth: 584,
               handleToggleTile,
-              tileNumber,
+              division,
               selectedTiles,
             }}
           />
@@ -86,6 +113,7 @@ export default props => {
           <ResultDetail
             {...{
               hasLabels,
+              division,
               wholeLabels,
               users,
               activeIndex,
