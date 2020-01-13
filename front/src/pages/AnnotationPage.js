@@ -11,6 +11,7 @@ import DivisionSelect from 'components/lv1/DivisionSelect'
 import Modal from 'components/lv2/Modal'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
+import { MAX_DIVISION } from 'datas/tile'
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -26,8 +27,6 @@ const useStyles = makeStyles(theme => ({
 
 export default props => {
   const { userId, katagamiId, num } = props.match.params
-
-  const tileNumber = 9
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const classes = useStyles()
 
@@ -37,7 +36,7 @@ export default props => {
   const [katagamiHeight, setKatagamiHeight] = useState(0)
   const [labels, setLabels] = useState([])
   const [selectedTiles, setSelectedTiles] = useState(
-    new Array(tileNumber).fill(false)
+    new Array(MAX_DIVISION).fill(false)
   )
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
   const [division, setDivision] = useState(12)
@@ -50,6 +49,7 @@ export default props => {
   const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
+    console.log(selectedTiles.length)
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )
@@ -103,6 +103,7 @@ export default props => {
   }
 
   const handleChangeDivision = event => {
+    setSelectedTiles(new Array(MAX_DIVISION).fill(false))
     setDivision(event.target.value)
   }
 
@@ -137,8 +138,8 @@ export default props => {
     })
   }, [katagamiId, userId, num])
 
-  // init diplayedTiles (localStorage)
-  useEffect(() => initAllTiles(num), [katagamiId, userId, num, division])
+  // init displayedTiles (localStorage)
+  useEffect(() => initAllTiles(num, division), [katagamiId, userId, num])
 
   if (isLoading) {
     return (
@@ -158,6 +159,7 @@ export default props => {
           handleChangeDivision,
           handleSelectOpen,
           handleSelectClose,
+          tileIsSelectable,
         }}
       />
       <Grid container>
@@ -169,7 +171,7 @@ export default props => {
               katagamiWidth,
               tileIsSelectable,
               handleToggleTile,
-              tileNumber,
+              division,
               selectedTiles,
               fixedWidth: 640,
             }}
@@ -185,6 +187,8 @@ export default props => {
               setTileIsSelectable,
               isEditing,
               setIsEditing,
+              division,
+              setDivision,
             }}
           />
           <Grid className={classes.submit}>

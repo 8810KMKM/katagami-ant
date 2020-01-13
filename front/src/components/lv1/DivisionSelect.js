@@ -20,6 +20,7 @@ export default props => {
     handleChangeDivision,
     handleSelectOpen,
     handleSelectClose,
+    tileIsSelectable,
   } = props
   const classes = useStyles()
 
@@ -38,6 +39,7 @@ export default props => {
           onClose={handleSelectClose}
           value={division}
           onChange={handleChangeDivision}
+          disabled={!tileIsSelectable}
         >
           <MenuItem value={12}>4 × 3</MenuItem>
           <MenuItem value={24}>6 × 4</MenuItem>

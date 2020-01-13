@@ -18,20 +18,42 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const xDiv = division => {
+  switch (division) {
+    case 12:
+      return 3
+    case 24:
+      return 4
+    default:
+      return 3
+  }
+}
+
+const yDiv = division => {
+  switch (division) {
+    case 12:
+      return 4
+    case 24:
+      return 6
+    default:
+      return 4
+  }
+}
+
 export default props => {
   const {
     katagamiUrl,
     katagamiWidth,
     katagamiHeight,
-    tileNumber,
     selectedTiles,
     handleToggleTile,
     tileIsSelectable,
     fixedWidth,
+    division,
   } = props
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
-  const tileSquare = Math.sqrt(tileNumber)
-  const tileHeight = fixedHeight / tileSquare
+  const dx = xDiv(division)
+  const tileHeight = fixedHeight / yDiv(division)
   const savedTilesAreNotZero = selectedTiles.reduce((a, b) => a && b, true)
   const classes = useStyles({
     katagamiUrl,
@@ -44,12 +66,12 @@ export default props => {
 
   const TilesOnKatagami = () => {
     const labels = []
-    for (let i = 1; i <= tileNumber; i++) {
+    for (let i = 1; i <= division; i++) {
       labels.push(
         <Tile
           key={i}
           number={i}
-          square={tileSquare}
+          square={dx}
           isSelected={selectedTiles[i - 1]}
           handleToggleTile={handleToggleTile}
         />

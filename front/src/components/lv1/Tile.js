@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   },
   tile: {
     color: grey[50],
-    border: '2px solid',
+    border: '1px solid',
     padding: '2px 4px',
     fontSize: 40,
   },
@@ -30,8 +30,6 @@ export default props => {
         isSelected ? classes.tile + ' ' + classes.selected : classes.tile
       }
       onClick={() => handleToggleTile(number)}
-    >
-      {number}
-    </Grid>
+    />
   )
 }

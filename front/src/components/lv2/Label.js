@@ -17,7 +17,12 @@ import {
   Info,
 } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
-import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
+import {
+  saveSelectedTiles,
+  displayedTiles,
+  saveDivision,
+  getDivision,
+} from 'libs/tile'
 
 const useStyles = makeStyles(theme => ({
   tiles: { paddingTop: 6 },
@@ -45,6 +50,8 @@ export default props => {
     isEditing,
     setIsEditing,
     handleToggleHint,
+    division,
+    setDivision,
   } = props
   const classes = useStyles({ ruby: name.ruby })
   const isFocused = selectedIndex === i
@@ -54,7 +61,8 @@ export default props => {
   const handleSelectThis = () => {
     if (!(isEditing || isFocused)) {
       setTileIsSelectable(false)
-      setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
+      setSelectedTiles(convertNumToBoolOfTiles(displayedTiles(i)))
+      setDivision(getDivision(i))
       setSelectedIndex(i)
     }
   }
@@ -63,14 +71,16 @@ export default props => {
     setIsEditing(false)
     setTileIsSelectable(false)
     saveSelectedTiles(convertedSelectedTiles, i)
+    saveDivision(division, i)
     setSelectedTiles(new Array(9).fill(false))
     setSelectedIndex(i + 1)
+    setDivision(getDivision(i + 1))
   }
 
   const handleEdit = () => {
     setIsEditing(true)
     setTileIsSelectable(true)
-    setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
+    setSelectedTiles(convertNumToBoolOfTiles(displayedTiles(i)))
     setSelectedIndex(i)
   }
 
@@ -82,7 +92,7 @@ export default props => {
 
   useEffect(() => {
     if (isEditingThis) {
-      setSelectedTiles(convertNumToBoolOfTiles(diplayedTiles(i)))
+      setSelectedTiles(convertNumToBoolOfTiles(displayedTiles(i)))
     }
   }, [isEditingThis, i, setSelectedTiles])
 
@@ -126,7 +136,7 @@ export default props => {
 
   const DisplayedTiles = () => (
     <Typography variant="body1" color="primary" className={classes.tiles}>
-      {isEditingThis ? convertedSelectedTiles : diplayedTiles(i)}
+      {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
     </Typography>
   )
 
