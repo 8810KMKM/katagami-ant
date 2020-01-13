@@ -7,6 +7,7 @@ import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
 import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
 import LoadingModal from 'components/lv1/LoadingModal'
+import DivisionSelect from 'components/lv1/DivisionSelect'
 import Modal from 'components/lv2/Modal'
 import LabelList from 'components/lv3/LabelList'
 import KatagamiImage from 'components/lv3/KatagamiImage'
@@ -39,6 +40,8 @@ export default props => {
     new Array(tileNumber).fill(false)
   )
   const [tileIsSelectable, setTileIsSelectable] = useState(false)
+  const [division, setDivision] = useState(12)
+  const [selectIsOpen, setSelectIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false)
@@ -91,6 +94,18 @@ export default props => {
     setBackModalIsOpen(false)
   }
 
+  const handleSelectOpen = () => {
+    setSelectIsOpen(true)
+  }
+
+  const handleSelectClose = () => {
+    setSelectIsOpen(false)
+  }
+
+  const handleChangeDivision = event => {
+    setDivision(event.target.value)
+  }
+
   // to fecth Katagami image
   useEffect(() => {
     const handleCreateAnnotation = response => {
@@ -123,7 +138,7 @@ export default props => {
   }, [katagamiId, userId, num])
 
   // init diplayedTiles (localStorage)
-  useEffect(() => initAllTiles(num), [katagamiId, userId, num])
+  useEffect(() => initAllTiles(num), [katagamiId, userId, num, division])
 
   if (isLoading) {
     return (
@@ -136,6 +151,15 @@ export default props => {
   return (
     <Container>
       <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
+      <DivisionSelect
+        {...{
+          division,
+          selectIsOpen,
+          handleChangeDivision,
+          handleSelectOpen,
+          handleSelectClose,
+        }}
+      />
       <Grid container>
         <Grid item xs={7}>
           <KatagamiImage

@@ -2,7 +2,6 @@ import { savedTiles } from './tile'
 
 // APIから取得したラベル名を日本語化
 export const labelNameJp = nameEn => {
-  console.log(nameEn)
   switch (nameEn) {
     case 'kasuri':
       return { kanji: '絣', ruby: 'かすり' }
