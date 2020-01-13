@@ -26,6 +26,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  hint: {
+    padding: 0,
+    lineHeight: 16,
+    margin: '0 0 6px 4px',
+  },
 }))
 
 export default props => {
@@ -109,6 +114,13 @@ export default props => {
         {name.kanji}
         <rt>{name.ruby}</rt>
       </ruby>
+      <IconButton
+        disabled={!isFocused}
+        onClick={handleToggleHint}
+        className={classes.hint}
+      >
+        <Info fontSize="small" />
+      </IconButton>
     </Typography>
   )
 
@@ -131,9 +143,6 @@ export default props => {
         <Grid container>
           <Grid item xs={4} className={classes.name}>
             <RubyLabelName />
-            <IconButton disabled={!isFocused} onClick={handleToggleHint}>
-              <Info />
-            </IconButton>
           </Grid>
           <Grid item xs={4} className={classes.tile}>
             <DisplayedTiles />
