@@ -8,12 +8,11 @@ import LoadingModal from 'components/lv1/LoadingModal'
 import DivisionSelect from 'components/lv1/DivisionSelect'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultDetail from 'components/lv3/ResultDetail'
-import { DIVISIONS, MAX_DIVISION } from 'datas/tile'
+import { MAX_DIVISION } from 'datas/tile'
 
 export default props => {
   const { katagamiId } = props.match.params
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
-  const tileNumber = 9
 
   const [katagamiUrl, setKatagamiUrl] = useState('')
   const [katagamiWidth, setKatagamiWidth] = useState(0)
