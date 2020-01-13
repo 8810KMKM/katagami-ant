@@ -14,6 +14,7 @@ import {
   Edit,
   Cancel,
   Check,
+  Info,
 } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import { saveSelectedTiles, diplayedTiles } from 'libs/tile'
@@ -38,6 +39,7 @@ export default props => {
     setTileIsSelectable,
     isEditing,
     setIsEditing,
+    handleToggleHint,
   } = props
   const classes = useStyles({ ruby: name.ruby })
   const isFocused = selectedIndex === i
@@ -129,6 +131,9 @@ export default props => {
         <Grid container>
           <Grid item xs={4} className={classes.name}>
             <RubyLabelName />
+            <IconButton disabled={!isFocused} onClick={handleToggleHint}>
+              <Info />
+            </IconButton>
           </Grid>
           <Grid item xs={4} className={classes.tile}>
             <DisplayedTiles />
