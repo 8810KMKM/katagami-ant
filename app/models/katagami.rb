@@ -55,23 +55,27 @@ class Katagami < ApplicationRecord
     }
   end
 
-  # ラベル名, ポジションでhas_labelをクラス分け
+  # division > position > labelでhas_labelをクラス分け
   def classified_has_labels
     annotations
       .map {|ant| 
         ant.has_labels.map {|has_label| 
           {
             user: ant.user.id.to_s + ' ' + ant.user.email,
-            position: has_label.position, 
+            position: has_label.position,
+            division: has_label.division,
             label: has_label.label.name
           }
         }
       }
-      .flatten.group_by {|label| label[:position]}
-      .map {|k, v| 
-        {
-          position: k,
-          score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+      .flatten.group_by { |has_label| has_label[:division] }
+      .map {|k, v| v
+        .group_by {|label| label[:position]}
+        .map {|k, v| 
+          {
+            position: k,
+            score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+          }
         }
       }
   end
