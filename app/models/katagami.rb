@@ -80,6 +80,10 @@ class Katagami < ApplicationRecord
       }
   end
 
+  def plus_ant_num(n=1)
+    self.update(ant_num: self.ant_num + n)
+  end
+
   def self.s3_bucket
     Aws::S3::Resource.new(
       region: 'ap-northeast-1',

@@ -10,16 +10,8 @@ class Annotation < ApplicationRecord
   # アノテーション実行開始
   def self.stand_by(params)
     katagami = Katagami.find(params[:katagami])
-    ant_params = {
-      katagami: katagami,
-      user: User.find(params[:user])
-    }
-    annotation = find_by(ant_params)
-
-    if !annotation.present?
-      annotation = create(ant_params)
-      katagami.update(ant_num: katagami.ant_num + 1)
-    end
+    ant_params = { katagami: katagami, user: User.find(params[:user])}
+    annotation = find_by(ant_params) || create(ant_params) 
     
     {
       id: annotation.id,
@@ -40,6 +32,7 @@ class Annotation < ApplicationRecord
         new_status += 1
       end
     end
+      self.katagami.plus_ant_num if self.status == 0
       self.update(status: new_status)
       self.has_labels
     rescue => e
