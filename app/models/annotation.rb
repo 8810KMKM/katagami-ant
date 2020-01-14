@@ -34,6 +34,7 @@ class Annotation < ApplicationRecord
     end
       self.katagami.plus_ant_num if self.status == 0
       self.update(status: new_status)
+      katagami.clear_caches
       self.has_labels
     rescue => e
       p e.message
