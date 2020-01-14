@@ -95,7 +95,7 @@ class Katagami < ApplicationRecord
   end
 
   def plus_ant_num(n=1)
-    self.update(ant_num: ant_num + n)
+    update(ant_num: ant_num + n)
   end
 
   def self.s3_bucket

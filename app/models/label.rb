@@ -5,7 +5,7 @@ class Label < ApplicationRecord
 
   def self.listing
     Rails.cache.fetch('labels') do
-      Label.all.pluck(:name)
+      all.pluck(:name)
     end
   end
 
@@ -15,6 +15,6 @@ class Label < ApplicationRecord
     target_num = params[:num].to_i
 
     rest_num - target_num < 0 ?
-      [] : Label.where(id: [1..rest_num]).order(id: 'DESC').limit(target_num)
+      [] : where(id: [1..rest_num]).order(id: 'DESC').limit(target_num)
   end
 end
