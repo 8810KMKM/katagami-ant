@@ -10,16 +10,8 @@ class Annotation < ApplicationRecord
   # アノテーション実行開始
   def self.stand_by(params)
     katagami = Katagami.find(params[:katagami])
-    ant_params = {
-      katagami: katagami,
-      user: User.find(params[:user])
-    }
-    annotation = find_by(ant_params)
-
-    if !annotation.present?
-      annotation = create(ant_params)
-      katagami.update(ant_num: katagami.ant_num + 1)
-    end
+    ant_params = { katagami: katagami, user: User.find(params[:user])}
+    annotation = find_by(ant_params) || create(ant_params) 
     
     {
       id: annotation.id,
@@ -31,17 +23,19 @@ class Annotation < ApplicationRecord
 
   # アノテーション結果を保存
   def save_result(params)
-    new_status = self.status
+    new_status = status
 
     HasLabel.transaction do
       # {has_labels: 'label_id division [positions],label_id division [positions]'}
       params[:has_labels].split(',').each do |has_label|
-        self.add(has_label)
+        add(has_label)
         new_status += 1
       end
     end
-      self.update(status: new_status)
-      self.has_labels
+      katagami.plus_ant_num if status == 0
+      update(status: new_status)
+      katagami.clear_caches
+      has_labels
     rescue => e
       p e.message
       []
@@ -55,7 +49,7 @@ class Annotation < ApplicationRecord
 
     _has_label.each {|position|
       HasLabel.create(
-        annotation: self, katagami: self.katagami, label: label, division: division, position: position
+        annotation: self, katagami: katagami, label: label, division: division, position: position
       )
     }
   end

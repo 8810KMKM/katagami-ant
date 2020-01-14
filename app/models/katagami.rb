@@ -19,26 +19,30 @@ class Katagami < ApplicationRecord
 
   # トップページの型紙一覧
   def self.listing_for_top(params)
-    katagamis = Katagami.all.pluck(:id, :name, :ant_num)
-    statuses = ant_statuses(params[:user])
+    Rails.cache.fetch('katagamis-' + params[:user] + params[:page] + params[:per] + params[:sorting]) do
+      katagamis = Katagami.all.pluck(:id, :name, :ant_num)
+      statuses = ant_statuses(params[:user])
 
-    top = (params[:page].to_i - 1) * params[:per].to_i
-    bottom = top + params[:per].to_i - 1
-    sortIndex = params[:sorting].to_i
+      top = (params[:page].to_i - 1) * params[:per].to_i
+      bottom = top + params[:per].to_i - 1
+      sortIndex = params[:sorting].to_i
 
-    katagamis
-      .map  {|k| k << (statuses[k[0]] ? statuses[k[0]] : 0)}
-      .sort {|a, b| a[sortIndex] <=> b[sortIndex]}[top..bottom]
-      .format_for_index(katagamis.size)
+      katagamis
+        .map  {|k| k << (statuses[k[0]] ? statuses[k[0]] : 0)}
+        .sort {|a, b| a[sortIndex] <=> b[sortIndex]}[top..bottom]
+        .format_for_index(katagamis.size)
+    end
   end
 
   # ユーザーページの型紙一覧
   def self.listing_for_user(params)
-    includes(:annotations)
-      .where(annotations: {user_id: params[:owned_user]}).order(:id)
-      .page(params[:page]).per(params[:per])
-      .pluck(:id, :name, :ant_num, :'annotations.status')
-      .format_for_index
+    Rails.cache.fetch('katagamis-owned-' + params[:page] + params[:per] + params[:owned_user]) do
+      includes(:annotations)
+        .where(annotations: {user_id: params[:owned_user]}).order(:id)
+        .page(params[:page]).per(params[:per])
+        .pluck(:id, :name, :ant_num, :'annotations.status')
+        .format_for_index
+    end
   end
 
   # アノテーション結果ページのリソース
@@ -57,27 +61,41 @@ class Katagami < ApplicationRecord
 
   # division > position > labelでhas_labelをクラス分け
   def classified_has_labels
-    annotations
-      .map {|ant| 
-        ant.has_labels.map {|has_label| 
-          {
-            user: ant.user.id.to_s + ' ' + ant.user.email,
-            position: has_label.position,
-            division: has_label.division,
-            label: has_label.label.name
+    Rails.cache.fetch('has_labels-' + id.to_s) do
+      annotations
+        .map {|ant| 
+          ant.has_labels.map {|has_label| 
+            {
+              user: ant.user.id.to_s + ' ' + ant.user.email,
+              position: has_label.position,
+              division: has_label.division,
+              label: has_label.label.name
+            }
           }
         }
-      }
-      .flatten.group_by { |has_label| has_label[:division] }
-      .map {|k, v| v
-        .group_by {|label| label[:position]}
-        .map {|k, v| 
-          {
-            position: k,
-            score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+        .flatten.group_by { |has_label| has_label[:division] }
+        .map {|k, v| v
+          .group_by {|label| label[:position]}
+          .map {|k, v| 
+            {
+              position: k,
+              score: v.group_by {|v| v[:label]}.each{|_, v| v.map!{|h| h[:user]}}
+            }
           }
         }
-      }
+    end
+  end
+
+   # 型紙一覧の全キャッシュと自身の持つHasLabelのキャッシュをクリア
+   def clear_caches
+    Rails.cache.instance_variable_get(:@data).keys.each {|k| 
+      Rails.cache.delete(k) if k.match(/katagamis/)
+    }
+    Rails.cache.delete('has_labels-' + id.to_s)
+  end
+
+  def plus_ant_num(n=1)
+    update(ant_num: ant_num + n)
   end
 
   def self.s3_bucket
