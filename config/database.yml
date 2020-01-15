@@ -15,7 +15,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV.fetch("DATABASE_USER") { root } %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") { root } %>
-  host: <%= ENV.fetch("DATABASE_HOST") { localhost } %>
+  host: <%= ENV.fetch("DATABASE_HOST") { db } %>
+  url: <%= ENV.fetch("DATABASE_URL") { mysql2://root:password@db/katagami-ant_development } >
 
 development:
   <<: *default
