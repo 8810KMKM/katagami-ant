@@ -46,6 +46,4 @@ development:
 #
 production:
   <<: *default
-  database: katagami-ant_production
-  username: katagami-ant
-  password: <%= ENV['KATAGAMI-ANT_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
