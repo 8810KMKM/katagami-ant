@@ -59,5 +59,6 @@ gem 'kaminari'
 gem 'redis'
 gem 'redis-rails'
 # デバッグ用
+gem 'pry'
 gem 'pry-byebug'
 gem 'pry-rails'
