@@ -1,6 +1,4 @@
-# README
-
-## Katagami-ant
+# Katagami-ant
 
 九州工業大学 情報工学部 坂本研究室 2019 年度 B4 大隈隼 の卒業研究の制作物.
 
