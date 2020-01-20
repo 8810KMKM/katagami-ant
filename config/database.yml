@@ -12,10 +12,10 @@
 default: &default
   adapter: mysql2
   encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV.fetch("DATABASE_USER") { 'root' } %>
   password: <%= ENV.fetch("DATABASE_PASSWORD") { 'password' } %>
   host: <%= ENV.fetch("DATABASE_HOST") { 'db' } %>
@@ -46,6 +46,4 @@ development:
 #
 production:
   <<: *default
-  database: katagami-ant_production
-  username: katagami-ant
-  password: <%= ENV['KATAGAMI-ANT_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
