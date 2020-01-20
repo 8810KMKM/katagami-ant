@@ -16,4 +16,4 @@ COPY Gemfile.lock /katagami-ant/Gemfile.lock
 RUN bundle install --without development test
 COPY . /katagami-ant
 EXPOSE 3001
-CMD ["rails", "server", "-p", "3001", "-b", "'0.0.0.0'"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
