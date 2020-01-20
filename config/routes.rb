@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # User
   post '/signup', to: 'users#signup'
   post '/login' , to: 'users#login'
