@@ -5,7 +5,6 @@ class KatagamisController < ApplicationController
   end
 
   def show
-    binding.pry
     render json: Katagami.ant_result(params)
   end
 end
