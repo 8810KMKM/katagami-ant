@@ -13,14 +13,11 @@
 ActiveRecord::Schema.define(version: 2020_01_13_115903) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
     t.bigint "katagami_id"
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["katagami_id"], name: "index_annotations_on_katagami_id"
-    t.index ["user_id", "katagami_id"], name: "index_annotations_on_user_id_and_katagami_id", unique: true
-    t.index ["user_id"], name: "index_annotations_on_user_id"
   end
 
   create_table "has_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -53,15 +50,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_115903) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "password_digest", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_foreign_key "annotations", "katagamis"
-  add_foreign_key "annotations", "users"
   add_foreign_key "has_labels", "annotations"
   add_foreign_key "has_labels", "katagamis"
   add_foreign_key "has_labels", "labels"
