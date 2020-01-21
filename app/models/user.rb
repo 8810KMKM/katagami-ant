@@ -11,4 +11,5 @@ class User < ApplicationRecord
       user = User.create(email: auth.info.email, password: Devise.friendly_token[0, 20])
     end
     user
+  end
 end

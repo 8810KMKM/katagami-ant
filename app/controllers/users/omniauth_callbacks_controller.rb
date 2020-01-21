@@ -8,6 +8,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       session['devise.google_data'] = request.env['omniauth.auth']
       redirect_to new_user_registration_url
-    end
+    endz
   end
 end
