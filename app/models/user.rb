@@ -15,7 +15,7 @@ class User < ApplicationRecord
         uid:      auth.uid,
         token:    auth.credentials.token,
         password: Devise.friendly_token[0, 20],
-        meta:     auth.to_yaml
+        # meta:     auth.to_yaml
       )
     end
     user
