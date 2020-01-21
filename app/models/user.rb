@@ -2,6 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :trackable, :omniauthable, omniauth_providers: %i(google)
+  attr_accessor :password
 
   protected
   def self.find_for_google(auth)
