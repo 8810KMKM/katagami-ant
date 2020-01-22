@@ -1,18 +1,15 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google
-    
-    binding.pry
-    
     @user = User.find_for_google(request.env['omniauth.auth'])
 
     if @user.persisted?
       p 'success'
-      flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect @user, event: :authentication
+      p user_signed_in?
+      p current_user
+      redirect_to 'https://github.com/8810KMKM/katagami-ant'
     else
       p 'failure'
-      session['devise.google_data'] = request.env['omniauth.auth']
-      redirect_to new_user_registration_url
+      redirect_to user_google_omniauth_authorize_path
     end
   end
 end
