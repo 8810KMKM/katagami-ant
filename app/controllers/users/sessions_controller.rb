@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     sign_out current_user
-    render json: { user: 'hoge' }
+    render json: { user: nil }
   end
 
   # protected
