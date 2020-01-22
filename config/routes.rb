@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   # User
+  get '/hoge', to: 'users#hoge', as: 'new_session'
   post '/signup', to: 'users#signup'
   post '/login' , to: 'users#login'
   get 'users/:id', to: 'users#show'

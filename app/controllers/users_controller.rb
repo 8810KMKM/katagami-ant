@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   def show
     render json: cache_user(params)
   end
+
+  def hoge
+    render json: { user: 'hoge' }
+  end
   
   def signup
     user = User.create(
