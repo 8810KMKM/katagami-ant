@@ -10,14 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_20_164156) do
+ActiveRecord::Schema.define(version: 2020_01_22_150337) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "katagami_id"
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["katagami_id"], name: "index_annotations_on_katagami_id"
+    t.index ["user_id", "katagami_id"], name: "index_annotations_on_user_id_and_katagami_id", unique: true
+    t.index ["user_id"], name: "index_annotations_on_user_id"
   end
 
   create_table "has_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -50,12 +53,6 @@ ActiveRecord::Schema.define(version: 2020_01_20_164156) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sns_credentials", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "provider"
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_sns_credentials_on_user_id"
-  end
-
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -79,8 +76,8 @@ ActiveRecord::Schema.define(version: 2020_01_20_164156) do
   end
 
   add_foreign_key "annotations", "katagamis"
+  add_foreign_key "annotations", "users"
   add_foreign_key "has_labels", "annotations"
   add_foreign_key "has_labels", "katagamis"
   add_foreign_key "has_labels", "labels"
-  add_foreign_key "sns_credentials", "users"
 end
