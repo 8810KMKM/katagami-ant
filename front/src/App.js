@@ -18,6 +18,7 @@ import LoginPage from 'pages/LoginPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import ResultPage from 'pages/ResultPage'
 import UserPage from 'pages/UserPage'
+import SignInPage from 'pages/SignInPage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,7 +59,7 @@ export default () => {
         render={({ location }) => (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: '/sign_in',
               state: { from: location },
             }}
           />
@@ -77,6 +78,7 @@ export default () => {
         />
         <Box className={classes.root}>
           <Switch>
+            <AuthRoute path="/sign_in" component={SignInPage} />
             <AuthRoute path="/signup" component={SignupPage} />
             <AuthRoute path="/login" component={LoginPage} />
             <PrivateRoute

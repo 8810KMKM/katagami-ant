@@ -4,6 +4,15 @@ const baseUrl =
     : process.env.REACT_APP_DEV_API_URL
 
 // User
+export const signIn = async props => {
+  const { handleAuth } = props
+
+  await fetchGet({
+    url: `${baseUrl}/users/auth/google`,
+    successAction: handleAuth,
+  })
+}
+
 export const signup = async props => {
   const { email, password, passwordConfirmation, handleAuth } = props
 
