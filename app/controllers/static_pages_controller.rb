@@ -3,7 +3,7 @@ class StaticPagesController < ActionController::Base
 
   def index
     if user_signed_in?
-      redirect_to ENV['FRONT_URL']
+      redirect_to ENV['FRONT_URL'] + current_user.id.to_s
     else
       redirect_to '/welcome'
     end
