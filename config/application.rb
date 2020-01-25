@@ -27,9 +27,9 @@ module KatagamiAnt
     config.api_only = true
 
     # setting for usinge OmuniAuth into API
-    config.session_store :cookie_store, key: '_interslice_session'
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+    config.cache_store = :redis_store, 'redis://redis:6379/0', { expires_in: 1.hour }
+    config.middleware.use ActionDispatch::Cache
+    config.middleware.use ActionDispatch::Session::CacheStore
     config.middleware.use ActionDispatch::Flash
 
     config.middleware.insert_before 0, Rack::Cors do
