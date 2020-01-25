@@ -8,7 +8,7 @@ export const signIn = async props => {
   const { handleAuth } = props
 
   await fetchGet({
-    url: `${baseUrl}/users/auth/google`,
+    url: `${baseUrl}/users/sign_in`,
     successAction: handleAuth,
   })
 }
@@ -105,7 +105,9 @@ export const fetchLabels = async props => {
 const fetchGet = async props => {
   const { url, successAction, failureAction } = props
 
-  return await fetch(url)
+  return await fetch(url, {
+    mode: 'cors',
+  })
     .then(response => response.json())
     .then(responseJson => {
       // console.log(responseJson);

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'static_pages#index'
   # User
   devise_for :users, controllers: { 
     omniauth_callbacks: 'users/omniauth_callbacks',
@@ -6,7 +7,9 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     get '/users/sign_out' => 'users/sessions#destroy'
+    get '/users/sign_in' => 'users/sessions#create'
   end
+  
   # Katagami
   get '/katagamis/:user/:page/:per/:owned_user/:sorting', to: 'katagamis#index'
   get '/katagamis/:id', to: 'katagamis#show'
