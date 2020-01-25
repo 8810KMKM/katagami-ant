@@ -8,9 +8,9 @@ class Annotation < ApplicationRecord
   has_many :has_labels
 
   # アノテーション実行開始
-  def self.stand_by(params)
-    katagami = Katagami.find(params[:katagami])
-    ant_params = { katagami: katagami, user: User.find(params[:user])}
+  def self.stand_by(katagami_id, user_id)
+    katagami = Katagami.find(katagami_id)
+    ant_params = { katagami: katagami, user: User.find(user_id)}
     annotation = find_by(ant_params) || create(ant_params) 
     
     {

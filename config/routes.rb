@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   end
   
   # Katagami
-  get '/katagamis/:user/:page/:per/:owned_user/:sorting', to: 'katagamis#index'
+  get '/katagamis/:owned_user/:page/:per/:sorting', to: 'katagamis#index'
   get '/katagamis/:id', to: 'katagamis#show'
   # Annotation
-  post '/annotations/:katagami/:user', to: 'annotations#create'
+  post '/annotations/:katagami', to: 'annotations#create'
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'
   # Label
-  get '/labels/target/:katagami/:user/:num', to: 'labels#target'
+  get '/labels/target/:katagami/:num', to: 'labels#target'
 end

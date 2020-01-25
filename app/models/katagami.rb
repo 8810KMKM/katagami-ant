@@ -18,10 +18,10 @@ class Katagami < ApplicationRecord
   end
 
   # トップページの型紙一覧
-  def self.listing_for_top(params)
-    Rails.cache.fetch('katagamis-' + params[:user] + params[:page] + params[:per] + params[:sorting]) do
+  def self.listing_for_top(params, user_id)
+    Rails.cache.fetch('katagamis-' + user_id.to_s + params[:page] + params[:per] + params[:sorting]) do
       katagamis = Katagami.all.pluck(:id, :name, :ant_num)
-      statuses = ant_statuses(params[:user])
+      statuses = ant_statuses(user_id)
 
       top = (params[:page].to_i - 1) * params[:per].to_i
       bottom = top + params[:per].to_i - 1
