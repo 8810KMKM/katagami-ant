@@ -52,10 +52,10 @@ export const fetchUser = async props => {
 
 // Katagami
 export const fetchKatagamis = async props => {
-  const { userId, page, per, ownedUserId, sorting, handleGetKatagamis } = props
+  const { page, per, ownedUserId, sorting, handleGetKatagamis } = props
 
   await fetchGet({
-    url: `${baseUrl}/katagamis/${userId}/${page}/${per}/${ownedUserId}/${sorting}`,
+    url: `${baseUrl}/katagamis/${ownedUserId}/${page}/${per}/${sorting}`,
     successAction: handleGetKatagamis,
   })
 }
@@ -70,10 +70,10 @@ export const fetchKatagamiResult = async props => {
 
 // Annotation
 export const createAnnotation = async props => {
-  const { katagamiId, userId, handleCreateAnnotation } = props
+  const { katagamiId, handleCreateAnnotation } = props
 
   await fetchPost({
-    url: `${baseUrl}/annotations/${katagamiId}/${userId}`,
+    url: `${baseUrl}/annotations/${katagamiId}`,
     body: new FormData(),
     successAction: handleCreateAnnotation,
   })
@@ -95,9 +95,9 @@ export const postHasLabels = async props => {
 
 // Label
 export const fetchLabels = async props => {
-  const { userId, katagamiId, num, handleGetLabels } = props
+  const { katagamiId, num, handleGetLabels } = props
   await fetchGet({
-    url: `${baseUrl}/labels/target/${katagamiId}/${userId}/${num}`,
+    url: `${baseUrl}/labels/target/${katagamiId}/${num}`,
     successAction: handleGetLabels,
   })
 }
