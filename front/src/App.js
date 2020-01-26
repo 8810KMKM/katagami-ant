@@ -48,11 +48,7 @@ export default () => {
     <ThemeProvider theme={theme}>
       <CookiesProvider>
         <BrowserRouter>
-          {/* <Header
-            isLoggedIn={isLoggedIn}
-            handleLogout={handleLogout}
-            theme={theme}
-          /> */}
+          <Header handleSignOut={handleSignOut} />
           <Box className={classes.root}>
             <Switch>
               <Route
