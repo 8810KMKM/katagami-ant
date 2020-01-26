@@ -7,17 +7,15 @@ class User < ApplicationRecord
 
   def self.detail(id)
     Rails.cache.fetch('user-' + id) do
-      user = User.includes(annotations: [{katagami: :annotations}]).find(id)
+      user = User.includes(:annotations).find(id)
+      annotations = user.annotations.pluck(:id, :status)
+  
       {
         id: id,
         email: user.email,
-        katagamis: user.annotations.map {|annotation| 
-          katagami = annotation.katagami
-          {
-            id: katagami.id,
-            name: katagami.name,
-            annotation_num: katagami.annotations.size,
-          }
+        katagami_counts: {
+          doing: annotations.select {|a| a[1].between?(1, 9)}.size,
+          done:  annotations.select {|a| a[1] == 10}.size
         }
       }
     end
