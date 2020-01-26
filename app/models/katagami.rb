@@ -36,9 +36,9 @@ class Katagami < ApplicationRecord
 
   # ユーザーページの型紙一覧
   def self.listing_for_user(params)
-    Rails.cache.fetch('katagamis-owned-' + params[:page] + params[:per] + params[:owned_user]) do
+    Rails.cache.fetch('katagamis-owned-' + params[:owned_user] + params[:page] + params[:per]) do
       includes(:annotations)
-        .where(annotations: {user_id: params[:owned_user]}).order(:id)
+        .where(annotations: {user_id: params[:owned_user], status: [1..10]}).order(:id)
         .page(params[:page]).per(params[:per])
         .pluck(:id, :name, :ant_num, :'annotations.status')
         .format_for_index

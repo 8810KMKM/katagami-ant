@@ -33,6 +33,7 @@ export default () => {
   }
 
   const PrivateRoute = ({ path, component }) => {
+    console.log(path)
     if (cookies.auth) {
       return (
         <Route
@@ -61,7 +62,7 @@ export default () => {
                 path="/results/:katagamiId"
                 component={ResultPage}
               />
-              <PrivateRoute path="/users/:userId/:email" component={UserPage} />
+              <PrivateRoute path="/users/:userId/" component={UserPage} />
               <Route
                 path="/:authorization"
                 render={({ match }) => (

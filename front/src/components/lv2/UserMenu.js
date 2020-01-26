@@ -83,7 +83,7 @@ export default props => {
           className={classes.menuItem}
           onClick={() => setAnchorEl(false)}
         >
-          <Link to={`/users/`} className={classes.link}>
+          <Link to={`/users/my_page`} className={classes.link}>
             <ListItemIcon>
               <AccountBox color="primary" />
             </ListItemIcon>

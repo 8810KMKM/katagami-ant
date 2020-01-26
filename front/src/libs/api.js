@@ -9,8 +9,9 @@ export const redirectToWelcome = () =>
 
 // User
 export const fetchUser = async props => {
-  const { userId, handleGetUser } = props
+  const { auth, userId, handleGetUser } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/users/${userId}`,
     successAction: handleGetUser,
   })
@@ -20,6 +21,7 @@ export const fetchUser = async props => {
 export const fetchKatagamis = async props => {
   const { auth, page, per, ownedUserId, sorting, handleGetKatagamis } = props
 
+  console.log({ ...props })
   await fetchGet({
     auth: auth,
     url: `${baseUrl}/katagamis/${ownedUserId}/${page}/${per}/${sorting}`,
