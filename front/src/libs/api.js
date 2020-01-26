@@ -21,7 +21,6 @@ export const fetchUser = async props => {
 export const fetchKatagamis = async props => {
   const { auth, page, per, ownedUserId, sorting, handleGetKatagamis } = props
 
-  console.log({ ...props })
   await fetchGet({
     auth: auth,
     url: `${baseUrl}/katagamis/${ownedUserId}/${page}/${per}/${sorting}`,
