@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out' => 'users/sessions#destroy'
     get '/users/sign_in' => 'users/sessions#create'
+    get '/users/:id' => 'users#show'
   end
   
   # Katagami
