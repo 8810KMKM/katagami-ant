@@ -45,15 +45,20 @@ export default () => {
 
   const handleSignIn = auth => {
     if (!cookies.auth) {
-      const now = new Date()
-      const expires = now.setDate(now.getDate() + 1)
+      let expires = new Date()
+      expires.setDate(expires.getDate() + 1)
       setCookies('auth', auth, { path: '/', expires: expires })
     }
   }
 
   const MyRoute = ({ path, component }) => {
     if (cookies.auth) {
-      return <Route path={path} render={() => component()} />
+      return (
+        <Route
+          path={path}
+          render={props => component({ ...props, auth: cookies.auth })}
+        />
+      )
     }
     window.location.href = 'http://localhost:3001/welcome'
   }
@@ -103,9 +108,15 @@ export default () => {
             <Switch>
               <Route
                 path="/:authorization"
-                render={() => TopPage({ handleSignIn })}
+                render={props => (
+                  <TopPage
+                    {...props}
+                    handleSignIn={handleSignIn}
+                    auth={cookies.auth}
+                  />
+                )}
               />
-              <Route path="/" render={() => TopPage({ handleSignIn })} />
+              <MyRoute path="/" component={TopPage} />
               {/* <AuthRoute path="/sign_in" component={SignInPage} />
             <AuthRoute path="/signup" component={SignupPage} />
             <AuthRoute path="/login" component={LoginPage} /> */}

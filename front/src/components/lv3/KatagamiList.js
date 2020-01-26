@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { ownedUser } = props
+  const { auth, ownedUser } = props
   const [katagamis, setKatagamis] = useState([])
   const [count, setCount] = useState(0)
   const [page, setPage] = useState(0)
@@ -61,6 +61,7 @@ export default props => {
       setCount(response.count)
     }
     fetchKatagamis({
+      auth: auth,
       userId: user.id,
       page: page + 1,
       per: per,

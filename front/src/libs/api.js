@@ -52,9 +52,10 @@ export const fetchUser = async props => {
 
 // Katagami
 export const fetchKatagamis = async props => {
-  const { page, per, ownedUserId, sorting, handleGetKatagamis } = props
+  const { auth, page, per, ownedUserId, sorting, handleGetKatagamis } = props
 
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/katagamis/${ownedUserId}/${page}/${per}/${sorting}`,
     successAction: handleGetKatagamis,
   })
@@ -103,10 +104,13 @@ export const fetchLabels = async props => {
 }
 
 const fetchGet = async props => {
-  const { url, successAction, failureAction } = props
+  const { auth, url, successAction, failureAction } = props
 
   return await fetch(url, {
     mode: 'cors',
+    headers: {
+      Authorization: auth,
+    },
   })
     .then(response => response.json())
     .then(responseJson => {
