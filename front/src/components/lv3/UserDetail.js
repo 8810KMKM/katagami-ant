@@ -3,6 +3,7 @@ import { fetchUser } from 'libs/api'
 import { Typography, makeStyles } from '@material-ui/core'
 import HeadLine from 'components/lv1/HeadLine'
 import { zeroPaddingOf } from 'libs/format'
+import StatusPieChart from 'components/lv2/StatusPieChart'
 
 const useStyles = makeStyles(theme => ({
   detail: {
@@ -35,8 +36,7 @@ export default props => {
       </div>
       <div className={classes.detail}>
         <Typography variant="h2">アノテーション進捗</Typography>
-        <Typography>{`実行中 : ${detail.katagami_counts.doing}`}</Typography>
-        <Typography>{`達成済 : ${detail.katagami_counts.done}`}</Typography>
+        <StatusPieChart data={detail.ant_counts} />
       </div>
     </div>
   )

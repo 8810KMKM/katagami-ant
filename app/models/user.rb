@@ -6,6 +6,7 @@ class User < ApplicationRecord
   attr_accessor :password
 
   def self.detail(id)
+    Rails.cache.delete('user-' + id.to_s)
     Rails.cache.fetch('user-' + id.to_s) do
       user = User.includes(:annotations).find(id)
       annotations = user.annotations.pluck(:id, :status)
@@ -15,11 +16,11 @@ class User < ApplicationRecord
       {
         id: id,
         email: user.email,
-        katagami_counts: {
-          doing: doing,
-          done: done,
-          yet: Katagami.count - (doing + done)
-        }
+        ant_counts: [
+          { status: 'DOING', count: doing },
+          { status: 'DONE',  count: done },
+          { status: 'YET',   count: Katagami.count - (doing + done) }
+        ]
       }
     end
   end
