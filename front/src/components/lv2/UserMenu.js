@@ -94,7 +94,7 @@ export default props => {
           <ListItemIcon>
             <ExitToApp color="primary" />
           </ListItemIcon>
-          <ListItemText primary="ログアウト" />
+          <ListItemText primary="サインアウト" />
         </MenuItem>
       </Menu>
       <Modal
