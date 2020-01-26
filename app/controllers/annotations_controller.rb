@@ -4,9 +4,6 @@ class AnnotationsController < ApplicationController
   end
 
   def add_has_labels
-    
-    binding.pry
-    
     render json: 
       Annotation.find(params[:annotation_id]).save_result(params)
   end
