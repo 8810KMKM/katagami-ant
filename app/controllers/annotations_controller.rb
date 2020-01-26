@@ -1,6 +1,4 @@
 class AnnotationsController < ApplicationController
-  before_action :authenticate_user!
-
   def create
     render json: Annotation.stand_by(params[:katagami], current_user.id)
   end

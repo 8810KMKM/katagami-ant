@@ -1,6 +1,4 @@
 class LabelsController < ApplicationController
-  before_action :authenticate_user!
-
   def target
     render json: Label.listing_for_ant(params, current_user.id)
   end
