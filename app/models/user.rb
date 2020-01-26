@@ -9,13 +9,16 @@ class User < ApplicationRecord
     Rails.cache.fetch('user-' + id.to_s) do
       user = User.includes(:annotations).find(id)
       annotations = user.annotations.pluck(:id, :status)
+      doing = annotations.select {|a| a[1].between?(1, 9)}.size
+      done = annotations.select {|a| a[1] == 10}.size
 
       {
         id: id,
         email: user.email,
         katagami_counts: {
-          doing: annotations.select {|a| a[1].between?(1, 9)}.size,
-          done:  annotations.select {|a| a[1] == 10}.size
+          doing: doing,
+          done: done,
+          yet: Katagami.count - (doing + done)
         }
       }
     end

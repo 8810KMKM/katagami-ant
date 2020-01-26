@@ -35,6 +35,7 @@ class Annotation < ApplicationRecord
       katagami.plus_ant_num if status == 0
       update(status: new_status)
       katagami.clear_caches
+      Rails.cache.delete('user-' + user_id.to_s)
       has_labels
     rescue => e
       p e.message
