@@ -81,7 +81,7 @@ export default props => {
   }
 
   const handleDoAnnotation = () => {
-    window.location.href = `ant/${selectedId}/${user.id}/2`
+    window.location.href = `ant/${selectedId}/2`
   }
 
   const handleModalClose = () => {

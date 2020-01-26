@@ -18,7 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       {
         auth_token: JsonWebToken.encode({
           user_id: user.id, 
-          exp: (Time.now + 1.hour).to_i
+          exp: (Time.now + 1.day).to_i
         }),
         user: { id: user.id, email: user.email }
       }

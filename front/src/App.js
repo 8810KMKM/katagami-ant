@@ -37,7 +37,9 @@ export default () => {
       return (
         <Route
           path={path}
-          render={props => component({ ...props, auth: cookies.auth })}
+          render={({ match }) =>
+            component({ auth: cookies.auth, ...match.params })
+          }
         />
       )
     }
@@ -51,18 +53,8 @@ export default () => {
           <Header handleSignOut={handleSignOut} />
           <Box className={classes.root}>
             <Switch>
-              <Route
-                path="/:authorization"
-                render={props => (
-                  <TopPage
-                    {...props}
-                    handleSignIn={handleSignIn}
-                    auth={cookies.auth}
-                  />
-                )}
-              />
               <PrivateRoute
-                path="/ant/:katagamiId/:userId/:num"
+                path="/ant/:katagamiId/:num"
                 component={AnnotationPage}
               />
               <PrivateRoute
@@ -70,6 +62,18 @@ export default () => {
                 component={ResultPage}
               />
               <PrivateRoute path="/users/:userId/:email" component={UserPage} />
+              <Route
+                path="/:authorization"
+                render={({ match }) => (
+                  <TopPage
+                    {...{
+                      handleSignIn: handleSignIn,
+                      auth: cookies.auth,
+                      ...match.params,
+                    }}
+                  />
+                )}
+              />
               <PrivateRoute path="/" component={TopPage} />
             </Switch>
           </Box>
