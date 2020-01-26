@@ -3,45 +3,11 @@ const baseUrl =
     ? process.env.REACT_APP_PROD_API_URL
     : process.env.REACT_APP_DEV_API_URL
 
+// Auth失効時のリダイレクト
+export const redirectToWelcome = () =>
+  (window.location.href = `${baseUrl}/welcome`)
+
 // User
-export const signIn = async props => {
-  const { handleAuth } = props
-
-  await fetchGet({
-    url: `${baseUrl}/users/sign_in`,
-    successAction: handleAuth,
-  })
-}
-
-export const signup = async props => {
-  const { email, password, passwordConfirmation, handleAuth } = props
-
-  const body = new FormData()
-  body.append('email', email)
-  body.append('password', password)
-  body.append('password_confirmation', passwordConfirmation)
-
-  await fetchPost({
-    url: `${baseUrl}/signup`,
-    body: body,
-    successAction: handleAuth,
-  })
-}
-
-export const login = async props => {
-  const { email, password, handleAuth } = props
-
-  const body = new FormData()
-  body.append('email', email)
-  body.append('password', password)
-
-  await fetchPost({
-    url: `${baseUrl}/login`,
-    body: body,
-    successAction: handleAuth,
-  })
-}
-
 export const fetchUser = async props => {
   const { userId, handleGetUser } = props
   await fetchGet({
@@ -128,13 +94,15 @@ const fetchGet = async props => {
 }
 
 const fetchPost = async props => {
-  const { url, body, successAction, failureAction } = props
-
-  const method = 'POST'
+  const { auth, url, body, successAction, failureAction } = props
 
   return await fetch(url, {
-    method,
-    body,
+    method: 'POST',
+    body: body,
+    mode: 'cors',
+    headers: {
+      Authorization: auth,
+    },
   })
     .then(response => response.json())
     .then(responseJson => {
@@ -142,7 +110,7 @@ const fetchPost = async props => {
       if (successAction) {
         successAction(responseJson)
       }
-      // // console.log('fetch is finished');
+      // console.log('fetch is finished');
     })
     .catch(error => {
       console.error(error)
