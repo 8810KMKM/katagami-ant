@@ -12,6 +12,8 @@ export default props => {
         dataKey="count"
         nameKey="status"
         outerRadius={160}
+        startAngle={90}
+        endAngle={-270}
         label={data => data.status + ' : ' + data.count}
       >
         {data.map((entry, index) => (

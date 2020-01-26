@@ -109,10 +109,8 @@ class Katagami < ApplicationRecord
   # S3バケットに対して認証済みurlを取得
   # デフォルトの有効期限が1時間なので, それに対応してfetchさせる.
   def presigned_url
-    Rails.cache.fetch('katagami_image-' + id.to_s) do
-      target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      target[0].presigned_url(:get)
-    end
+    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
+    target[0].presigned_url(:get)
   end
 end
 
