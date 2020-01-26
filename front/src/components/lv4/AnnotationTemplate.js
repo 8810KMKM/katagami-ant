@@ -49,7 +49,6 @@ export default props => {
   const [isPosting, setIsPosting] = useState(false)
 
   const handleToggleTile = number => {
-    console.log({ ...localStorage })
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? !tile : tile))
     )
@@ -60,7 +59,7 @@ export default props => {
       setIsPosting(false)
       setTimeout(() => {
         window.location.href = '/'
-      }, 200000)
+      }, 2000)
     }
     setIsPosting(true)
     setConfirmModalIsOpen(false)
@@ -141,7 +140,7 @@ export default props => {
   }, [auth, katagamiId, num])
 
   // init displayedTiles (localStorage)
-  useEffect(() => initAllTiles(num, division), [division, katagamiId, num])
+  useEffect(() => initAllTiles(num, division), [katagamiId, num])
 
   if (isLoading) {
     return (
