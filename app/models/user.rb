@@ -6,7 +6,6 @@ class User < ApplicationRecord
   attr_accessor :password
 
   def self.detail(id)
-    Rails.cache.delete('user-' + id.to_s)
     Rails.cache.fetch('user-' + id.to_s) do
       user = User.includes(:annotations).find(id)
       annotations = user.annotations.pluck(:id, :status)

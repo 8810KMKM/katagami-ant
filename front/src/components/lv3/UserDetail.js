@@ -29,7 +29,7 @@ export default props => {
 
   return (
     <div>
-      <HeadLine>{`ユーザー id : ${zeroPaddingOf(detail.id, 3)}`}</HeadLine>
+      <HeadLine>{`ユーザー id : ${zeroPaddingOf(detail.id, 4)}`}</HeadLine>
       <div className={classes.detail}>
         <Typography variant="h2">登録情報</Typography>
         <Typography>{`メールアドレス : ${detail.email}`}</Typography>
