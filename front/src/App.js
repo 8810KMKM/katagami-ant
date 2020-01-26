@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
+import { CookiesProvider, useCookies } from 'react-cookie'
 import { isAuthenticated, logout } from 'libs/auth'
 import theme from 'libs/theme'
 import Header from 'components/lv3/Header'
@@ -27,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default () => {
+  const [cookies, setCookies, removeCookies] = useCookies(['auth'])
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated())
   // const user = currentUser()
   const classes = useStyles()
@@ -34,6 +36,26 @@ export default () => {
   const handleLogout = () => {
     logout()
     setIsLoggedIn(null)
+  }
+
+  const handleSignOut = () => {
+    removeCookies('auth')
+    window.location.href = 'http://localhost:3001/welcome'
+  }
+
+  const handleSignIn = auth => {
+    if (!cookies.auth) {
+      const now = new Date()
+      const expires = now.setDate(now.getDate() + 1)
+      setCookies('auth', auth, { path: '/', expires: expires })
+    }
+  }
+
+  const MyRoute = ({ path, component }) => {
+    if (cookies.auth) {
+      return <Route path={path} render={() => component()} />
+    }
+    window.location.href = 'http://localhost:3001/welcome'
   }
 
   const AuthRoute = ({ path, component }) => {
@@ -70,27 +92,36 @@ export default () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Header
-          isLoggedIn={isLoggedIn}
-          handleLogout={handleLogout}
-          theme={theme}
-        />
-        <Box className={classes.root}>
-          <Switch>
-            <AuthRoute path="/sign_in" component={SignInPage} />
+      <CookiesProvider>
+        <BrowserRouter>
+          <Header
+            isLoggedIn={isLoggedIn}
+            handleLogout={handleLogout}
+            theme={theme}
+          />
+          <Box className={classes.root}>
+            <Switch>
+              <Route
+                path="/:authorization"
+                render={() => TopPage({ handleSignIn })}
+              />
+              <Route path="/" render={() => TopPage({ handleSignIn })} />
+              {/* <AuthRoute path="/sign_in" component={SignInPage} />
             <AuthRoute path="/signup" component={SignupPage} />
-            <AuthRoute path="/login" component={LoginPage} />
-            <PrivateRoute
-              path="/ant/:katagamiId/:userId/:num"
-              component={AnnotationPage}
-            />
-            <PrivateRoute path="/results/:katagamiId" component={ResultPage} />
-            <PrivateRoute path="/users/:userId/:email" component={UserPage} />
-            <PrivateRoute path="/" component={TopPage} />
-          </Switch>
-        </Box>
-      </BrowserRouter>
+            <AuthRoute path="/login" component={LoginPage} /> */}
+              <PrivateRoute
+                path="/ant/:katagamiId/:userId/:num"
+                component={AnnotationPage}
+              />
+              <PrivateRoute
+                path="/results/:katagamiId"
+                component={ResultPage}
+              />
+              <PrivateRoute path="/users/:userId/:email" component={UserPage} />
+            </Switch>
+          </Box>
+        </BrowserRouter>
+      </CookiesProvider>
     </ThemeProvider>
   )
 }

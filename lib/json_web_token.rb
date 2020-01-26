@@ -7,9 +7,6 @@ class JsonWebToken
     end
 
     def decode(token)
-
-      binding.pry
-      
       HashWithIndifferentAccess.new(
         JWT.decode(token, ENV['JWT_SECRET_KEY_BASE'])
       )[0]
