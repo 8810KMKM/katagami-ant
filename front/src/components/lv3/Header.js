@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { isLoggedIn, handleLogout } = props
+  const { handleSignOut } = props
 
   let location = useLocation()
   const isAnnotationPage = location.pathname.split('/')[1] === 'ant'
@@ -33,11 +33,9 @@ export default props => {
               <AppLogo />
             )}
           </Grid>
-          {isLoggedIn && (
-            <Grid item xs={1}>
-              <UserMenu handleLogout={handleLogout} />
-            </Grid>
-          )}
+          <Grid item xs={1}>
+            <UserMenu handleSignOut={handleSignOut} />
+          </Grid>
         </Grid>
       </Toolbar>
     </AppBar>
