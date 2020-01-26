@@ -6,9 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      render json: payload(@user)
-
-      redirect_to ENV['FRONT_URL'] + auth_payload[:auth_token]
+      redirect_to ENV['FRONT_URL'] + payload(@user)[:auth_token]
     else
       redirect_to root_path
     end
