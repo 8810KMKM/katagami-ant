@@ -66,5 +66,3 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'jwt'
-# public配下のファイルの配信用
-gem 'rails_serve_static_assets'
