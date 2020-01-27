@@ -26,7 +26,7 @@ export default props => {
   const classes = useStyles({ isActive })
 
   const handleLinkToUser = (id, email) => {
-    window.location.href = `/users/${id}/${email}`
+    window.location.href = `/users/${id}`
   }
 
   return (

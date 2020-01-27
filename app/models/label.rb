@@ -1,6 +1,5 @@
 class Label < ApplicationRecord
   validates :name, presence: true, allow_nil: false
-
   has_many :has_labels
 
   def self.listing
@@ -9,8 +8,8 @@ class Label < ApplicationRecord
     end
   end
 
-  def self.listing_for_ant(params)
-    annotation = Annotation.find_by(katagami_id: params[:katagami], user_id: params[:user])
+  def self.listing_for_ant(params, user_id)
+    annotation = Annotation.find_by(katagami_id: params[:katagami], user_id: user_id)
     rest_num = annotation ? 10 - annotation.status : 10
     target_num = params[:num].to_i
 

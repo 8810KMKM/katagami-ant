@@ -9,9 +9,9 @@ import {
   ListItemText,
 } from '@material-ui/core'
 import { AccountBox, ExitToApp } from '@material-ui/icons'
-import { currentUser } from 'libs/auth'
+import { blueGrey } from '@material-ui/core/colors'
+import MenuIcon from '@material-ui/icons/Menu'
 import theme from 'libs/theme'
-import UserIcon from 'components/lv1/UserIcon'
 import Modal from 'components/lv2/Modal'
 
 const useStyle = makeStyles(theme => ({
@@ -22,8 +22,10 @@ const useStyle = makeStyles(theme => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  menuItem: {
-    width: 320,
+  menuItem: { width: 320 },
+  menuIcon: {
+    fontSize: 32,
+    color: blueGrey[50],
   },
   icon: {
     display: 'inlineBlock',
@@ -33,17 +35,16 @@ const useStyle = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { handleLogout } = props
+  const { handleSignOut } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const open = Boolean(anchorEl)
-  const user = currentUser()
   const classes = useStyle(theme)
 
   const handleSafetyLogout = () => {
     setModalIsOpen(false)
     setAnchorEl(false)
-    handleLogout()
+    handleSignOut()
   }
 
   const handleModalOpen = () => {
@@ -51,9 +52,7 @@ export default props => {
     setModalIsOpen(true)
   }
 
-  const handleModalClose = () => {
-    setModalIsOpen(false)
-  }
+  const handleModalClose = () => setModalIsOpen(false)
 
   return (
     <div>
@@ -63,7 +62,7 @@ export default props => {
         aria-controls="menu-appbar"
         onClick={e => setAnchorEl(e.currentTarget)}
       >
-        <UserIcon size={40} email={user.email} />
+        <MenuIcon className={classes.menuIcon} />
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -84,7 +83,7 @@ export default props => {
           className={classes.menuItem}
           onClick={() => setAnchorEl(false)}
         >
-          <Link to={`/users/${user.id}/${user.email}`} className={classes.link}>
+          <Link to={`/users/my_page`} className={classes.link}>
             <ListItemIcon>
               <AccountBox color="primary" />
             </ListItemIcon>
@@ -95,7 +94,7 @@ export default props => {
           <ListItemIcon>
             <ExitToApp color="primary" />
           </ListItemIcon>
-          <ListItemText primary="ログアウト" />
+          <ListItemText primary="サインアウト" />
         </MenuItem>
       </Menu>
       <Modal

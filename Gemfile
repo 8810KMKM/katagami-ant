@@ -60,3 +60,9 @@ gem 'redis'
 gem 'redis-rails'
 # デバッグ用
 gem 'pry-byebug'
+# 認証用
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'jwt'

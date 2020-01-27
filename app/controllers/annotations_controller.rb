@@ -1,6 +1,6 @@
 class AnnotationsController < ApplicationController
   def create
-    render json: Annotation.stand_by(params)
+    render json: Annotation.stand_by(params[:katagami], current_user.id)
   end
 
   def add_has_labels

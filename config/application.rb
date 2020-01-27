@@ -26,6 +26,12 @@ module KatagamiAnt
     config.time_zone = 'Tokyo'
     config.api_only = true
 
+    # setting for usinge OmuniAuth into API
+    config.cache_store = :redis_store, 'redis://redis:6379/0', { expires_in: 1.hour }
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CacheStore
+    config.middleware.use ActionDispatch::Flash
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins "*"

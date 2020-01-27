@@ -1,41 +1,17 @@
 const baseUrl =
-  process.env.NODE_ENV == 'production'
+  process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_PROD_API_URL
     : process.env.REACT_APP_DEV_API_URL
 
+// Auth失効時のリダイレクト
+export const redirectToWelcome = () =>
+  (window.location.href = `${baseUrl}/welcome`)
+
 // User
-export const signup = async props => {
-  const { email, password, passwordConfirmation, handleAuth } = props
-
-  const body = new FormData()
-  body.append('email', email)
-  body.append('password', password)
-  body.append('password_confirmation', passwordConfirmation)
-
-  await fetchPost({
-    url: `${baseUrl}/signup`,
-    body: body,
-    successAction: handleAuth,
-  })
-}
-
-export const login = async props => {
-  const { email, password, handleAuth } = props
-
-  const body = new FormData()
-  body.append('email', email)
-  body.append('password', password)
-
-  await fetchPost({
-    url: `${baseUrl}/login`,
-    body: body,
-    successAction: handleAuth,
-  })
-}
-
 export const fetchUser = async props => {
-  const { userId, handleGetUser } = props
+  const { auth, userId, handleGetUser } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/users/${userId}`,
     successAction: handleGetUser,
   })
@@ -43,17 +19,19 @@ export const fetchUser = async props => {
 
 // Katagami
 export const fetchKatagamis = async props => {
-  const { userId, page, per, ownedUserId, sorting, handleGetKatagamis } = props
+  const { auth, page, per, ownedUserId, sorting, handleGetKatagamis } = props
 
   await fetchGet({
-    url: `${baseUrl}/katagamis/${userId}/${page}/${per}/${ownedUserId}/${sorting}`,
+    auth: auth,
+    url: `${baseUrl}/katagamis/${ownedUserId}/${page}/${per}/${sorting}`,
     successAction: handleGetKatagamis,
   })
 }
 
 export const fetchKatagamiResult = async props => {
-  const { katagamiId, handleGetKatagamiResult } = props
+  const { auth, katagamiId, handleGetKatagamiResult } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/katagamis/${katagamiId}`,
     successAction: handleGetKatagamiResult,
   })
@@ -61,23 +39,26 @@ export const fetchKatagamiResult = async props => {
 
 // Annotation
 export const createAnnotation = async props => {
-  const { katagamiId, userId, handleCreateAnnotation } = props
+  const { auth, katagamiId, handleCreateAnnotation } = props
 
   await fetchPost({
-    url: `${baseUrl}/annotations/${katagamiId}/${userId}`,
+    auth: auth,
+    url: `${baseUrl}/annotations/${katagamiId}`,
     body: new FormData(),
     successAction: handleCreateAnnotation,
   })
 }
 
 export const postHasLabels = async props => {
-  const { annotationId, hasLabels, handleCompleteAnnotation } = props
+  const { auth, annotationId, hasLabels, handleCompleteAnnotation } = props
 
+  console.log(props)
   const body = new FormData()
   body.append('annotation_id', annotationId)
   body.append('has_labels', hasLabels)
 
   await fetchPost({
+    auth: auth,
     url: `${baseUrl}/annotations/add_has_labels`,
     body: body,
     successAction: handleCompleteAnnotation,
@@ -86,17 +67,25 @@ export const postHasLabels = async props => {
 
 // Label
 export const fetchLabels = async props => {
-  const { userId, katagamiId, num, handleGetLabels } = props
+  const { auth, katagamiId, num, handleGetLabels } = props
   await fetchGet({
-    url: `${baseUrl}/labels/target/${katagamiId}/${userId}/${num}`,
+    auth: auth,
+    url: `${baseUrl}/labels/target/${katagamiId}/${num}`,
     successAction: handleGetLabels,
   })
 }
 
 const fetchGet = async props => {
-  const { url, successAction, failureAction } = props
+  const { auth, url, successAction, failureAction } = props
 
-  return await fetch(url)
+  console.log(auth)
+
+  return await fetch(url, {
+    mode: 'cors',
+    headers: {
+      Authorization: auth,
+    },
+  })
     .then(response => response.json())
     .then(responseJson => {
       // console.log(responseJson);
@@ -113,13 +102,15 @@ const fetchGet = async props => {
 }
 
 const fetchPost = async props => {
-  const { url, body, successAction, failureAction } = props
-
-  const method = 'POST'
+  const { auth, url, body, successAction, failureAction } = props
 
   return await fetch(url, {
-    method,
-    body,
+    method: 'POST',
+    body: body,
+    mode: 'cors',
+    headers: {
+      Authorization: auth,
+    },
   })
     .then(response => response.json())
     .then(responseJson => {
@@ -127,7 +118,7 @@ const fetchPost = async props => {
       if (successAction) {
         successAction(responseJson)
       }
-      // // console.log('fetch is finished');
+      // console.log('fetch is finished');
     })
     .catch(error => {
       console.error(error)

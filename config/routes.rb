@@ -1,15 +1,22 @@
 Rails.application.routes.draw do
+  root 'static_pages#index'
   # User
-  post '/signup', to: 'users#signup'
-  post '/login' , to: 'users#login'
-  get 'users/:id', to: 'users#show'
+  devise_for :users, controllers: { 
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions'
+  }
+  devise_scope :user do
+    get '/users/sign_out' => 'users/sessions#destroy'
+    get '/users/sign_in' => 'users/sessions#create'
+    get '/users/:id' => 'users#show'
+  end
+  
   # Katagami
-  get '/katagamis/:user/:page/:per/:owned_user/:sorting', to: 'katagamis#index'
+  get '/katagamis/:owned_user/:page/:per/:sorting', to: 'katagamis#index'
   get '/katagamis/:id', to: 'katagamis#show'
   # Annotation
-  post '/annotations/:katagami/:user', to: 'annotations#create'
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'
+  post '/annotations/:katagami', to: 'annotations#create'
   # Label
-  get '/labels', to: 'labels#get_random'
-  get '/labels/target/:katagami/:user/:num', to: 'labels#target'
+  get '/labels/target/:katagami/:num', to: 'labels#target'
 end
