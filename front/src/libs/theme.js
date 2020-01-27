@@ -82,7 +82,7 @@ export default createMuiTheme(
     overrides: {
       MuiCssBaseline: {
         '@global': {
-          '@font-face': [koruri],
+          '@font-face': [koruri, audiowide],
         },
       },
     },

@@ -51,7 +51,6 @@ export default props => {
   const [sorting, setSorting] = useState('')
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage)
-  const user = currentUser()
   const isInUserPage = ownedUser !== undefined
   const classes = useStyles(theme)
 
@@ -62,7 +61,6 @@ export default props => {
     }
     fetchKatagamis({
       auth: auth,
-      userId: user.id,
       page: page + 1,
       per: per,
       ownedUserId: isInUserPage ? ownedUser : 0,
@@ -81,7 +79,7 @@ export default props => {
   }
 
   const handleDoAnnotation = () => {
-    window.location.href = `ant/${selectedId}/${user.id}/2`
+    window.location.href = `ant/${selectedId}/2`
   }
 
   const handleModalClose = () => {

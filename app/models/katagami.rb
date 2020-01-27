@@ -36,9 +36,9 @@ class Katagami < ApplicationRecord
 
   # ユーザーページの型紙一覧
   def self.listing_for_user(params)
-    Rails.cache.fetch('katagamis-owned-' + params[:page] + params[:per] + params[:owned_user]) do
+    Rails.cache.fetch('katagamis-owned-' + params[:owned_user] + params[:page] + params[:per]) do
       includes(:annotations)
-        .where(annotations: {user_id: params[:owned_user]}).order(:id)
+        .where(annotations: {user_id: params[:owned_user], status: [1..10]}).order(:id)
         .page(params[:page]).per(params[:per])
         .pluck(:id, :name, :ant_num, :'annotations.status')
         .format_for_index
@@ -109,10 +109,8 @@ class Katagami < ApplicationRecord
   # S3バケットに対して認証済みurlを取得
   # デフォルトの有効期限が1時間なので, それに対応してfetchさせる.
   def presigned_url
-    Rails.cache.fetch('katagami_image-' + id.to_s) do
-      target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      target[0].presigned_url(:get)
-    end
+    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
+    target[0].presigned_url(:get)
   end
 end
 

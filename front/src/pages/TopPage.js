@@ -4,8 +4,8 @@ import KatagamiList from 'components/lv3/KatagamiList'
 import HeadLine from 'components/lv1/HeadLine'
 
 export default props => {
-  const { handleSignIn, auth } = props
-  const { authorization } = props.match.params
+  const { authorization, handleSignIn, auth } = props
+  console.log(props)
 
   if (authorization) {
     handleSignIn(authorization)

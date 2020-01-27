@@ -1,4 +1,9 @@
-class UsersController < ActionController::Base
-  protect_from_forgery
-  before_action :authenticate_user!
+class UsersController < ApplicationController
+  before_action :authenticate_request!
+
+  def show
+    render json: User.detail(
+      params[:id] == 'my_page' ? current_user.id : params[:id]
+    )
+  end
 end 

@@ -9,8 +9,9 @@ export const redirectToWelcome = () =>
 
 // User
 export const fetchUser = async props => {
-  const { userId, handleGetUser } = props
+  const { auth, userId, handleGetUser } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/users/${userId}`,
     successAction: handleGetUser,
   })
@@ -28,8 +29,9 @@ export const fetchKatagamis = async props => {
 }
 
 export const fetchKatagamiResult = async props => {
-  const { katagamiId, handleGetKatagamiResult } = props
+  const { auth, katagamiId, handleGetKatagamiResult } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/katagamis/${katagamiId}`,
     successAction: handleGetKatagamiResult,
   })
@@ -37,9 +39,10 @@ export const fetchKatagamiResult = async props => {
 
 // Annotation
 export const createAnnotation = async props => {
-  const { katagamiId, handleCreateAnnotation } = props
+  const { auth, katagamiId, handleCreateAnnotation } = props
 
   await fetchPost({
+    auth: auth,
     url: `${baseUrl}/annotations/${katagamiId}`,
     body: new FormData(),
     successAction: handleCreateAnnotation,
@@ -47,13 +50,15 @@ export const createAnnotation = async props => {
 }
 
 export const postHasLabels = async props => {
-  const { annotationId, hasLabels, handleCompleteAnnotation } = props
+  const { auth, annotationId, hasLabels, handleCompleteAnnotation } = props
 
+  console.log(props)
   const body = new FormData()
   body.append('annotation_id', annotationId)
   body.append('has_labels', hasLabels)
 
   await fetchPost({
+    auth: auth,
     url: `${baseUrl}/annotations/add_has_labels`,
     body: body,
     successAction: handleCompleteAnnotation,
@@ -62,8 +67,9 @@ export const postHasLabels = async props => {
 
 // Label
 export const fetchLabels = async props => {
-  const { katagamiId, num, handleGetLabels } = props
+  const { auth, katagamiId, num, handleGetLabels } = props
   await fetchGet({
+    auth: auth,
     url: `${baseUrl}/labels/target/${katagamiId}/${num}`,
     successAction: handleGetLabels,
   })
@@ -71,6 +77,8 @@ export const fetchLabels = async props => {
 
 const fetchGet = async props => {
   const { auth, url, successAction, failureAction } = props
+
+  console.log(auth)
 
   return await fetch(url, {
     mode: 'cors',
