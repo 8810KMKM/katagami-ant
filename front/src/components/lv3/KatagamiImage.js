@@ -4,6 +4,10 @@ import { Grid } from '@material-ui/core'
 import Tile from 'components/lv1/Tile'
 
 const useStyles = makeStyles(theme => ({
+  wrapper: {
+    overflow: 'scroll',
+    height: 640,
+  },
   root: {
     width: props => `${props.fixedWidth}px`,
     pointerEvents: props => (props.tileIsSelectable ? '' : 'none'),
@@ -81,10 +85,12 @@ export default props => {
   }
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={0} className={classes.katagami}>
-        <TilesOnKatagami />
-      </Grid>
+    <div className={classes.wrapper}>
+      <div className={classes.root}>
+        <Grid container spacing={0} className={classes.katagami}>
+          <TilesOnKatagami />
+        </Grid>
+      </div>
     </div>
   )
 }

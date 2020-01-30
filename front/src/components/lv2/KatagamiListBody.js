@@ -65,7 +65,7 @@ export default props => {
         </TableRow>
       ))}
       {emptyRows > 0 && (
-        <TableRow style={{ height: 55 * emptyRows }}>
+        <TableRow style={{ height: 65 * emptyRows }}>
           <TableCell colSpan={6} />
         </TableRow>
       )}
