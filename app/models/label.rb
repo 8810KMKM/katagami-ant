@@ -11,11 +11,13 @@ class Label < ApplicationRecord
   
     def listing_for_ant(params, user_id)
       annotation = Annotation.find_by(katagami_id: params[:katagami], user_id: user_id)
+
       head = annotation ? annotation.status : 0
       tail = head + params[:num].to_i - 1
   
       head === 10 ? 
-        [] : all.pluck(:id, :name)[head..tail].map {|l| { id: l[0], name: l[1] }}
+        [] : all.pluck(:id, :name)[head..tail]
+                .map.with_index {|l, i| { id: head + 1 + i, name: l[1] }}
     end
   end
 end

@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 export default props => {
   const { check, index, handleClose } = props
   const classes = useStyles()
-  const hintData = labelInfo[index ? index - 1 : 0]
+  const hintData = labelInfo[index]
   return (
     <div className={classes.root}>
       <Fade in={check}>
