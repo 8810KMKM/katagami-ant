@@ -1,5 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
 import { CookiesProvider, useCookies } from 'react-cookie'
@@ -16,24 +22,23 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default () => {
-  const [cookies, setCookies, removeCookies] = useCookies(['auth'])
+  const [cookies, setCookie, removeCookie] = useCookies(['auth'])
   const classes = useStyles()
 
   const handleSignIn = auth => {
     if (!cookies.auth) {
       let expires = new Date()
       expires.setDate(expires.getDate() + 1)
-      setCookies('auth', auth, { path: '/', expires: expires })
+      setCookie('auth', auth, { path: '/', maxAge: 3600 * 60 })
     }
   }
 
   const handleSignOut = () => {
-    removeCookies('auth')
+    removeCookie('auth', { path: '/' })
     redirectToWelcome()
   }
 
   const PrivateRoute = ({ path, component }) => {
-    console.log(path)
     if (cookies.auth) {
       return (
         <Route
@@ -54,6 +59,18 @@ export default () => {
           <Header handleSignOut={handleSignOut} />
           <Box className={classes.root}>
             <Switch>
+              <Route
+                path="/auth/:authorization"
+                render={({ match }) => (
+                  <TopPage
+                    {...{
+                      handleSignIn,
+                      auth: cookies.auth,
+                      ...match.params,
+                    }}
+                  />
+                )}
+              />
               <PrivateRoute
                 path="/ant/:katagamiId/:num"
                 component={AnnotationPage}
@@ -63,18 +80,6 @@ export default () => {
                 component={ResultPage}
               />
               <PrivateRoute path="/users/:userId/" component={UserPage} />
-              <Route
-                path="/:authorization"
-                render={({ match }) => (
-                  <TopPage
-                    {...{
-                      handleSignIn: handleSignIn,
-                      auth: cookies.auth,
-                      ...match.params,
-                    }}
-                  />
-                )}
-              />
               <PrivateRoute path="/" component={TopPage} />
             </Switch>
           </Box>
