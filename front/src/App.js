@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  useLocation,
-  Redirect,
-} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
 import { CookiesProvider, useCookies } from 'react-cookie'

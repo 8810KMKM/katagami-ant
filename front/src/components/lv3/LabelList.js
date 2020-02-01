@@ -48,7 +48,11 @@ export default props => {
       </div>
       <LabelHint
         check={hintIsOpen}
-        index={labels.length > 0 ? labels[selectedIndex].id - 1 : 0}
+        index={
+          labels.length > 0 && labels.length < selectedIndex
+            ? labels[selectedIndex].id - 1
+            : 0
+        }
         handleClose={handleCloseHint}
       />
     </div>
