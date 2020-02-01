@@ -12,6 +12,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def after_omniauth_failure_path_for resources
+    root_path
+  end
+
   private
     def payload(user)
       return nil unless user && user.id

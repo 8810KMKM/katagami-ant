@@ -3,11 +3,12 @@ import { useHistory, Redirect } from 'react-router-dom'
 
 export default props => {
   const { authorization, handleSignIn, auth } = props
+  const history = useHistory()
 
   if (auth) {
-    const history = useHistory()
     history.replace({ pathname: '/' })
   } else {
+    history.push('/')
     handleSignIn(authorization)
   }
 
