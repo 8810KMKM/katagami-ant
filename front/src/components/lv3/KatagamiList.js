@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { currentUser } from 'libs/auth'
 import { fetchKatagamis } from 'libs/api'
 import theme from 'libs/theme'
 import SortingSelect from 'components/lv1/SortingSelect'
