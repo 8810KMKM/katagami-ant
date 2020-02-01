@@ -45,7 +45,7 @@ export default () => {
         />
       )
     }
-    // redirectToWelcome()
+    redirectToWelcome()
     return
   }
 
