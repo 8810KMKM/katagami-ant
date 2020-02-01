@@ -42,7 +42,8 @@ export default props => {
           disabled={!tileIsSelectable}
         >
           <MenuItem value={12}>4 × 3</MenuItem>
-          <MenuItem value={24}>6 × 4</MenuItem>
+          <MenuItem value={48}>8 × 6</MenuItem>
+          <MenuItem value={192}>16 × 12</MenuItem>
         </Select>
       </FormControl>
     </div>
