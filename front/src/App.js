@@ -59,7 +59,7 @@ export default () => {
     <ThemeProvider theme={theme}>
       <CookiesProvider>
         <BrowserRouter>
-          <Header handleSignOut={handleSignOut} auth={cookies.auth} />
+          <Header handleSignOut={handleSignOut} />
           <Box className={classes.root}>
             <Switch>
               <Route

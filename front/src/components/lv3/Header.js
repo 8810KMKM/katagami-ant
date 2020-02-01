@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { handleSignOut, auth } = props
+  const { handleSignOut } = props
 
   let location = useLocation()
   const isAnnotationPage = location.pathname.split('/')[1] === 'ant'
@@ -30,7 +30,7 @@ export default props => {
                 ブラウザの「戻るボタン」等でページを離れると実行中のデータは保存されません.)
               </Typography>
             ) : (
-              <AppLogo auth={auth} />
+              <AppLogo />
             )}
           </Grid>
           <Grid item xs={1}>

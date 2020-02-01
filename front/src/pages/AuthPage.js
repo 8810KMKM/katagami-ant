@@ -11,5 +11,5 @@ export default props => {
     handleSignIn(authorization)
   }
 
-  return <Redirect to={{ pathname: '/', state: { auth: authorization } }} />
+  return <Redirect to={{ pathname: '/' }} />
 }

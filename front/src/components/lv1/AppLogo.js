@@ -7,7 +7,6 @@ import { Typography } from '@material-ui/core'
 const useStyle = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
-    pointerEvents: props => (props.auth ? '' : 'none'),
   },
   logo: {
     fontFamily: 'Audiowide',
@@ -18,9 +17,8 @@ const useStyle = makeStyles(theme => ({
   },
 }))
 
-export default props => {
-  const { auth } = props
-  const classes = useStyle({ size: 32, auth: auth })
+export default () => {
+  const classes = useStyle({ size: 32 })
 
   return (
     <Link to="/" className={classes.link}>
