@@ -6,9 +6,7 @@ import { zeroPaddingOf } from 'libs/format'
 import StatusPieChart from 'components/lv2/StatusPieChart'
 
 const useStyles = makeStyles(theme => ({
-  detail: {
-    marginBottom: 40,
-  },
+  detail: { marginBottom: 40 },
 }))
 
 export default props => {
@@ -23,7 +21,7 @@ export default props => {
       setIsLoaging(false)
     }
     fetchUser({ ...{ auth, userId, handleGetUser } })
-  }, [userId])
+  }, [userId, auth])
 
   if (isLoading) return <Typography>Loading...</Typography>
 

@@ -123,7 +123,7 @@ export default props => {
       katagamiId,
       handleCreateAnnotation,
     })
-  }, [auth, num])
+  }, [auth, num, katagamiId])
 
   // to fetch labels
   useEffect(() => {
