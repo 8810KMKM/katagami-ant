@@ -152,7 +152,11 @@ export default props => {
 
   return (
     <Container>
-      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
+      <HeadLine>
+        {katagamiId === 'recommend'
+          ? 'おすすめの型紙'
+          : `型紙 id : ${zeroPaddingId}`}
+      </HeadLine>
       <DivisionSelect
         {...{
           division,
