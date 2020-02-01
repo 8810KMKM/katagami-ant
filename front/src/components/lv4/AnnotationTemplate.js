@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default props => {
+const AnnotationTemplate = props => {
   const { auth, katagamiId, num } = props
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const classes = useStyles()
@@ -244,3 +245,12 @@ export default props => {
     </Container>
   )
 }
+// auth, katagamiId, num,
+AnnotationTemplate.propTypes = {
+  auth: PropTypes.string.isRequired,
+  katagamiId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  num: PropTypes.number.isRequired,
+}
+
+export default AnnotationTemplate

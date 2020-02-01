@@ -36,6 +36,14 @@ export default () => {
     redirectToWelcome()
   }
 
+  const handleDoRecommendAnnotation = () => {
+    window.location.href = 'ant/recommend/2'
+  }
+
+  const handleCancelRecommend = () => {
+    removeCookie('canRecommend', { path: '/' })
+  }
+
   const PrivateRoute = ({ path, component }) => {
     const [cookies] = useCookies(['auth', 'canRecommend'])
     if (cookies.auth) {
@@ -46,6 +54,8 @@ export default () => {
             component({
               auth: cookies.auth,
               canRecommend: cookies.canRecommend === '1',
+              handleCancelRecommend,
+              handleDoRecommendAnnotation,
               ...match.params,
             })
           }
