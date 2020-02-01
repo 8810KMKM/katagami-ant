@@ -49,7 +49,7 @@ export default props => {
       <LabelHint
         check={hintIsOpen}
         index={
-          labels.length > 0 && labels.length < selectedIndex
+          labels.length > 0 && selectedIndex < labels.length
             ? labels[selectedIndex].id - 1
             : 0
         }

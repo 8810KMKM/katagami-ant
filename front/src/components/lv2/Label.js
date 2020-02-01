@@ -14,7 +14,6 @@ import {
   Edit,
   Cancel,
   Check,
-  Info,
 } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
@@ -23,6 +22,7 @@ import {
   saveDivision,
   getDivision,
 } from 'libs/tile'
+import RubyLabelName from 'components/lv1/RubyLabelName'
 
 const useStyles = makeStyles(theme => ({
   tiles: { paddingTop: 6 },
@@ -30,11 +30,6 @@ const useStyles = makeStyles(theme => ({
   single: {
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-  hint: {
-    padding: 0,
-    lineHeight: 16,
-    margin: '0 0 6px 4px',
   },
 }))
 
@@ -118,22 +113,6 @@ export default props => {
     )
   }
 
-  const RubyLabelName = () => (
-    <Typography>
-      <ruby>
-        {name.kanji}
-        <rt>{name.ruby}</rt>
-      </ruby>
-      <IconButton
-        disabled={!isFocused}
-        onClick={handleToggleHint}
-        className={classes.hint}
-      >
-        <Info fontSize="small" />
-      </IconButton>
-    </Typography>
-  )
-
   const DisplayedTiles = () => (
     <Typography variant="body1" color="primary" className={classes.tiles}>
       {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
@@ -152,7 +131,7 @@ export default props => {
       <ListItemText>
         <Grid container>
           <Grid item xs={4} className={classes.name}>
-            <RubyLabelName />
+            <RubyLabelName {...{ name, isFocused, handleToggleHint }} />
           </Grid>
           <Grid item xs={4} className={classes.tile}>
             <DisplayedTiles />
