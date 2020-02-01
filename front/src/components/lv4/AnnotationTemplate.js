@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default props => {
+const AnnotationTemplate = props => {
   const { auth, katagamiId, num } = props
   const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const classes = useStyles()
@@ -123,7 +124,7 @@ export default props => {
       katagamiId,
       handleCreateAnnotation,
     })
-  }, [auth, num])
+  }, [auth, num, katagamiId])
 
   // to fetch labels
   useEffect(() => {
@@ -152,7 +153,11 @@ export default props => {
 
   return (
     <Container>
-      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
+      <HeadLine>
+        {katagamiId === 'recommend'
+          ? 'おすすめの型紙'
+          : `型紙 id : ${zeroPaddingId}`}
+      </HeadLine>
       <DivisionSelect
         {...{
           division,
@@ -240,3 +245,12 @@ export default props => {
     </Container>
   )
 }
+// auth, katagamiId, num,
+AnnotationTemplate.propTypes = {
+  auth: PropTypes.string.isRequired,
+  katagamiId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  num: PropTypes.number.isRequired,
+}
+
+export default AnnotationTemplate

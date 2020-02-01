@@ -17,14 +17,17 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['auth'])
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'auth',
+    'canRecommend',
+  ])
   const classes = useStyles()
 
-  const handleSignIn = auth => {
+  const handleSignIn = (auth, canRecommend) => {
     if (!cookies.auth) {
-      let expires = new Date()
-      expires.setDate(expires.getDate() + 1)
-      setCookie('auth', auth, { path: '/', maxAge: 3600 * 20 })
+      const age = 3600 * 20
+      setCookie('auth', auth, { path: '/', maxAge: age })
+      setCookie('canRecommend', canRecommend, { path: '/', maxAge: age })
     }
   }
 
@@ -33,14 +36,28 @@ export default () => {
     redirectToWelcome()
   }
 
+  const handleDoRecommendAnnotation = () => {
+    window.location.href = 'ant/recommend/2'
+  }
+
+  const handleCancelRecommend = () => {
+    removeCookie('canRecommend', { path: '/' })
+  }
+
   const PrivateRoute = ({ path, component }) => {
-    const [cookies] = useCookies(['auth'])
+    const [cookies] = useCookies(['auth', 'canRecommend'])
     if (cookies.auth) {
       return (
         <Route
           path={path}
           render={({ match }) =>
-            component({ auth: cookies.auth, ...match.params })
+            component({
+              auth: cookies.auth,
+              canRecommend: cookies.canRecommend === '1',
+              handleCancelRecommend,
+              handleDoRecommendAnnotation,
+              ...match.params,
+            })
           }
         />
       )
@@ -57,7 +74,7 @@ export default () => {
           <Box className={classes.root}>
             <Switch>
               <Route
-                path="/auth/:authorization"
+                path="/auth/:authorization/:canRecommend"
                 render={({ match }) => (
                   <AuthPage
                     {...{
