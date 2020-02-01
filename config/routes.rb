@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   # Annotation
   post '/annotations/add_has_labels', to: 'annotations#add_has_labels'
   post '/annotations/:katagami', to: 'annotations#create'
-  post '/annotations/recommend', to: 'annotations#create_with_recommend'
   # Label
   get '/labels/target/:katagami/:num', to: 'labels#target'
 end

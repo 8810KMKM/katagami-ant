@@ -1,11 +1,8 @@
 class AnnotationsController < ApplicationController
   def create
-    render json: Annotation.stand_by(params[:katagami], current_user.id)
-  end
-
-  def create_with_recommend
     render json: Annotation.stand_by(
-      current_user.recommended_katagami_id,
+      params[:katagami] == 'recommend' ? 
+        current_user.recommended_katagami_id : params[:katagami], 
       current_user.id
     )
   end
