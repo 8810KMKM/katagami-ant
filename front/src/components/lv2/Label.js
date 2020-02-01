@@ -4,17 +4,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  IconButton,
   Grid,
   Typography,
 } from '@material-ui/core'
-import {
-  RadioButtonUnchecked,
-  RadioButtonChecked,
-  Edit,
-  Cancel,
-  Check,
-} from '@material-ui/icons'
+import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
 import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
   saveSelectedTiles,
@@ -23,14 +16,10 @@ import {
   getDivision,
 } from 'libs/tile'
 import RubyLabelName from 'components/lv1/RubyLabelName'
+import ActivatedAntButtons from 'components/lv1/ActivatedAntButtons'
 
 const useStyles = makeStyles(theme => ({
   tiles: { paddingTop: 6 },
-  buttons: { width: 128 },
-  single: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
 }))
 
 export default props => {
@@ -91,28 +80,6 @@ export default props => {
     }
   }, [isEditingThis, i, setSelectedTiles])
 
-  const ActivatedButtons = () => {
-    if (isEditingThis) {
-      return (
-        <div classes={classes.buttons}>
-          <IconButton color="primary" onClick={handleSave}>
-            <Check />
-          </IconButton>
-          <IconButton color="secondary" onClick={handleCancelEdit}>
-            <Cancel />
-          </IconButton>
-        </div>
-      )
-    }
-    return (
-      <div className={classes.buttons + ' ' + classes.single}>
-        <IconButton color="default" onClick={handleEdit} disabled={!isFocused}>
-          <Edit />
-        </IconButton>
-      </div>
-    )
-  }
-
   const DisplayedTiles = () => (
     <Typography variant="body1" color="primary" className={classes.tiles}>
       {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
@@ -138,7 +105,15 @@ export default props => {
           </Grid>
         </Grid>
       </ListItemText>
-      <ActivatedButtons />
+      <ActivatedAntButtons
+        {...{
+          isEditingThis,
+          isFocused,
+          handleSave,
+          handleEdit,
+          handleCancelEdit,
+        }}
+      />
     </ListItem>
   )
 }
