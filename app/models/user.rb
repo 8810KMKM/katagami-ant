@@ -5,21 +5,27 @@ class User < ApplicationRecord
   has_many :annotations
   attr_accessor :password
 
-  def self.detail(id)
-    Rails.cache.fetch('user-' + id.to_s) do
-      user = User.includes(:annotations).find(id)
-      done, doing = user.annotations.pluck(:id, :status).partition {|a| a[1] == 10}
-
-      {
-        id: id,
-        email: user.email,
-        ant_counts: [
-          { status: 'DOING', count: doing.size },
-          { status: 'DONE',  count: done.size },
-          { status: 'YET',   count: Katagami.count - (doing.size + done.size) }
-        ]
-      }
+  class << self
+    def detail(id)
+      Rails.cache.fetch('user-' + id.to_s) do
+        user = User.includes(:annotations).find(id)
+        done, doing = user.annotations.pluck(:id, :status).partition {|a| a[1] == 10}
+  
+        {
+          id: id,
+          email: user.email,
+          ant_counts: [
+            { status: 'DOING', count: doing.size },
+            { status: 'DONE',  count: done.size },
+            { status: 'YET',   count: Katagami.count - (doing.size + done.size) }
+          ]
+        }
+      end
     end
+  end
+
+  def have_done_all_annotations?
+    (Katagami.all.pluck(:id) - annotations.pluck(:katagami_id, :status).select {|a| i[a] == 10}.to_h.keys).size < 0
   end
 
   def recommended_katagami_id
