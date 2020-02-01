@@ -4,7 +4,7 @@ import {
   Route,
   Switch,
   useLocation,
-  useHistory,
+  Redirect,
 } from 'react-router-dom'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { Box } from '@material-ui/core'
@@ -16,6 +16,7 @@ import TopPage from 'pages/TopPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import ResultPage from 'pages/ResultPage'
 import UserPage from 'pages/UserPage'
+import AuthPage from 'pages/AuthPage'
 
 const useStyles = makeStyles(theme => ({
   root: { margin: '80px auto' },
@@ -29,7 +30,7 @@ export default () => {
     if (!cookies.auth) {
       let expires = new Date()
       expires.setDate(expires.getDate() + 1)
-      setCookie('auth', auth, { path: '/', maxAge: 3600 * 60 })
+      setCookie('auth', auth, { path: '/', maxAge: 3600 * 20 })
     }
   }
 
@@ -39,6 +40,7 @@ export default () => {
   }
 
   const PrivateRoute = ({ path, component }) => {
+    const [cookies] = useCookies(['auth'])
     if (cookies.auth) {
       return (
         <Route
@@ -49,20 +51,21 @@ export default () => {
         />
       )
     }
-    redirectToWelcome()
+    // redirectToWelcome()
+    return
   }
 
   return (
     <ThemeProvider theme={theme}>
       <CookiesProvider>
         <BrowserRouter>
-          <Header handleSignOut={handleSignOut} />
+          <Header handleSignOut={handleSignOut} auth={cookies.auth} />
           <Box className={classes.root}>
             <Switch>
               <Route
                 path="/auth/:authorization"
                 render={({ match }) => (
-                  <TopPage
+                  <AuthPage
                     {...{
                       handleSignIn,
                       auth: cookies.auth,
