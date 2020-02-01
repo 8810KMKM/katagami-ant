@@ -34,7 +34,7 @@ export default props => {
             )}
           </Grid>
           <Grid item xs={1}>
-            <UserMenu handleSignOut={handleSignOut} />
+            {!isAnnotationPage && <UserMenu handleSignOut={handleSignOut} />}
           </Grid>
         </Grid>
       </Toolbar>
