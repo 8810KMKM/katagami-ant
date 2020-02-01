@@ -1,40 +1,34 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
+import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  IconButton,
-  Grid,
   Typography,
 } from '@material-ui/core'
-import {
-  RadioButtonUnchecked,
-  RadioButtonChecked,
-  Edit,
-  Cancel,
-  Check,
-  Info,
-} from '@material-ui/icons'
-import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
   saveSelectedTiles,
   displayedTiles,
   saveDivision,
   getDivision,
 } from 'libs/tile'
+import RubyLabelName from 'components/lv1/RubyLabelName'
+import ActivatedAntButtons from 'components/lv1/ActivatedAntButtons'
 
 const useStyles = makeStyles(theme => ({
-  tiles: { paddingTop: 6 },
-  buttons: { width: 128 },
-  single: {
+  textWrapper: {
+    width: 300,
     display: 'flex',
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  hint: {
-    padding: 0,
-    lineHeight: 16,
-    margin: '0 0 6px 4px',
+  tiles: {
+    lineHeight: '48px',
+    overflowX: 'scroll',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
   },
 }))
 
@@ -96,50 +90,6 @@ export default props => {
     }
   }, [isEditingThis, i, setSelectedTiles])
 
-  const ActivatedButtons = () => {
-    if (isEditingThis) {
-      return (
-        <div classes={classes.buttons}>
-          <IconButton color="primary" onClick={handleSave}>
-            <Check />
-          </IconButton>
-          <IconButton color="secondary" onClick={handleCancelEdit}>
-            <Cancel />
-          </IconButton>
-        </div>
-      )
-    }
-    return (
-      <div className={classes.buttons + ' ' + classes.single}>
-        <IconButton color="default" onClick={handleEdit} disabled={!isFocused}>
-          <Edit />
-        </IconButton>
-      </div>
-    )
-  }
-
-  const RubyLabelName = () => (
-    <Typography>
-      <ruby>
-        {name.kanji}
-        <rt>{name.ruby}</rt>
-      </ruby>
-      <IconButton
-        disabled={!isFocused}
-        onClick={handleToggleHint}
-        className={classes.hint}
-      >
-        <Info fontSize="small" />
-      </IconButton>
-    </Typography>
-  )
-
-  const DisplayedTiles = () => (
-    <Typography variant="body1" color="primary" className={classes.tiles}>
-      {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
-    </Typography>
-  )
-
   return (
     <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
@@ -150,16 +100,22 @@ export default props => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Grid container>
-          <Grid item xs={4} className={classes.name}>
-            <RubyLabelName />
-          </Grid>
-          <Grid item xs={4} className={classes.tile}>
-            <DisplayedTiles />
-          </Grid>
-        </Grid>
+        <div className={classes.textWrapper}>
+          <RubyLabelName {...{ name, isFocused, handleToggleHint }} />
+          <Typography variant="body1" color="primary" className={classes.tiles}>
+            {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
+          </Typography>
+        </div>
       </ListItemText>
-      <ActivatedButtons />
+      <ActivatedAntButtons
+        {...{
+          isEditingThis,
+          isFocused,
+          handleSave,
+          handleEdit,
+          handleCancelEdit,
+        }}
+      />
     </ListItem>
   )
 }
