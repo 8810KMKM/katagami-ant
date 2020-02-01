@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
+import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Grid,
   Typography,
 } from '@material-ui/core'
-import { RadioButtonUnchecked, RadioButtonChecked } from '@material-ui/icons'
-import { convertBoolToNumOfTiles, convertNumToBoolOfTiles } from 'libs/format'
 import {
   saveSelectedTiles,
   displayedTiles,
@@ -19,7 +18,18 @@ import RubyLabelName from 'components/lv1/RubyLabelName'
 import ActivatedAntButtons from 'components/lv1/ActivatedAntButtons'
 
 const useStyles = makeStyles(theme => ({
-  tiles: { paddingTop: 6 },
+  textWrapper: {
+    width: 300,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tiles: {
+    lineHeight: '48px',
+    overflowX: 'scroll',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+  },
 }))
 
 export default props => {
@@ -80,12 +90,6 @@ export default props => {
     }
   }, [isEditingThis, i, setSelectedTiles])
 
-  const DisplayedTiles = () => (
-    <Typography variant="body1" color="primary" className={classes.tiles}>
-      {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
-    </Typography>
-  )
-
   return (
     <ListItem selected={isFocused}>
       <ListItemIcon onClick={handleSelectThis}>
@@ -96,14 +100,12 @@ export default props => {
         )}
       </ListItemIcon>
       <ListItemText>
-        <Grid container>
-          <Grid item xs={4} className={classes.name}>
-            <RubyLabelName {...{ name, isFocused, handleToggleHint }} />
-          </Grid>
-          <Grid item xs={4} className={classes.tile}>
-            <DisplayedTiles />
-          </Grid>
-        </Grid>
+        <div className={classes.textWrapper}>
+          <RubyLabelName {...{ name, isFocused, handleToggleHint }} />
+          <Typography variant="body1" color="primary" className={classes.tiles}>
+            {isEditingThis ? convertedSelectedTiles : displayedTiles(i)}
+          </Typography>
+        </div>
       </ListItemText>
       <ActivatedAntButtons
         {...{

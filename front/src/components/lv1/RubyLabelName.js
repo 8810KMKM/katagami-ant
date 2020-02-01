@@ -5,10 +5,16 @@ import { Info } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: 96,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   hint: {
     padding: 0,
     lineHeight: 16,
-    margin: '0 0 6px 4px',
+    marginLeft: 4,
   },
 }))
 
@@ -17,7 +23,7 @@ const RubyLabelName = props => {
   const classes = useStyles()
 
   return (
-    <Typography>
+    <Typography className={classes.root}>
       <ruby>
         {name.kanji}
         <rt>{name.ruby}</rt>
