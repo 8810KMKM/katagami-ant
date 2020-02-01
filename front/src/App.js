@@ -57,7 +57,7 @@ export default () => {
           <Box className={classes.root}>
             <Switch>
               <Route
-                path="/auth/:authorization"
+                path="/auth/:authorization/:canRecommend"
                 render={({ match }) => (
                   <AuthPage
                     {...{

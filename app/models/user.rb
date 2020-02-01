@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def have_done_all_annotations?
-    (Katagami.all.pluck(:id) - annotations.pluck(:katagami_id, :status).select {|a| i[a] == 10}.to_h.keys).size < 0
+    (Katagami.all.pluck(:id) - annotations.pluck(:katagami_id, :status).select {|a| a[1] == 10}.to_h.keys).size < 0
   end
 
   def recommended_katagami_id
