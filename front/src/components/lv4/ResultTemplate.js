@@ -30,8 +30,6 @@ export default props => {
   const [division, setDivision] = useState(12)
   const [selectIsOpen, setSelectIsOpen] = useState(false)
 
-  console.log(props)
-
   const handleSelectUsers = (data, index) => {
     setActiveIndex(index)
     setUsers(data.users)

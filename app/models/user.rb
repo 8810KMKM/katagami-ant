@@ -9,15 +9,17 @@ class User < ApplicationRecord
     def detail(id)
       Rails.cache.fetch('user-' + id.to_s) do
         user = User.includes(:annotations).find(id)
-        done, doing = user.annotations.pluck(:id, :status).partition {|a| a[1] == 10}
+        annotations = user.annotations.pluck(:id, :status)
+        doing = annotations.count { |a| a[1].between?(1, 9) }
+        done = annotations.count { |a| a[1] == 10 }
   
         {
           id: id,
           email: user.email,
           ant_counts: [
-            { status: 'DOING', count: doing.size },
-            { status: 'DONE',  count: done.size },
-            { status: 'YET',   count: Katagami.count - (doing.size + done.size) }
+            { status: 'DOING', count: doing },
+            { status: 'DONE',  count: done },
+            { status: 'YET',   count: Katagami.count - (doing + done) }
           ]
         }
       end

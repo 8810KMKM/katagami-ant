@@ -31,7 +31,7 @@ class Katagami < ApplicationRecord
         katagamis
           .map  { |k| k << (statuses[k[0]] ? statuses[k[0]] : 0) }
           .sort { |a, b| a[sortIndex] <=> b[sortIndex] }[top..bottom]
-          .format_for_index
+          .format_for_index(katagamis.size)
       end
     end
 
@@ -75,7 +75,7 @@ class Katagami < ApplicationRecord
 
   # division > position > labelでhas_labelをクラス分け
   def classified_has_labels
-    Rails.cache.fetch('has_labels-' + id.to_s) do
+    # Rails.cache.fetch('has_labels-' + id.to_s) do
       annotations
         .map { |ant| 
           ant.has_labels.map {|has_label| 
@@ -88,16 +88,16 @@ class Katagami < ApplicationRecord
           }
         }
         .flatten.group_by { |has_label| has_label[:division] }
-        .map { |k, v| v
+        .map { |k, v| [k, v
           .group_by { |label| label[:position] }
           .map { |k, v| 
             {
               position: k,
               score: v.group_by { |v| v[:label] }.each{ |_, v| v.map! { |h| h[:user] } }
             }
-          }
-        }
-    end
+          }]
+        }.to_h
+    # end
   end
 
   # 型紙一覧の全キャッシュと自身の持つHasLabelのキャッシュをクリア
