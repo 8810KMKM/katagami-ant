@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-  const { number, square, isSelected, handleToggleTile } = props
+  const { number, square, isSelected, handleToggleTile, isResultPage } = props
   const classes = useStyles()
 
   return (
@@ -25,7 +25,16 @@ export default props => {
       className={
         isSelected ? classes.tile + ' ' + classes.selected : classes.tile
       }
-      onMouseOver={() => handleToggleTile(number)}
+      onMouseOver={() => {
+        if (isResultPage) {
+          handleToggleTile(number)
+        }
+      }}
+      onClick={() => {
+        if (!isResultPage) {
+          handleToggleTile(number)
+        }
+      }}
     />
   )
 }

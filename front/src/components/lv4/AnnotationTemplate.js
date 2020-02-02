@@ -173,6 +173,7 @@ const AnnotationTemplate = props => {
               division,
               selectedTiles,
               fixedWidth: 640,
+              isResultPage: false,
             }}
           />
         </Grid>
@@ -243,7 +244,7 @@ AnnotationTemplate.propTypes = {
   auth: PropTypes.string.isRequired,
   katagamiId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     .isRequired,
-  num: PropTypes.number.isRequired,
+  num: PropTypes.string.isRequired,
 }
 
 export default AnnotationTemplate

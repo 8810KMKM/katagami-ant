@@ -33,6 +33,7 @@ export default props => {
     tileIsSelectable,
     fixedWidth,
     division,
+    isResultPage = false,
   } = props
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
   const dx = DIV_X(division)
@@ -47,6 +48,8 @@ export default props => {
     savedTilesAreNotZero,
   })
 
+  console.log(isResultPage)
+
   const TilesOnKatagami = () => {
     const labels = []
     for (let i = 1; i <= division; i++) {
@@ -57,6 +60,7 @@ export default props => {
           square={dx}
           isSelected={selectedTiles[i - 1]}
           handleToggleTile={handleToggleTile}
+          isResultPage={isResultPage}
         />
       )
     }
