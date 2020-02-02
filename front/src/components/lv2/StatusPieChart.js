@@ -6,7 +6,11 @@ export default props => {
   const fillColors = ['#673AB7', '#00796B', '#9e9e9e']
 
   return (
-    <PieChart width={640} height={440}>
+    <PieChart
+      width={640}
+      height={440}
+      style={{ fontFamily: 'Koruri', fontSize: 20, fontWeight: 'bold' }}
+    >
       <Pie
         data={data}
         dataKey="count"
