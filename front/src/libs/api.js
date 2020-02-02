@@ -75,8 +75,6 @@ export const fetchLabels = async props => {
 const fetchGet = async props => {
   const { auth, url, successAction, failureAction } = props
 
-  console.log(auth)
-
   return await fetch(url, {
     mode: 'cors',
     headers: {
@@ -85,7 +83,7 @@ const fetchGet = async props => {
   })
     .then(response => response.json())
     .then(responseJson => {
-      // console.log(responseJson);
+      // console.log(responseJson)
       if (successAction) {
         successAction(responseJson)
       }

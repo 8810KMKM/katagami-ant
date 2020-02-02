@@ -10,41 +10,60 @@ import TopPage from 'pages/TopPage'
 import AnnotationPage from 'pages/AnnotationPage'
 import ResultPage from 'pages/ResultPage'
 import UserPage from 'pages/UserPage'
+import AuthPage from 'pages/AuthPage'
 
 const useStyles = makeStyles(theme => ({
   root: { margin: '80px auto' },
 }))
 
 export default () => {
-  const [cookies, setCookies, removeCookies] = useCookies(['auth'])
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'auth',
+    'canRecommend',
+  ])
   const classes = useStyles()
 
-  const handleSignIn = auth => {
+  const handleSignIn = (auth, canRecommend) => {
     if (!cookies.auth) {
-      let expires = new Date()
-      expires.setDate(expires.getDate() + 1)
-      setCookies('auth', auth, { path: '/', expires: expires })
+      const age = 3600 * 20
+      setCookie('auth', auth, { path: '/', maxAge: age })
+      setCookie('canRecommend', canRecommend, { path: '/', maxAge: age })
     }
   }
 
   const handleSignOut = () => {
-    removeCookies('auth')
+    removeCookie('auth', { path: '/' })
     redirectToWelcome()
   }
 
+  const handleDoRecommendAnnotation = () => {
+    window.location.href = 'ant/recommend/2'
+  }
+
+  const handleCancelRecommend = () => {
+    removeCookie('canRecommend', { path: '/' })
+  }
+
   const PrivateRoute = ({ path, component }) => {
-    console.log(path)
+    const [cookies] = useCookies(['auth', 'canRecommend'])
     if (cookies.auth) {
       return (
         <Route
           path={path}
           render={({ match }) =>
-            component({ auth: cookies.auth, ...match.params })
+            component({
+              auth: cookies.auth,
+              canRecommend: cookies.canRecommend === '1',
+              handleCancelRecommend,
+              handleDoRecommendAnnotation,
+              ...match.params,
+            })
           }
         />
       )
     }
     redirectToWelcome()
+    return
   }
 
   return (
@@ -54,6 +73,18 @@ export default () => {
           <Header handleSignOut={handleSignOut} />
           <Box className={classes.root}>
             <Switch>
+              <Route
+                path="/auth/:authorization/:canRecommend"
+                render={({ match }) => (
+                  <AuthPage
+                    {...{
+                      handleSignIn,
+                      auth: cookies.auth,
+                      ...match.params,
+                    }}
+                  />
+                )}
+              />
               <PrivateRoute
                 path="/ant/:katagamiId/:num"
                 component={AnnotationPage}
@@ -63,18 +94,6 @@ export default () => {
                 component={ResultPage}
               />
               <PrivateRoute path="/users/:userId/" component={UserPage} />
-              <Route
-                path="/:authorization"
-                render={({ match }) => (
-                  <TopPage
-                    {...{
-                      handleSignIn: handleSignIn,
-                      auth: cookies.auth,
-                      ...match.params,
-                    }}
-                  />
-                )}
-              />
               <PrivateRoute path="/" component={TopPage} />
             </Switch>
           </Box>

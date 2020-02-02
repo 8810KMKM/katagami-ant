@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
+import PropTypes from 'prop-types'
 import { Grid, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { initAllTiles } from 'libs/tile'
-import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
+import { hasLabelsForPost } from 'libs/format'
 import { MAX_DIVISION } from 'datas/tile'
 import Container from 'components/lv1/Container'
-import HeadLine from 'components/lv1/HeadLine'
 import LoadingModal from 'components/lv1/LoadingModal'
 import DivisionSelect from 'components/lv1/DivisionSelect'
 import Modal from 'components/lv2/Modal'
@@ -25,9 +25,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default props => {
+const AnnotationTemplate = props => {
   const { auth, katagamiId, num } = props
-  const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
   const classes = useStyles()
 
   const [annotation, setAnnotation] = useState(null)
@@ -123,7 +122,7 @@ export default props => {
       katagamiId,
       handleCreateAnnotation,
     })
-  }, [auth, num])
+  }, [auth, num, katagamiId])
 
   // to fetch labels
   useEffect(() => {
@@ -152,7 +151,6 @@ export default props => {
 
   return (
     <Container>
-      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
       <DivisionSelect
         {...{
           division,
@@ -240,3 +238,12 @@ export default props => {
     </Container>
   )
 }
+// auth, katagamiId, num,
+AnnotationTemplate.propTypes = {
+  auth: PropTypes.string.isRequired,
+  katagamiId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
+  num: PropTypes.number.isRequired,
+}
+
+export default AnnotationTemplate

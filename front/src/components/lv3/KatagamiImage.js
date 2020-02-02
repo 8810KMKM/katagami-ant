@@ -2,8 +2,13 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@material-ui/core'
 import Tile from 'components/lv1/Tile'
+import { DIV_X, DIV_Y } from 'datas/tile'
 
 const useStyles = makeStyles(theme => ({
+  wrapper: {
+    overflow: 'scroll',
+    height: 640,
+  },
   root: {
     width: props => `${props.fixedWidth}px`,
     pointerEvents: props => (props.tileIsSelectable ? '' : 'none'),
@@ -18,28 +23,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const xDiv = division => {
-  switch (division) {
-    case 12:
-      return 3
-    case 24:
-      return 4
-    default:
-      return 3
-  }
-}
-
-const yDiv = division => {
-  switch (division) {
-    case 12:
-      return 4
-    case 24:
-      return 6
-    default:
-      return 4
-  }
-}
-
 export default props => {
   const {
     katagamiUrl,
@@ -52,8 +35,8 @@ export default props => {
     division,
   } = props
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
-  const dx = xDiv(division)
-  const tileHeight = fixedHeight / yDiv(division)
+  const dx = DIV_X(division)
+  const tileHeight = fixedHeight / DIV_Y(division)
   const savedTilesAreNotZero = selectedTiles.reduce((a, b) => a && b, true)
   const classes = useStyles({
     katagamiUrl,
@@ -81,10 +64,12 @@ export default props => {
   }
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={0} className={classes.katagami}>
-        <TilesOnKatagami />
-      </Grid>
+    <div className={classes.wrapper}>
+      <div className={classes.root}>
+        <Grid container spacing={0} className={classes.katagami}>
+          <TilesOnKatagami />
+        </Grid>
+      </div>
     </div>
   )
 }

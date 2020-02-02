@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { fetchUser } from 'libs/api'
 import { Typography, makeStyles } from '@material-ui/core'
-import HeadLine from 'components/lv1/HeadLine'
+import { AccountBox } from '@material-ui/icons'
+import { fetchUser } from 'libs/api'
 import { zeroPaddingOf } from 'libs/format'
+import HeadLine from 'components/lv1/HeadLine'
 import StatusPieChart from 'components/lv2/StatusPieChart'
 
 const useStyles = makeStyles(theme => ({
-  detail: {
-    marginBottom: 40,
-  },
+  detail: { marginBottom: 40 },
 }))
 
 export default props => {
@@ -23,13 +22,16 @@ export default props => {
       setIsLoaging(false)
     }
     fetchUser({ ...{ auth, userId, handleGetUser } })
-  }, [userId])
+  }, [userId, auth])
 
   if (isLoading) return <Typography>Loading...</Typography>
 
   return (
     <div>
-      <HeadLine>{`ユーザー id : ${zeroPaddingOf(detail.id, 4)}`}</HeadLine>
+      <HeadLine
+        Icon={<AccountBox fontSize="large" />}
+        title={`user - ${zeroPaddingOf(detail.id, 4)}`}
+      />
       <div className={classes.detail}>
         <Typography variant="h2">登録情報</Typography>
         <Typography>{`メールアドレス : ${detail.email}`}</Typography>

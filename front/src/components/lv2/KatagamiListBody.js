@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TableRow, TableCell, TableBody, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Create, Equalizer } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
+import ToggledThumbnail from 'components/lv1/ToggledThumbnail'
 
 const useStyles = makeStyles(theme => ({
   tableRow: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 export default props => {
   const { katagamis, emptyRows, handleSelectId } = props
+  const [selectedId, setSelectedId] = useState(0)
   const classes = useStyles()
 
   const UserStatus = ({ status }) =>
@@ -40,7 +42,12 @@ export default props => {
       {katagamis.map(katagami => (
         <TableRow key={katagami.id} className={classes.tableRow}>
           <TableCell align="right">{katagami.id}</TableCell>
-          <TableCell className={classes.name}>{katagami.name}</TableCell>
+          <ToggledThumbnail
+            katagami={katagami}
+            selectedId={selectedId}
+            handleOpen={setSelectedId}
+            handleClose={() => setSelectedId(0)}
+          />
           <UserStatus status={katagami.status} />
           <TableCell align="left">
             {katagami.status < 10 && (
@@ -65,7 +72,7 @@ export default props => {
         </TableRow>
       ))}
       {emptyRows > 0 && (
-        <TableRow style={{ height: 55 * emptyRows }}>
+        <TableRow style={{ height: 65 * emptyRows }}>
           <TableCell colSpan={6} />
         </TableRow>
       )}
