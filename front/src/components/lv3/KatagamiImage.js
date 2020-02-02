@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
     backgroundSize: 'cover',
-    border: props => (props.tileIsSelectable ? '2px solid #673ab7' : 'none'),
+    border: props => (props.tileIsSelectable ? '2px solid #00796B' : 'none'),
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`,
   },

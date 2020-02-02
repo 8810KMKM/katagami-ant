@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     padding: 16,
     margin: '0 0 16px 60px',
     border: props =>
-      props.isActive ? `2px solid ${theme.palette.primary.light}` : 'none',
+      props.isActive ? `2px solid ${theme.palette.secondary.light}` : 'none',
   },
   user: {
     cursor: 'pointer',
