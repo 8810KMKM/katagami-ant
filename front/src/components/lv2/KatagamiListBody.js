@@ -67,7 +67,11 @@ const KatagamiListBody = props => {
           <TableCell align="center">
             <IconButton
               className={classes.button}
-              onClick={() => (window.location.href = `/results/${katagami.id}`)}
+              onClick={() =>
+                (window.location.href = `/results/${katagami.id}/${wrappedId(
+                  i
+                )}`)
+              }
             >
               <Equalizer />
             </IconButton>
