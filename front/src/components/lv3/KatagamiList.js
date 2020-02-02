@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
   Table,
   TableHead,
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   footer: { marginTop: theme.spacing(20) },
 }))
 
-export default props => {
+const KatagamiList = props => {
   const { auth, ownedUser } = props
   const [katagamis, setKatagamis] = useState([])
   const [count, setCount] = useState(0)
@@ -141,6 +142,8 @@ export default props => {
         </TableHead>
         <KatagamiListBody
           {...{
+            page,
+            rowsPerPage,
             katagamis,
             emptyRows,
             handleSelectId,
@@ -177,3 +180,10 @@ export default props => {
     </div>
   )
 }
+
+KatagamiList.propTypes = {
+  auth: PropTypes.string.isRequired,
+  ownedUser: PropTypes.number,
+}
+
+export default KatagamiList

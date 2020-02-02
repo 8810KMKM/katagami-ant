@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@material-ui/core'
 import Tile from 'components/lv1/Tile'
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   katagami: {
     backgroundImage: props => `url(${props.katagamiUrl})`,
     backgroundSize: 'cover',
-    border: props => (props.tileIsSelectable ? '2px solid #673ab7' : 'none'),
+    border: props => (props.tileIsSelectable ? '2px solid #00796B' : 'none'),
     width: props => `${props.fixedWidth}px`,
     height: props => `${props.fixedHeight}px`,
   },
@@ -47,8 +47,7 @@ export default props => {
     tileIsSelectable,
     savedTilesAreNotZero,
   })
-
-  console.log(isResultPage)
+  const [stay, setStay] = useState(false)
 
   const TilesOnKatagami = () => {
     const labels = []
@@ -61,6 +60,8 @@ export default props => {
           isSelected={selectedTiles[i - 1]}
           handleToggleTile={handleToggleTile}
           isResultPage={isResultPage}
+          stay={stay}
+          setStay={setStay}
         />
       )
     }

@@ -15,7 +15,7 @@ export default props => {
         {data.map((entry, index) => (
           <Cell
             cursor="pointer"
-            fill={index === activeIndex ? '#007769' : '#9a67ea'}
+            fill={index === activeIndex ? '#9a67ea' : '#007769'}
             key={index}
           />
         ))}

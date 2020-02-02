@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Typography, makeStyles } from '@material-ui/core'
 import { AccountBox } from '@material-ui/icons'
 import { fetchUser } from 'libs/api'
-import { zeroPaddingOf } from 'libs/format'
+import { zeroPaddingOf, fixedProdId } from 'libs/format'
 import HeadLine from 'components/lv1/HeadLine'
 import StatusPieChart from 'components/lv2/StatusPieChart'
 
@@ -30,7 +30,12 @@ export default props => {
     <div>
       <HeadLine
         Icon={<AccountBox fontSize="large" />}
-        title={`user - ${zeroPaddingOf(detail.id, 4)}`}
+        title={`user - ${zeroPaddingOf(
+          process.env.NODE_ENV === 'production'
+            ? fixedProdId(detail.id)
+            : fixedProdId(detail.id),
+          4
+        )}`}
       />
       <div className={classes.detail}>
         <Typography variant="h2">登録情報</Typography>

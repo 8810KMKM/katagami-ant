@@ -42,8 +42,8 @@ export default props => {
           <MenuItem value="">
             <em>指定無し</em>
           </MenuItem>
-          <MenuItem value="2">ユーザー数が少ない順</MenuItem>
-          <MenuItem value="3">達成度が低い順</MenuItem>
+          <MenuItem value="3">ユーザー数が少ない順</MenuItem>
+          <MenuItem value="4">達成度が低い順</MenuItem>
         </Select>
       </FormControl>
     </div>
