@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@material-ui/core'
+import { Wallpaper } from '@material-ui/icons'
 import { fetchKatagamiResult } from 'libs/api'
 import { zeroPaddingOf, convertBoolToNumOfTiles } from 'libs/format'
+import { MAX_DIVISION } from 'datas/tile'
 import Container from 'components/lv1/Container'
 import HeadLine from 'components/lv1/HeadLine'
 import LoadingModal from 'components/lv1/LoadingModal'
 import DivisionSelect from 'components/lv1/DivisionSelect'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultDetail from 'components/lv3/ResultDetail'
-import { MAX_DIVISION } from 'datas/tile'
 
 export default props => {
   const { auth, katagamiId } = props
@@ -86,7 +87,10 @@ export default props => {
     />
   ) : (
     <Container>
-      <HeadLine>型紙 id : {zeroPaddingId}</HeadLine>
+      <HeadLine
+        Icon={<Wallpaper fontSize="large" />}
+        title={`katagami - ${zeroPaddingId}`}
+      />
       <DivisionSelect
         {...{
           division,

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { PhotoLibrary } from '@material-ui/icons'
 import Container from 'components/lv1/Container'
-import KatagamiList from 'components/lv3/KatagamiList'
 import HeadLine from 'components/lv1/HeadLine'
 import Modal from 'components/lv2/Modal'
+import KatagamiList from 'components/lv3/KatagamiList'
 
 const TopTemplate = props => {
   const {
@@ -20,7 +21,7 @@ const TopTemplate = props => {
 
   return (
     <Container>
-      <HeadLine>型紙一覧</HeadLine>
+      <HeadLine Icon={<PhotoLibrary fontSize="large" />} title="型紙一覧" />
       <KatagamiList {...props} />
       <Modal
         isOpen={modalIsOpen && canRecommend}

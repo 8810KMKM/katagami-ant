@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { Grid, Button, Typography } from '@material-ui/core'
+import { Wallpaper } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
+import { createAnnotation, fetchLabels, postHasLabels } from 'libs/api'
 import { initAllTiles } from 'libs/tile'
 import { hasLabelsForPost, zeroPaddingOf } from 'libs/format'
 import { MAX_DIVISION } from 'datas/tile'
@@ -153,11 +154,14 @@ const AnnotationTemplate = props => {
 
   return (
     <Container>
-      <HeadLine>
-        {katagamiId === 'recommend'
-          ? 'おすすめの型紙'
-          : `型紙 id : ${zeroPaddingId}`}
-      </HeadLine>
+      <HeadLine
+        Icon={<Wallpaper fontSize="large" />}
+        title={
+          katagamiId === 'recommend'
+            ? 'recommend katagami'
+            : `katagami - ${zeroPaddingId}`
+        }
+      />
       <DivisionSelect
         {...{
           division,
