@@ -45,12 +45,14 @@ class Annotation < ApplicationRecord
   # 自身に紐付くHasLabel生成
   def add(has_label)
     _has_label = has_label.split(' ').map { |n| n.to_i }
+    label_id = _has_label.shift
+
+    if ENV['RAILS_ENV'] == 'production' && label_id != '1'
+      label_id = label_id * 10 + 1
+    end
+
     label = Label.find(_has_label.shift) # has_labelの先頭はlabel_id
     division = _has_label.shift # その次はdivision
-
-    if ENV['RAILS_ENV'] == 'production'
-      label = label == 1 ? 1 : label * 10 + 1
-    end
 
     _has_label.each {|position|
       HasLabel.create(
