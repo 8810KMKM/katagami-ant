@@ -48,6 +48,10 @@ class Annotation < ApplicationRecord
     label = Label.find(_has_label.shift) # has_labelの先頭はlabel_id
     division = _has_label.shift # その次はdivision
 
+    if ENV['RAILS_ENV'] == 'production'
+      label = label == 1 ? 1 : label * 10 + 1
+    end
+
     _has_label.each {|position|
       HasLabel.create(
         annotation: self, katagami: katagami, label: label, division: division, position: position

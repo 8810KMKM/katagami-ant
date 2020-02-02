@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Grid } from '@material-ui/core'
 import { Wallpaper } from '@material-ui/icons'
 import { fetchKatagamiResult } from 'libs/api'
@@ -11,9 +12,9 @@ import DivisionSelect from 'components/lv1/DivisionSelect'
 import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultDetail from 'components/lv3/ResultDetail'
 
-export default props => {
-  const { auth, katagamiId } = props
-  const zeroPaddingId = zeroPaddingOf(katagamiId, 6)
+const ResultTempalte = props => {
+  const { auth, katagamiId, fixedId } = props
+  const zeroPaddingId = zeroPaddingOf(fixedId, 6)
 
   const [katagamiUrl, setKatagamiUrl] = useState('')
   const [katagamiWidth, setKatagamiWidth] = useState(0)
@@ -132,3 +133,11 @@ export default props => {
     </Container>
   )
 }
+
+ResultTempalte.propTypes = {
+  auth: PropTypes.string.isRequired,
+  katagamiId: PropTypes.string.isRequired,
+  fixedId: PropTypes.string.isRequired,
+}
+
+export default ResultTempalte
