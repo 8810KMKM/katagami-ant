@@ -38,13 +38,13 @@ const KatagamiListBody = props => {
       </TableCell>
     )
 
-  const wrappedId = i => i + 1 + page * rowsPerPage
+  const fixedId = i => i + 1 + page * rowsPerPage
 
   return (
     <TableBody>
       {katagamis.map((katagami, i) => (
         <TableRow key={katagami.id} className={classes.tableRow}>
-          <TableCell align="right">{wrappedId(i)}</TableCell>
+          <TableCell align="right">{fixedId(i)}</TableCell>
           <ToggledThumbnail
             katagami={katagami}
             selectedId={selectedId}
@@ -68,9 +68,7 @@ const KatagamiListBody = props => {
             <IconButton
               className={classes.button}
               onClick={() =>
-                (window.location.href = `/results/${katagami.id}/${wrappedId(
-                  i
-                )}`)
+                (window.location.href = `/results/${katagami.id}/${fixedId(i)}`)
               }
             >
               <Equalizer />

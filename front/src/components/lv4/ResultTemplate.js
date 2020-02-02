@@ -13,8 +13,8 @@ import KatagamiImage from 'components/lv3/KatagamiImage'
 import ResultDetail from 'components/lv3/ResultDetail'
 
 const ResultTempalte = props => {
-  const { auth, katagamiId, wrappedId } = props
-  const zeroPaddingId = zeroPaddingOf(wrappedId, 6)
+  const { auth, katagamiId, fixedId } = props
+  const zeroPaddingId = zeroPaddingOf(fixedId, 6)
 
   const [katagamiUrl, setKatagamiUrl] = useState('')
   const [katagamiWidth, setKatagamiWidth] = useState(0)
@@ -137,7 +137,7 @@ const ResultTempalte = props => {
 ResultTempalte.propTypes = {
   auth: PropTypes.string.isRequired,
   katagamiId: PropTypes.number.isRequired,
-  wrappedId: PropTypes.number.isRequired,
+  fixedId: PropTypes.number.isRequired,
 }
 
 export default ResultTempalte
