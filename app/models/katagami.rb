@@ -21,7 +21,7 @@ class Katagami < ApplicationRecord
     # トップページの型紙一覧
     def listing_for_top(params, user_id)
       Rails.cache.fetch('katagamis-' + user_id.to_s + params[:page] + params[:per] + params[:sorting]) do
-        katagamis = Katagami.all.pluck(:id, :name, :ant_num)
+        katagamis = Katagami.all.pluck(:id, :name, :s3_url, :ant_num)
         statuses = ant_statuses(user_id)
 
         top = (params[:page].to_i - 1) * params[:per].to_i
@@ -31,7 +31,7 @@ class Katagami < ApplicationRecord
         katagamis
           .map  { |k| k << (statuses[k[0]] ? statuses[k[0]] : 0) }
           .sort { |a, b| a[sortIndex] <=> b[sortIndex] }[top..bottom]
-          .format_for_index(katagamis.size)
+          .format_for_index
       end
     end
 
@@ -41,7 +41,7 @@ class Katagami < ApplicationRecord
         includes(:annotations)
           .where(annotations: {user_id: params[:owned_user], status: [1..10]}).order(:id)
           .page(params[:page]).per(params[:per])
-          .pluck(:id, :name, :ant_num, :'annotations.status')
+          .pluck(:id, :name, :s3_url, :ant_num, :'annotations.status')
           .format_for_index
       end
     end
@@ -51,7 +51,7 @@ class Katagami < ApplicationRecord
       katagami = includes(annotations: [:user, {has_labels: :label}]).find(params[:id])
 
       {
-        katagami_url: katagami.presigned_url,
+        katagami_url: katagami.s3_url,
         katagami_width: katagami.width,
         katagami_height: katagami.height,
         annotation_num: katagami.annotations.size,
@@ -66,6 +66,10 @@ class Katagami < ApplicationRecord
         access_key_id: ENV['S3_ACCESS_KEY_ID'],
         secret_access_key: ENV['S3_SECRET_ACCESS_KEY']
       ).bucket('katagami-ant')
+    end
+
+    def refresh_url
+      find_each { |k| k.presigned_url }
     end
   end
 
@@ -113,7 +117,7 @@ class Katagami < ApplicationRecord
   def presigned_url
     Rails.cache.fetch('katagami-' + id.to_s) do
       target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 65))
+      update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 60 * 24))
       s3_url
     end
   end
@@ -126,8 +130,9 @@ class Array
       katagamis: self.map {|k| {
         id: k[0],
         name: k[1],
-        annotation_num: k[2],
-        status: k[3]
+        url: k[2],
+        annotation_num: k[3],
+        status: k[4] 
       }}
     }
   end
