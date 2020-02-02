@@ -136,8 +136,8 @@ const ResultTempalte = props => {
 
 ResultTempalte.propTypes = {
   auth: PropTypes.string.isRequired,
-  katagamiId: PropTypes.number.isRequired,
-  fixedId: PropTypes.number.isRequired,
+  katagamiId: PropTypes.string.isRequired,
+  fixedId: PropTypes.string.isRequired,
 }
 
 export default ResultTempalte
