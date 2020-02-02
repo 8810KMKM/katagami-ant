@@ -111,6 +111,7 @@ export default props => {
               handleToggleTile,
               division,
               selectedTiles,
+              isResultPage: true,
             }}
           />
         </Grid>
