@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Typography, Paper } from '@material-ui/core'
+import { Group } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,6 +19,11 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.primary.main,
     },
   },
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  icon: { margin: '4px 2px 0 0' },
 }))
 
 export default props => {
@@ -31,7 +37,12 @@ export default props => {
 
   return (
     <Paper className={classes.root}>
-      <Typography>ラベル付けしたユーザー</Typography>
+      <Typography className={classes.title}>
+        <span className={classes.icon}>
+          <Group />
+        </span>
+        ラベル付けしたユーザー
+      </Typography>
       {isActive ? (
         <ul>
           {users.map(user => {

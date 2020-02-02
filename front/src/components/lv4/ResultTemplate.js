@@ -89,7 +89,7 @@ export default props => {
     <Container>
       <HeadLine
         Icon={<Wallpaper fontSize="large" />}
-        title={`katagami - ${zeroPaddingId}`}
+        title={`Result (katagami - ${zeroPaddingId})`}
       />
       <DivisionSelect
         {...{
