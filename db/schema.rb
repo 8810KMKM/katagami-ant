@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_150337) do
+ActiveRecord::Schema.define(version: 2020_02_02_053641) do
 
   create_table "annotations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "katagami_id"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_01_22_150337) do
     t.string "cw_obj", null: false
     t.string "name", null: false
     t.integer "ant_num", default: 0
+    t.text "s3_url", null: false
   end
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
