@@ -38,7 +38,7 @@ const TopTemplate = props => {
 
 TopTemplate.propTypes = {
   auth: PropTypes.string.isRequired,
-  canRecommend: PropTypes.string.isRequired,
+  canRecommend: PropTypes.bool.isRequired,
   handleDoRecommendAnnotation: PropTypes.func.isRequired,
   handleCancelRecommend: PropTypes.func.isRequired,
 }

@@ -29,7 +29,7 @@ const HeadLine = props => {
 
 HeadLine.propTypes = {
   title: PropTypes.string.isRequired,
-  Icon: PropTypes.func,
+  Icon: PropTypes.object,
 }
 
 export default HeadLine
