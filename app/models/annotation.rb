@@ -51,7 +51,7 @@ class Annotation < ApplicationRecord
       label_id = label_id * 10 + 1
     end
 
-    label = Label.find(_has_label.shift) # has_labelの先頭はlabel_id
+    label = Label.find(label_id) # has_labelの先頭はlabel_id
     division = _has_label.shift # その次はdivision
 
     _has_label.each {|position|
