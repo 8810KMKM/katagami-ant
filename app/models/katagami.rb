@@ -71,11 +71,35 @@ class Katagami < ApplicationRecord
     def refresh_url
       find_each { |k| k.presigned_url }
     end
+
+    def fetch_from_s3_new_files
+      s3_katagamis = Katagami.s3_bucket.objects.to_a
+      db_katagamis_size = Katagami.count
+      new_katagamis = s3_katagamis[db_katagamis_size..-1]
+
+      if new_katagamis.size > 0
+        fetch_from_s3 new_katagamis
+      end
+    end
+
+    def fetch_from_s3_files(bucket_objects=s3_bucket.objects)
+      Katagami.transaction do
+        bucket_objects.each do |item|
+          item_url = item.presigned_url(:get, expires_in: 60 * 65)
+          katagami = Katagami.new(
+            name: item.key,
+            cw_obj: open(item_url),
+            s3_url: item_url,
+          )
+          katagami.save!
+        end
+      end
+    end
   end
 
   # division > position > labelでhas_labelをクラス分け
   def classified_has_labels
-    # Rails.cache.fetch('has_labels-' + id.to_s) do
+    Rails.cache.fetch('has_labels-' + id.to_s) do
       annotations
         .map { |ant| 
           ant.has_labels.map {|has_label| 
@@ -97,7 +121,7 @@ class Katagami < ApplicationRecord
             }
           }]
         }.to_h
-    # end
+    end
   end
 
   # 型紙一覧の全キャッシュと自身の持つHasLabelのキャッシュをクリア
