@@ -113,7 +113,8 @@ class Katagami < ApplicationRecord
   def presigned_url
     Rails.cache.fetch('katagami-' + id.to_s) do
       target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      target[0].presigned_url(:get, expires_in: 60 * 65)
+      update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 65))
+      s3_url
     end
   end
 end
