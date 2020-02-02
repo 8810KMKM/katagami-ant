@@ -60,6 +60,7 @@ class Katagami < ApplicationRecord
       }
     end
 
+    # アップロードされた型紙の場所(AWS S3)
     def s3_bucket
       Aws::S3::Resource.new(
         region: 'ap-northeast-1',
@@ -68,25 +69,27 @@ class Katagami < ApplicationRecord
       ).bucket('katagami-ant')
     end
 
+    # 認証済みurlを最新にする
     def refresh_url
       find_each { |k| k.presigned_url }
     end
 
+    # dbとs3の差分を読み込む
     def fetch_from_s3_new_files
-      s3_katagamis = Katagami.s3_bucket.objects.to_a
-      db_katagamis_size = Katagami.count
-      new_katagamis = s3_katagamis[db_katagamis_size..-1]
+      s3_katagamis = s3_bucket.objects.sort_by { |item| item.last_modified }.to_a
+      new_katagamis = s3_katagamis[count..-1]
 
       if new_katagamis.size > 0
         fetch_from_s3 new_katagamis
       end
     end
 
-    def fetch_from_s3_files(bucket_objects=s3_bucket.objects)
-      Katagami.transaction do
+    # s3の全データを読み込む
+    def fetch_from_s3(bucket_objects=s3_bucket.objects)
+      transaction do
         bucket_objects.each do |item|
           item_url = item.presigned_url(:get, expires_in: 60 * 65)
-          katagami = Katagami.new(
+          katagami = new(
             name: item.key,
             cw_obj: open(item_url),
             s3_url: item_url,
@@ -137,7 +140,6 @@ class Katagami < ApplicationRecord
   end
 
   # S3バケットに対して認証済みurlを取得
-  # デフォルトの有効期限が1時間なので, それに対応してfetchさせる.
   def presigned_url
     Rails.cache.fetch('katagami-' + id.to_s) do
       target = Katagami.s3_bucket.objects.select { |object| object.key === name }
