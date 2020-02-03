@@ -85,7 +85,7 @@ class Katagami < ApplicationRecord
     end
 
     # s3の全データを読み込む
-    def fetch_from_s3(bucket_objects=s3_bucket.objects)
+    def fetch_from_s3_files(bucket_objects=s3_bucket.objects)
       transaction do
         bucket_objects.each do |item|
           item_url = item.presigned_url(:get, expires_in: 60 * 60 * 30)
