@@ -84,4 +84,4 @@ export const graphDataOf = (hasLabel, wholeLabels) => {
 }
 
 // production環境だとidが10インクリメントなので, 表示だけ1インクリメントに対応させる.
-export const fixedProdId = id => (id === 1 ? id : Math.floor(id / 10))
+export const fixedProdId = id => (id === 1 ? id : Math.floor(id / 10) + 1)
