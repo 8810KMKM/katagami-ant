@@ -15,7 +15,7 @@ class Annotation < ApplicationRecord
     
     {
       id: annotation.id,
-      katagami_url: katagami.presigned_url,
+      katagami_url: katagami.s3_url,
       katagami_width: katagami.width,
       katagami_height: katagami.height
     }
@@ -45,13 +45,17 @@ class Annotation < ApplicationRecord
   # 自身に紐付くHasLabel生成
   def add(has_label)
     _has_label = has_label.split(' ').map { |n| n.to_i }
-    label_id = _has_label.shift
+    label_id = _has_label.shift # has_labelの先頭はlabel_id
 
     if ENV['RAILS_ENV'] == 'production' && label_id != '1'
       label_id = label_id * 10 + 1
     end
 
+<<<<<<< HEAD
     label = Label.find(label_id) # has_labelの先頭はlabel_id
+=======
+    label = Label.find(label_id) 
+>>>>>>> develop
     division = _has_label.shift # その次はdivision
 
     _has_label.each {|position|
