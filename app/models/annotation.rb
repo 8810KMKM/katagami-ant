@@ -15,7 +15,7 @@ class Annotation < ApplicationRecord
     
     {
       id: annotation.id,
-      katagami_url: katagami.presigned_url,
+      katagami_url: katagami.s3_url,
       katagami_width: katagami.width,
       katagami_height: katagami.height
     }
