@@ -70,8 +70,8 @@ class Katagami < ApplicationRecord
     end
 
     # 認証済みurlを最新にする
-    def refresh_url
-      find_each { |k| k.presigned_url }
+    def refresh_all_presigned_urls
+      find_each { |k| k.get_presigned_url }
     end
 
     # dbとs3の差分を読み込む
@@ -88,7 +88,7 @@ class Katagami < ApplicationRecord
     def fetch_from_s3(bucket_objects=s3_bucket.objects)
       transaction do
         bucket_objects.each do |item|
-          item_url = item.presigned_url(:get, expires_in: 60 * 65)
+          item_url = item.presigned_url(:get, expires_in: 60 * 60 * 30)
           katagami = new(
             name: item.key,
             cw_obj: open(item_url),
@@ -140,12 +140,9 @@ class Katagami < ApplicationRecord
   end
 
   # S3バケットに対して認証済みurlを取得
-  def presigned_url
-    Rails.cache.fetch('katagami-' + id.to_s) do
-      target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-      update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 60 * 24))
-      s3_url
-    end
+  def get_presigned_url
+    target = Katagami.s3_bucket.objects.select { |object| object.key === name }
+    update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 60 * 30))
   end
 end
 
