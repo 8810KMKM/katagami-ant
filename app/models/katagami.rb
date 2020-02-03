@@ -142,7 +142,8 @@ class Katagami < ApplicationRecord
   # S3バケットに対して認証済みurlを取得
   def get_presigned_url
     target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-    update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 60 * 30))
+    new_url = target[0].presigned_url(:get, expires_in: 60 * 60 * 30)
+    update(s3_url: new_url, cw_obj: open(new_url))
   end
 end
 
