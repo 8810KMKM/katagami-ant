@@ -5,18 +5,18 @@ import { Grid } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
-  selected: {
-    backgroundColor: props =>
-      props.stay && props.isSelected
-        ? 'rgba(133, 97, 197, 0.7)'
-        : 'rgba(0, 121, 107, 0.7)',
-  },
   tile: {
     pointerEvents: props => (props.stay && !props.isSelected ? 'none' : ''),
     color: grey[50],
     border: '1px solid',
     padding: '2px 4px',
     fontSize: 40,
+  },
+  selected: {
+    backgroundColor: props =>
+      props.stay && props.isSelected
+        ? 'rgba(133, 97, 197, 0.7)'
+        : 'rgba(0, 121, 107, 0.7)',
   },
 }))
 
