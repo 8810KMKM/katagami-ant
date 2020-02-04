@@ -136,7 +136,7 @@ class Katagami < ApplicationRecord
   end
 
   def plus_ant_num(n=1)
-    update(ant_num: ant_num + n, cw_obj: cw_obj)
+    update(ant_num: ant_num + n, cw_obj: oepn(s3_obj))
   end
 
   # S3バケットに対して認証済みurlを取得
