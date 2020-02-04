@@ -35,7 +35,10 @@ const useStyles = makeStyles(theme => ({
   checkBox: {
     margin: '0 0 8px 0',
   },
-  header: { backgroundColor: theme.palette.primary.light },
+  header: {
+    backgroundColor: theme.palette.primary.light,
+    '& *': { color: '#fafafa' },
+  },
   footer: { marginTop: theme.spacing(20) },
 }))
 

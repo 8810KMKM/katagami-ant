@@ -24,16 +24,22 @@ const ResultTempalte = props => {
   )
   const [annotationNum, setAnnotationNum] = useState(0)
   const [wholeLabels, setWholeLabels] = useState([])
-  const [hasLabels, setHasLabels] = useState([])
+  const [hasLabels, setHasLabels] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const [users, setUsers] = useState([])
   const [division, setDivision] = useState(12)
   const [selectIsOpen, setSelectIsOpen] = useState(false)
+  const [stay, setStay] = useState(false)
 
   const handleSelectUsers = (data, index) => {
     setActiveIndex(index)
     setUsers(data.users)
+  }
+
+  const handleUnselectUsers = () => {
+    setActiveIndex(-1)
+    setUsers([])
   }
 
   const handleToggleTile = number => {
@@ -90,28 +96,30 @@ const ResultTempalte = props => {
         Icon={<Wallpaper fontSize="large" />}
         title={`Result (katagami - ${zeroPaddingId})`}
       />
-      <DivisionSelect
-        {...{
-          division,
-          selectIsOpen,
-          handleChangeDivision,
-          handleSelectOpen,
-          handleSelectClose,
-          tileIsSelectable: true,
-        }}
-      />
       <Grid container>
         <Grid item xs={6}>
+          <DivisionSelect
+            {...{
+              division,
+              selectIsOpen,
+              handleChangeDivision,
+              handleSelectOpen,
+              handleSelectClose,
+              tileIsSelectable: true,
+            }}
+          />
           <KatagamiImage
             {...{
               katagamiUrl,
               katagamiHeight,
               katagamiWidth,
-              tileIsSelectable: true,
-              fixedWidth: 584,
               handleToggleTile,
               division,
               selectedTiles,
+              stay,
+              setStay,
+              tileIsSelectable: true,
+              fixedWidth: 584,
               isResultPage: true,
             }}
           />
@@ -125,6 +133,8 @@ const ResultTempalte = props => {
               users,
               activeIndex,
               handleSelectUsers,
+              handleUnselectUsers,
+              stay,
               position: convertBoolToNumOfTiles(selectedTiles),
             }}
           />

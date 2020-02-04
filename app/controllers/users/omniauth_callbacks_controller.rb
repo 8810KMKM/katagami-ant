@@ -6,7 +6,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     
     if @user.persisted?
       sign_in @user
-      Katagami.refresh_url
       redirect_to ENV['FRONT_URL'] + 'auth/' + payload(@user)[:auth_token] + '/' + (@user.have_done_all_annotations? ? '0' : '1')
     else
       redirect_to root_path

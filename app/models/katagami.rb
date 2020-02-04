@@ -85,7 +85,7 @@ class Katagami < ApplicationRecord
     end
 
     # s3の全データを読み込む
-    def fetch_from_s3(bucket_objects=s3_bucket.objects)
+    def fetch_from_s3_files(bucket_objects=s3_bucket.objects)
       transaction do
         bucket_objects.each do |item|
           item_url = item.presigned_url(:get, expires_in: 60 * 60 * 30)
@@ -136,13 +136,14 @@ class Katagami < ApplicationRecord
   end
 
   def plus_ant_num(n=1)
-    update(ant_num: ant_num + n)
+    update(ant_num: ant_num + n, cw_obj: open(s3_url))
   end
 
   # S3バケットに対して認証済みurlを取得
   def get_presigned_url
     target = Katagami.s3_bucket.objects.select { |object| object.key === name }
-    update(s3_url: target[0].presigned_url(:get, expires_in: 60 * 60 * 30))
+    new_url = target[0].presigned_url(:get, expires_in: 60 * 60 * 30)
+    update(s3_url: new_url, cw_obj: open(new_url))
   end
 end
 
