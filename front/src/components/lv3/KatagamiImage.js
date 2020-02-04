@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { Grid } from '@material-ui/core'
 import Tile from 'components/lv1/Tile'
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default props => {
+const KatagamiImage = props => {
   const {
     katagamiUrl,
     katagamiWidth,
@@ -79,3 +80,18 @@ export default props => {
     </div>
   )
 }
+
+KatagamiImage.propTypes = {
+  katagamiUrl: PropTypes.string.isRequired,
+  katagamiWidth: PropTypes.number.isRequired,
+  katagamiHeight: PropTypes.number.isRequired,
+  fixedWidth: PropTypes.number.isRequired,
+  division: PropTypes.number.isRequired,
+  selectedTiles: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  tileIsSelectable: PropTypes.bool.isRequired,
+  isResultPage: PropTypes.bool,
+  stay: PropTypes.bool,
+  setStay: PropTypes.func,
+}
+
+export default KatagamiImage
