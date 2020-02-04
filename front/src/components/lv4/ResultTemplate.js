@@ -30,6 +30,7 @@ const ResultTempalte = props => {
   const [users, setUsers] = useState([])
   const [division, setDivision] = useState(12)
   const [selectIsOpen, setSelectIsOpen] = useState(false)
+  const [stay, setStay] = useState(false)
 
   const handleSelectUsers = (data, index) => {
     setActiveIndex(index)
@@ -107,11 +108,13 @@ const ResultTempalte = props => {
               katagamiUrl,
               katagamiHeight,
               katagamiWidth,
-              tileIsSelectable: true,
-              fixedWidth: 584,
               handleToggleTile,
               division,
               selectedTiles,
+              stay,
+              setStay,
+              tileIsSelectable: true,
+              fixedWidth: 584,
               isResultPage: true,
             }}
           />

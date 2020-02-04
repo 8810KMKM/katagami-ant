@@ -33,6 +33,8 @@ export default props => {
     tileIsSelectable,
     fixedWidth,
     division,
+    stay,
+    setStay,
     isResultPage = false,
   } = props
   const fixedHeight = (katagamiHeight / katagamiWidth) * fixedWidth
@@ -47,7 +49,6 @@ export default props => {
     tileIsSelectable,
     savedTilesAreNotZero,
   })
-  const [stay, setStay] = useState(false)
 
   const TilesOnKatagami = () => {
     const labels = []
