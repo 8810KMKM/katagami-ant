@@ -37,6 +37,11 @@ const ResultTempalte = props => {
     setUsers(data.users)
   }
 
+  const handleUnselectUsers = () => {
+    setActiveIndex(-1)
+    setUsers([])
+  }
+
   const handleToggleTile = number => {
     setSelectedTiles(
       selectedTiles.map((tile, i) => (i === number - 1 ? true : false))
@@ -91,18 +96,18 @@ const ResultTempalte = props => {
         Icon={<Wallpaper fontSize="large" />}
         title={`Result (katagami - ${zeroPaddingId})`}
       />
-      <DivisionSelect
-        {...{
-          division,
-          selectIsOpen,
-          handleChangeDivision,
-          handleSelectOpen,
-          handleSelectClose,
-          tileIsSelectable: true,
-        }}
-      />
       <Grid container>
         <Grid item xs={6}>
+          <DivisionSelect
+            {...{
+              division,
+              selectIsOpen,
+              handleChangeDivision,
+              handleSelectOpen,
+              handleSelectClose,
+              tileIsSelectable: true,
+            }}
+          />
           <KatagamiImage
             {...{
               katagamiUrl,
@@ -128,6 +133,7 @@ const ResultTempalte = props => {
               users,
               activeIndex,
               handleSelectUsers,
+              handleUnselectUsers,
               stay,
               position: convertBoolToNumOfTiles(selectedTiles),
             }}
