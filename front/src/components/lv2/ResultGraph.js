@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { BarChart, XAxis, YAxis, Bar, Cell } from 'recharts'
 
-export default props => {
-  const { data, handleSelectUsers, activeIndex } = props
+const ResultGraph = props => {
+  const { data, handleSelectUsers, activeIndex, stay } = props
 
   return (
     <BarChart width={520} height={240} data={data}>
@@ -23,3 +24,12 @@ export default props => {
     </BarChart>
   )
 }
+
+ResultGraph.propTypes = {
+  data: PropTypes.array.isRequired,
+  activeIndex: PropTypes.number.isRequired,
+  handleSelectUsers: PropTypes.func.isRequired,
+  stay: PropTypes.bool.isRequired,
+}
+
+export default ResultGraph

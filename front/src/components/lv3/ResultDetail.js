@@ -27,8 +27,6 @@ const ResultDetail = props => {
 
   const _hasLabels = hasLabels[division.toString()]
 
-  console.log(typeof hasLabels)
-
   const [hasLabel] = _hasLabels
     ? _hasLabels.filter(
         hasLabel => hasLabel.position === parseInt(position, 10)
