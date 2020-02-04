@@ -24,7 +24,7 @@ const ResultTempalte = props => {
   )
   const [annotationNum, setAnnotationNum] = useState(0)
   const [wholeLabels, setWholeLabels] = useState([])
-  const [hasLabels, setHasLabels] = useState([])
+  const [hasLabels, setHasLabels] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const [users, setUsers] = useState([])
@@ -128,6 +128,7 @@ const ResultTempalte = props => {
               users,
               activeIndex,
               handleSelectUsers,
+              stay,
               position: convertBoolToNumOfTiles(selectedTiles),
             }}
           />

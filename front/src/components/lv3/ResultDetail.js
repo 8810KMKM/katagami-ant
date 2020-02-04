@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { Grid, Typography } from '@material-ui/core'
 import { graphDataOf } from 'libs/format'
@@ -12,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   title: { margin: '0 0 16px 60px' },
 }))
 
-export default props => {
+const ResultDetail = props => {
   const {
     hasLabels,
     division,
@@ -21,9 +22,12 @@ export default props => {
     users,
     activeIndex,
     handleSelectUsers,
+    stay,
   } = props
 
   const _hasLabels = hasLabels[division.toString()]
+
+  console.log(typeof hasLabels)
 
   const [hasLabel] = _hasLabels
     ? _hasLabels.filter(
@@ -43,9 +47,22 @@ export default props => {
           <UserList {...{ users, activeIndex }} />
         </Grid>
         <Grid item xs={8}>
-          <ResultGraph {...{ data, activeIndex, handleSelectUsers }} />
+          <ResultGraph {...{ data, activeIndex, handleSelectUsers, stay }} />
         </Grid>
       </Grid>
     </div>
   )
 }
+
+ResultDetail.propTypes = {
+  hasLabels: PropTypes.PropTypes.object.isRequired,
+  wholeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  users: PropTypes.arrayOf(PropTypes.string).isRequired,
+  division: PropTypes.number.isRequired,
+  position: PropTypes.string.isRequired,
+  activeIndex: PropTypes.number.isRequired,
+  handleSelectUsers: PropTypes.func.isRequired,
+  stay: PropTypes.bool.isRequired,
+}
+
+export default ResultDetail
